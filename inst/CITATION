@@ -1,0 +1,23 @@
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+authors <- as.personList(meta$Author)
+authors <- grep("\\[cre|\\[aut", authors, value = TRUE)
+
+bibentry(
+  bibtype = "Article",
+  title = "{varstan}: An {R} Package for {Bayesian} time series models with {Stan}",
+  author = c(
+    person("Izhar Asael", "Alonzo"),
+    person("Cristian", "Cruz")
+  ),
+  journal = "ARXIV Preprint",
+    year = "2020",
+  doi = "https://arxiv.org/abs/2005.10361",
+  header = "To cite varstan in publications use:",
+  textVersion = paste(
+    "Alonzo, I. and Cruz, C. (2020).",
+    "varstan: An R Package for Bayesian time series models with  Stan.",
+    "arxiv preprint", "doi:https://arxiv.org/abs/2005.10361"
+  ),
+  encoding = "UTF-8"
+)
