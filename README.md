@@ -4,22 +4,32 @@ Automatic forecasting and Bayesian modeling for time series
 ===========================================================
 
 The *bayesforecast* package implements Bayesian estimation of structured
-time series models,using the Hamiltonian Monte Carlo method, implemented
-with [Stan](http://mc-stan.org/), a probabilistic language model in C++.
-The aim of this package is to provide an interface for forecasting and
-modeling of the most popular time series models.
+time series models, using the Hamiltonian Monte Carlo method,
+implemented with [Stan](http://mc-stan.org/), a probabilistic language
+model in C++. The aim of this package is to provide an interface for
+forecasting and Bayesian modeling of the most popular time series
+models.
 
 On the beta version 1.0.0, the available models are:
 
--   ARIMA
--   Multiplicative Seasonal ARIMA
+-   ARIMA [Box and
+    Jenkins (1970)](https://www.wiley.com/en-us/Time+Series+Analysis%3A+Forecasting+and+Control%2C+5th+Edition-p-9781118675021).
+-   Multiplicative Seasonal ARIMA [Brockwell and
+    Davis (2016)](https://www.amazon.com/dp/3319298526/ref=cm_sw_su_dp?tag=otexts-20)
 -   GARCH
--   Asymmetric GARCH
+    [Bollerslev (1986)](https://doi.org/10.1016/0304-4076(86)90063-1)
+-   Asymmetric GARCH [Fonseca et.
+    al (2019)](https://arxiv.org/abs/1910.01398)
 -   ARMAX
+    [Pankratz (1991)](https://www.amazon.com/dp/0471615285/ref=cm_sw_su_dp?tag=otexts-20)
 -   Dynamic Harmonic regression
--   Stochastic Volatility models
--   Local global trend
--   Additive ETS models from the forecast package
+    [Pankratz (1991)](https://www.amazon.com/dp/0471615285/ref=cm_sw_su_dp?tag=otexts-20)
+-   Stochastic Volatility models [Sangjoon et.
+    al. (1998)](https://www.jstor.org/stable/2566931)
+-   Local global trend [Ng et. al. (2020)](https://arxiv.org/abs/2004.08492)
+-   Additive ETS models from the
+    [forecast package](https://github.com/robjhyndman/forecast). [Rob and
+    Khandakar (2008)](https://www.jstatsoft.org/article/view/v027i03)
     -   Local level models
     -   Holt’s linear trend
     -   Holt-Winter’s
@@ -32,16 +42,16 @@ package is used.
 ### Instalation
 
 This is still a beta version package, so currently installing it could
-be challenging, we recommend to install the current R version (R4.0) and
-the Rtools4.0. After that, install the package
+be challenging, we recommend to install the current R version (**R4.0**)
+and the **Rtools4.0**. After that, install the package
 [rstan](https://mc-stan.org/users/interfaces/rstan.html), you can follow
 the installation procedure
 [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started)
 
 ### Instalation from Github
 
-For installing *bayesforecast* package from git use the code on the next
-chunk:
+For installing *bayesforecast* package from Github, use the code on the
+next chunk:
 
 ``` r
 if (!requireNamespace("remotes")) install.packages("remotes")
@@ -52,14 +62,14 @@ remotes::install_github("asael697/bayesforecast",dependencies = TRUE)
 ### Case study: Analyzing the monthly live birth in U.S. an example
 
 As an example, we provide a time series modeling for the monthly live
-births in the United States 1948-1979, published by *Stoffer2019*. In
-*figure 1* , the data has a seasonal behavior that repeats every year.
-The series *waves* in the whole 40 years period (*superior part*). In
-addition, the partial (*pacf*) and auto-correlation (*acf*) functions
-are far from zero (*middle part*), and have the same wave pastern as
-birth series. Indicating non stationary and a strong cyclical behavior.
-After applying a difference to the data, the acf and pacf plots still
-have some non-zero values every 12 lags (*inferior part*).
+births in the United States 1948-1979, published by [Stoffer
+(2019)](https://github.com/nickpoison/astsa). In **figure 1** , the data
+has a seasonal behavior that repeats every year. The series *waves* in
+the whole 40 years period (*superior part*). In addition, the partial
+(*pacf*) and auto-correlation (*acf*) functions are far from zero
+(*middle part*). After applying a difference to the data, the acf and
+pacf plots still have some non-zero values every 12 lags (*inferior
+part*).
 
 <img src="man/figures/fig1-1.png" alt="\label{fig:fig1}Monthly live birth U.S.A" width="60%" />
 <p class="caption">
@@ -67,10 +77,11 @@ Monthly live birth U.S.A
 </p>
 
 For start, a multiplicative Seasonal ARIMA model could give a good fit
-to the data, following *Tsay2010* recommendations for order selection
-using the auto-correlation functions, we define p = 1, d = 1, q = 1 and
-for the seasonal part P= 1, D = 1 and Q = 1. The fitted model is defined
-as follows
+to the data, following [Tsay
+(2010)](https://www.amazon.com/dp/047136164X/ref=cm_sw_su_dp?tag=otexts-20)
+recommendations for order selection using the auto-correlation
+functions, we define (p = 1, d = 1, q = 1) and for the seasonal part (P=
+1, D = 1 and Q = 1). The fitted model is defined as follows
 
 ``` r
 sf1 = stan_sarima(ts = birth,order = c(1,1,1),seasonal = c(1,1,1),
@@ -78,8 +89,9 @@ sf1 = stan_sarima(ts = birth,order = c(1,1,1),seasonal = c(1,1,1),
 ```
 
 All fitted models are *varstan* objects, these are S3 classes with the
-*stanfit* results provided by the *rstan* package, and other useful
-elements that make the modeling process easier.
+*stanfit* results provided by the
+[rstan](https://mc-stan.org/users/interfaces/rstan.html) package, and
+other useful elements that make the modeling process easier.
 
 ``` r
 sf1
@@ -128,11 +140,11 @@ autoplot(forecast(object = sf1,h = 12))
 
 ### Automatic forecast with prophet
 
-Automatic prediction is posible using the *forecast* function, by
+Automatic prediction is posible using the **forecast** function, by
 default the prediction is done using Generalized additive models from
 the
 [prophet](https://facebook.github.io/prophet/docs/quick_start.html#python-api)
-package
+package.
 
 ``` r
 library(astsa)
@@ -143,23 +155,19 @@ autoplot(object = forecast(cardox,h = 12),include = 100)
 
 ### References
 
-For further readings and references you can check
-
--   Bob Carpenter, Andrew Gelman, Matthew D. Hoffman, Daniel Lee, Ben
-    Goodrich, Michael Betancourt, Marcus Brubaker, Jiqiang Guo, Peter
-    Li, and Allen Riddell. 2017. Stan: A probabilistic programming
-    language. Journal of Statistical Software 76(1). DOI
-    10.18637/jss.v076.i01
+For further readings and references you can check:
 
 -   Stan Development Team. 2018. Stan Modeling Language Users Guide and
-    Reference Manual, Version 2.18.0.
-    <a href="http://mc-stan.org" class="uri">http://mc-stan.org</a>
+    Reference Manual, Version 2.18.0. <http://mc-stan.org>
 
--   Rob J Hyndman and George Athanasopoulos. Forecasting: Principles and
-    practice Monash University, Australia
+-   Forecasting: Principles and practice Monash University, Australia.
+    [Forecasting principles](https://otexts.com/fpp2/)
 
--   Rob J. Hyndman, Y. Khandakar, Automatic Time Series Forecasting: The
-    forecast Package for R
+-   Time Series Analysis and Its Applications, With R Examples — 4th
+    Edition.[astsa](https://www.stat.pitt.edu/stoffer/tsa4/index.html)
 
--   R. S. Tsay. Analysis of Financial Time Series. Wiley-Interscience,
-    Chicago, second edition, 2010.
+-   facebook/prophet Quick start documentation.
+    [prophet](https://facebook.github.io/prophet/docs/quick_start.html#python-api)
+
+-   Orbit API Documentation and Examples.
+    [Orbit](https://uber.github.io/orbit/)
