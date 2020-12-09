@@ -338,13 +338,13 @@ ggpacf = function(y,title = NULL){
 #' @importFrom bayesplot mcmc_combo
 #' @importFrom stats quantile
 #'
-plot.varstan = function(x,prob = 0.9,...){
+plot.varstan = function(x,prob = 0.95,...){
 
   if( !is.varstan(x))
     stop("The current object is not a varstan class")
 
   pp = posterior_predict(x)
-  pI = posterior_interval(pp,prob = 0.9)
+  pI = posterior_interval(pp,prob = prob)
   pM = apply(pp, 2, FUN = mean)
 
   data = data.frame(time = as.numeric(time(x$ts)),y = as.numeric(x$ts))
@@ -392,7 +392,7 @@ plot.varstan = function(x,prob = 0.9,...){
 #' @importFrom stats quantile
 #' @export
 #'
-autoplot.varstan = function(object,prob = 0.9,...){
+autoplot.varstan = function(object,prob = 0.95,...){
   if( !is.varstan(object))
     stop("The current object is not a varstan class")
 

@@ -94,19 +94,20 @@ ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
               is_td = trend, is_dp = is_dp,is_ss = seasonal,
               y = y,yreal = stats::as.ts(ts),series.name = sn)
 
+    # Period
+    if(period == 0) m1$period = stats::frequency(ts)
+    else m1$period = period
+
     # Priors
     m1$prior_sigma0    = c(0,1,7,4)
     m1$prior_level     = c(0,0.5,1,1)
     m1$prior_trend     = c(0,0.5,1,1)
     m1$prior_damped    = c(0,0.5,1,1)
     m1$prior_seasonal  = c(0,0.5,1,1)
-    m1$prior_level1    = c(0,2.5,6,4)
+    m1$prior_level1    = c(mean(y[1:m1$period]) ,2.5,6,4)
     m1$prior_trend1    = c(0,2.5,6,4)
     m1$prior_seasonal1 = c(0,10,1,1)
 
-    # Period
-    if(period == 0) m1$period = stats::frequency(ts)
-    else m1$period = period
 
     # Generalized t distribution
     m1$genT = genT

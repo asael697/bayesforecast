@@ -60,6 +60,9 @@ posterior_predict.varstan = function(object,h = 0,xreg = NULL,robust = FALSE,
 
     if(is.naive(object$model))
       fc = posterior_predict_Sarima(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+
+    if(is.ssm(object$model))
+      fc = posterior_predict_ets(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
   }
   return(fc)
 }
@@ -307,7 +310,7 @@ posterior_predict_garch = function(object,h = 1,xreg = NULL,robust = TRUE,
 
   fixmgarch = NULL
 
-  # point etimate of the model parameters
+  # point estimate of the model parameters
   par0 = data.frame(extract_stan(object,pars = c("mu0","sigma0")))
   par0 = data.frame(par0[sp,])
 
@@ -496,4 +499,178 @@ posterior_predict_SVM = function(object,h = 1,xreg = NULL,robust = TRUE,
   colnames(yh) = paste0("yh.",1:h)
   yh = as.data.frame(yh)
   return(yh)
+}
+#' Draw from posterior predictive distribution of a SSM model
+#'
+#' @usage  posterior_predict_ets(object,h = 1,robust = TRUE,draws = 1000,seed = NULL)
+#'
+#' @param object a varstan object
+#' @param h An integer indicating the number of predictions. The default number
+#'    of predictions is 1
+#' @param xreg Optionally, a numerical matrix of external regressors,
+#' which must have the same number of rows as h. It should not be a data frame.
+#' @param robust A boolean for obtain the robust estimation. The default
+#' @param draws An integer indicating the number of draws to return. The default
+#'    number of draws is 1000
+#' @param seed An optional \code{\link[=set.seed]{seed}} to use.
+#'
+#' @author Asael Alonzo Matamoros
+#'
+#' @return
+#' A \code{draws} by \code{h} data.frame of simulations from the
+#' posterior predictive distribution. Each row of the data.frame is a vector of
+#' predictions generated using a single draw of the model parameters from the
+#' posterior distribution.
+#'
+#' @importFrom stats rnorm
+#' @noRd
+#'
+posterior_predict_ets = function(object,h = 1,xreg = NULL,robust = TRUE,
+                                 draws = 1000,seed = NULL){
+  if (!is.null(seed))
+    set.seed(seed)
+
+  # correct number of draws
+  nm = object$stan.parmaters$chains*(object$stan.parmaters$iter-object$stan.parmaters$warmup)
+  draw = draws
+  if( nm < draws) draw = nm
+
+  #preliminary checks
+  n = length(object$ts);d1 = object$model$d1;states = pars = NULL
+  m = object$model$period; n1 = n-m+1;
+  trendtype = object$model$is_td;damped = object$model$is_dp
+  seasontype = object$model$is_ss
+
+  if(d1 > 0){
+    # Check xreg
+    if(is.null(xreg)){
+      warning("No xreg specified, the forecast wont be accurate \n")
+      xh  = matrix(0,nrow = h,ncol = d1)
+    }
+    else if( dim(xreg)[1] != h ||  dim(xreg)[2] != d1){
+      # Check xreg dimensions
+      warning("The dimension of xreg are not correct, the forecast wont be accurate \n")
+      xh = matrix(0,nrow = h,ncol = d1)
+    }
+    else xh = xreg
+
+    breg = data.frame(extract_stan(object = object,pars = "breg"))
+  }
+
+  # Extract level
+  l = data.frame(extract_stan(object = object,pars = "l"))
+  states = cbind(states,l[,n])
+  colnames(states) = "l"
+
+  # Extract level parameters
+  pars = data.frame(extract_stan(object = object,pars = c("sigma0","level")))
+  colnames(pars) = c("sigma","alpha")
+
+  # Extract trend
+  if(trendtype){
+    # trend states
+    l = data.frame(extract_stan(object = object,pars = "b"))
+    states = cbind(states,l[,n])
+    colnames(states) = c("l","b")
+
+    #trend parameters
+    pars = cbind(pars,data.frame(extract_stan(object = object,pars = "trend")))
+    colnames(pars) = c("sigma","alpha","beta")
+
+    # damped
+    if(damped){
+      pars = cbind(pars,data.frame(extract_stan(object = object,pars = "damped")))
+      colnames(pars) = c("sigma","alpha","beta","phi")
+    }
+  }
+
+  # extract seasonality
+  if(seasontype){
+    # seasonal last states
+    l = data.frame(extract_stan(object = object,pars = "s"))
+    l = l[,n:n1];colnames(l) = paste0("s",1:m)
+    states = cbind(states,l)
+
+    # seasonal parameters
+    pars = cbind(pars,data.frame(extract_stan(object = object,pars = "seasonal")))
+    colnames(pars) = c("sigma","alpha","beta","phi","gamma")
+  }
+
+  # The previous data
+  yh  =  matrix(0,nrow = draw,ncol = h)
+  mu2 = rep(0,h)
+
+  for(i in 1:draw){
+    mu1 = class1(h = h,last.state = as.numeric(states[i,]),
+                 trendtype = trendtype,seasontype = seasontype,
+                 damped = damped,m = m,par = pars[i,])
+
+
+    if(d1 > 0) mu2 = sum(xh*breg[i,])
+
+    yh[i,] = rnorm(n = h,mean = mu1$mu + mu2,sd = mu1$var)
+  }
+  colnames(yh) = paste0("yh.",1:h)
+  yh = as.data.frame(yh)
+  return(yh)
+}
+#' Point forecast Kalman Filter procedure
+#'
+#' @param h number of predictiion
+#' @param last.state a vector with the last states (l,b,s)
+#' @param trendtype logical value for specify the trend
+#' @param seasontype logical value for specify the  seasonality
+#' @param damped logical value for specify a damped trend
+#' @param m an integer for specify the periodicity
+#' @param par a vreal vector with the states parameters
+#'
+#' @author Rob Hyndman.
+#' @noRd
+#'
+class1 = function(h,last.state, trendtype, seasontype,damped,m,par){
+  p = length(last.state);H = matrix(c(1, rep(0, p - 1)), nrow = 1)
+  sigma2 = as.numeric(par["sigma"])^2
+
+  # H matrix
+  if (seasontype) H[1, p] = 1
+  if (trendtype) {
+    if (damped) H[1, 2] = as.numeric(par["phi"])
+    else H[1, 2] = 1
+  }
+
+  # F matrix
+  F =  matrix(0, p, p)
+  F[1, 1] = 1
+
+  if (trendtype) {
+    if (damped)  F[1, 2] = F[2, 2] = as.numeric(par["phi"])
+    else F[1, 2] = F[2, 2] = 1
+  }
+  if (seasontype) {
+    F[p - m + 1, p] = 1
+    F[(p - m + 2):p, (p - m + 1):(p - 1)] = diag(m - 1)
+  }
+  # G matrix
+  G = matrix(0, nrow = p, ncol = 1)
+
+  G[1, 1] = as.numeric(par["alpha"])
+  if (trendtype == "A") G[2, 1] = as.numeric(par["beta"])
+  if (seasontype == "A")G[3, 1] = as.numeric(par["gamma"])
+
+  mu = numeric(h);Fj = diag(p);cj = numeric(h - 1)
+
+  if (h > 1) {
+    for (i in 1:(h - 1)){
+      mu[i] = H %*% Fj %*% last.state
+      cj[i] = H %*% Fj %*% G
+      Fj = Fj %*% F
+    }
+    cj2 = cumsum(cj ^ 2)
+    var = sigma2 * c(1, 1 + cj2)
+  }
+  else var = sigma2
+
+  mu[h] = H %*% Fj %*% last.state
+
+  return(list(mu = mu, var = sqrt(var), cj = cj))
 }
