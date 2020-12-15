@@ -4,7 +4,7 @@
 \alias{autoplot.varstan}
 \title{autoplot methods for varstan models.}
 \usage{
-\method{autoplot}{varstan}(object, prob = 0.9, ...)
+\method{autoplot}{varstan}(object, prob = 0.95, ...)
 }
 \arguments{
 \item{object}{An object of class \code{varstan}.}
