@@ -4,7 +4,7 @@
 \alias{plot.varstan}
 \title{plot methods for varstan models.}
 \usage{
-\method{plot}{varstan}(x, prob = 0.9, ...)
+\method{plot}{varstan}(x, prob = 0.95, ...)
 }
 \arguments{
 \item{x}{An object of class \code{varstan}.}

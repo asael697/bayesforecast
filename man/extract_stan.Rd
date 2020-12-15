@@ -32,13 +32,15 @@ in pars should be included (TRUE) or excluded (FALSE).}
 Extract chains of an stanfit object implemented in rstan package
 }
 \examples{
-library(astsa)
-# Fitting a GARCH(1,1) model
-dat = garch(ipc,order = c(1,1,0))
-fit2 = varstan(dat,chains = 1)
+\dontrun{
+ library(astsa)
+ # Fitting a GARCH(1,1) model
+ dat = garch(ipc,order = c(1,1,0))
+ fit2 = varstan(dat,chains = 1)
 
-# Extracting the mean parameter
-mu0 = extract_stan(fit2,pars = "mu0")
+ # Extracting the mean parameter
+ mu0 = extract_stan(fit2,pars = "mu0")
+}
 
 }
 \author{
