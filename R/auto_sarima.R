@@ -14,7 +14,7 @@
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 1 chain is run.
+#' by default 4 chains are run.
 #' @param iter An integer of total iterations per chain including the warm-up,
 #' by default  the number of iterations are 2000.
 #' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
@@ -95,7 +95,7 @@
 #'  auto.sarima(birth,xreg = fourier(birth,K= 6))
 #'}
 #'
-auto.sarima = function(ts,xreg= NULL,chains = 1,iter = 4000,warmup = floor(iter/2),
+auto.sarima = function(ts,xreg= NULL,chains = 4,iter = 4000,warmup = floor(iter/2),
                        adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
                        series.name = NULL,prior_mu0 = NULL,prior_sigma0 = NULL,
                        prior_ar = NULL, prior_ma = NULL, prior_sar = NULL,

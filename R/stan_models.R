@@ -16,7 +16,7 @@
 #' @param period an integer specifying the periodicity of the time series by
 #' default the value frequency(ts) is used.
 #' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 1 chain is run.
+#' by default 4 chains are run.
 #' @param iter An integer of total iterations per chain including the warm-up,
 #' by default  the number of iterations are 2000.
 #' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
@@ -100,7 +100,7 @@
 #' }
 #'
 stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
-                       period = 0,chains = 1,iter = 4000,warmup = floor(iter/2),
+                       period = 0,chains = 4,iter = 4000,warmup = floor(iter/2),
                        adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
                        prior_mu0 = NULL,prior_sigma0 = NULL,prior_ar = NULL,
                        prior_ma = NULL, prior_sar = NULL,prior_sma = NULL,
@@ -149,7 +149,7 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #' the value \code{"none"} for standard GARCH process. If \code{"logit"} a logistic function
 #' is used for asymmetry, and if \code{"exp"} an exponential function is used.
 #' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 1 chain is run.
+#' by default 4 chains are run.
 #' @param iter An integer of total iterations per chain including the warm-up,
 #' by default  the number of iterations are 2000.
 #' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
@@ -252,7 +252,7 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #' }
 #'
 stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE,
-                      asym = "none",chains = 1,iter = 4000,warmup = floor(iter/2),
+                      asym = "none",chains = 4,iter = 4000,warmup = floor(iter/2),
                       adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,prior_mu0 = NULL,
                       prior_sigma0 = NULL,prior_ar = NULL, prior_ma = NULL,prior_mgarch = NULL,
                       prior_arch = NULL,prior_garch = NULL, prior_breg = NULL,prior_gamma = NULL,
@@ -306,7 +306,7 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #' @param seasonal a Boolean value for select a seasonal random walk instead.
 #' @param m  an optional integer value for the seasonal period.
 #' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 1 chain is run.
+#' by default 4 chains are run.
 #' @param iter An integer of total iterations per chain including the warm-up,
 #' by default  the number of iterations are 2000.
 #' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
@@ -356,7 +356,7 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #'  sf1 = stan_naive(birth,seasonal = TRUE)
 #' }
 #'
-stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 1,iter = 4000,warmup = floor(iter/2),
+stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 4000,warmup = floor(iter/2),
                       adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
                       prior_mu0 = NULL,prior_sigma0 = NULL,series.name = NULL,...){
 
@@ -393,7 +393,7 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 1,iter = 4000,warmup = 
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 1 chain is run.
+#' by default 4 chains are run.
 #' @param iter An integer of total iterations per chain including the warm-up,
 #' by default  the number of iterations are 2000.
 #' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
@@ -451,7 +451,7 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 1,iter = 4000,warmup = 
 #'  sf1 = stan_SVM(ipc,arma = c(1,1))
 #' }
 #'
-stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 1,iter = 4000,
+stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 4000,
                     warmup = floor(iter/2),adapt.delta = 0.9,tree.depth = 10,
                     stepwise = TRUE,prior_mu0 = NULL,prior_sigma0 = NULL,prior_ar = NULL,
                        prior_ma = NULL, prior_alpha = NULL,prior_beta = NULL,
@@ -502,7 +502,7 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 1,iter = 4000,
 #' default the value frequency(ts) is used.
 #' @param genT a boolean value to specify for a generalized t-student SSM model.
 #' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 1 chain is run.
+#' by default 4 chains are run.
 #' @param iter An integer of total iterations per chain including the warm-up,
 #' by default  the number of iterations are 2000.
 #' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
@@ -597,7 +597,7 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 1,iter = 4000,
 #' }
 #'
 stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
-                    period = 0,genT = FALSE,chains = 1,iter = 4000,warmup = floor(iter/2),
+                    period = 0,genT = FALSE,chains = 4,iter = 4000,warmup = floor(iter/2),
                     adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,prior_sigma0 = NULL,
                     prior_level = NULL,prior_level1 = NULL, prior_trend = NULL,prior_trend1 = NULL,
                     prior_damped = NULL,prior_seasonal = NULL, prior_seasonal1 = NULL,prior_breg = NULL,
