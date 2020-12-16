@@ -1,5 +1,5 @@
 Package: bayesforecast
-Title: Bayesian time series modelling with Stan
+Title: Bayesian Time Series Modeling With Stan
 Version: 0.0.1.000
 Authors@R: c(person("Asael","Alonzo Matamoros", role = c("aut", "cre"),email = "asael.alonzo@gmail.com"),
      person("Cristian","Cruz Torres", role = 'aut', email = "cristian.cruz@unah.edu.hn"),
@@ -38,5 +38,6 @@ Collate: 'autoplot.R' 'auto_sarima.R' 'bayes_factor.R'
 NeedsCompilation: yes
 Packaged: 2020-11-29 18:06:44 UTC; asael
 Author: Asael Alonzo Matamoros [aut, cre],
-  Cristian Cruz Torres [aut]
+  Cristian Cruz Torres [aut], Rob Hyndman [ctb],
+  Mitchell O'Hara-Wild [ctb]
 Maintainer: Asael Alonzo Matamoros <asael.alonzo@gmail.com>
