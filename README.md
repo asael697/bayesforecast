@@ -158,7 +158,7 @@ autoplot(object = forecast(cardox,h = 12),include = 100)
 For further readings and references you can check:
 
 -   Stan Development Team. 2018. Stan Modeling Language Users Guide and
-    Reference Manual, Version 2.18.0. <http://mc-stan.org>
+    Reference Manual, Version 2.18.0. <https://mc-stan.org>
 
 -   Forecasting: Principles and practice Monash University, Australia.
     [Forecasting principles](https://otexts.com/fpp2/)
