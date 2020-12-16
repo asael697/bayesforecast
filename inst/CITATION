@@ -12,7 +12,6 @@ bibentry(
   ),
   journal = "ARXIV Preprint",
     year = "2020",
-  doi = "https://arxiv.org/abs/2005.10361",
   header = "To cite varstan in publications use:",
   textVersion = paste(
     "Alonzo, I. and Cruz, C. (2020).",
