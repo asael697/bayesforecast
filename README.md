@@ -48,7 +48,7 @@ and the **Rtools4.0**. After that, install the package
 the installation procedure
 [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started)
 
-### Instalation from Github
+### Installation from Github
 
 For installing *bayesforecast* package from Github, use the code on the
 next chunk:

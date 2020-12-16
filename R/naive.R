@@ -25,7 +25,7 @@
 #' @return The function returns a list with the data for running \code{stan()} function of
 #'  \pkg{rstan} package.
 #'
-#' @author Asael ALonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
 #' @seealso \code{\link{Sarima}}
 #'

@@ -330,7 +330,7 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #' @return The function returns a list with the data for running \code{stan()} function of
 #'  \pkg{rstan} package.
 #'
-#' @author Asael ALonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
 #' @seealso \code{\link{Sarima}}
 #' @export
