@@ -194,7 +194,7 @@ posterior_predict_Sarima = function(object,h = 1,xreg = NULL,robust = TRUE,
   if (!is.null(seed))
     set.seed(seed)
 
-  nm = object$stan.parmaters$chains*object$stan.parmaters$iter-object$stan.parmaters$warmup
+  nm = object$stan.parmaters$chains*(object$stan.parmaters$iter-object$stan.parmaters$warmup)
   draw = draws
   if( nm < draws) draw = nm
 
@@ -212,10 +212,17 @@ posterior_predict_Sarima = function(object,h = 1,xreg = NULL,robust = TRUE,
 
   # point estimate of the model parameters
   par0 = data.frame(extract_stan(object,pars = c("mu0","sigma0")))
-  fix = data.frame(extract_stan(object,pars = fix))
   par0 = as.matrix(par0[sp,])
-  fix = data.frame(fix[sp,])
 
+  if(!is.null(fix)){
+    fix = data.frame(extract_stan(object,pars = fix))
+    fix = data.frame(fix[sp,])
+  }
+  else{
+    fix = matrix(data = 0,nrow = nm,ncol = 2)
+    fix = data.frame(fix[sp,])
+    order$p = 2
+  }
 
   # The previous data
   yh = matrix(0,nrow = draw,ncol = h)
