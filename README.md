@@ -39,7 +39,7 @@ forecast, by default a Generalized additive model from the
 [prophet](https://facebook.github.io/prophet/docs/installation.html#r)
 package is used.
 
-### Instalation
+### Installation
 
 This is still a beta version package, so currently installing it could
 be challenging, we recommend to install the current R version (**R4.0**)
@@ -140,7 +140,7 @@ autoplot(forecast(object = sf1,h = 12))
 
 ### Automatic forecast with prophet
 
-Automatic prediction is posible using the **forecast** function, by
+Automatic prediction is possible using the **forecast** function, by
 default the prediction is done using Generalized additive models from
 the
 [prophet](https://facebook.github.io/prophet/docs/quick_start.html#python-api)
