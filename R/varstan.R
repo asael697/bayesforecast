@@ -231,6 +231,7 @@ get_order = function(object){
   if(is.Sarima(object$model)) return(get_order_arima(object$model))
   if(is.garch(object$model))  return(get_order_garch(object$model))
   if(is.SVM(object$model))    return(get_order_garch(object$model))
+  if(is.naive(object$model))  return(get_order_arima(object$model))
 }
 #' Max order  coefficients in a varma model
 #'
@@ -244,6 +245,7 @@ max_order = function(object){
   if(is.Sarima(object$model)) return(max_order_arima(object$model))
   if(is.garch(object$model))  return(max_order_garch(object$model))
   if(is.SVM(object$model))    return(max_order_garch(object$model))
+  if(is.naive(object$model))  return(max_order_arima(object$model))
 }
 #' Extracts all the order coefficients in a list
 #'
