@@ -73,6 +73,7 @@ autoplot.ts <- function(object, series=NULL, xlab = "Time", ylab = deparse(subst
 }
 #'
 #' @rdname autoplot.ts
+#' @importFrom zoo as.Date
 #' @export
 #'
 fortify.ts <- function(model, data, ...) {
@@ -82,7 +83,7 @@ fortify.ts <- function(model, data, ...) {
     tsp <- attr(model, which = "tsp")
     dtindex <- time(model)
     if (any(tsp[3] == c(4, 12))) {
-      dtindex <- as.Date.yearmon(dtindex)
+      dtindex <- zoo::as.Date.yearmon(dtindex)
     }
     model <- data.frame(Index = dtindex, Data = as.numeric(model))
     return(ggplot2::fortify(model))
