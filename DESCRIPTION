@@ -29,6 +29,7 @@ LinkingTo: BH (>= 1.66.0), Rcpp (>= 0.12.0), RcppParallel (>= 5.0.1),
         2.18.0)
 SystemRequirements: GNU make
 Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
 Collate: 'autoplot.R' 'auto_sarima.R' 'bayes_factor.R'
         'bayesforecast-package.R' 'Birth.R' 'Fit.R' 'forecast.R'
         'garch.R' 'get_params.R' 'ipc.R' 'log_lik.R' 'Misc.R' 'model.R'
