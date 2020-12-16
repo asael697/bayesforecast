@@ -28,7 +28,7 @@
 #' \code{doi: 10.18637/jss.v076.i01}.
 #'
 #' Stan Development Team. (2018). Stan Modeling Language Users Guide and Reference Manual,
-#' Version 2.18.0. \code{url: http://mc-stan.org}.
+#' Version 2.18.0. \code{url: https://mc-stan.org}.
 #'
 #' Hyndman, R. & Khandakar, Y. (2008). Automatic time series forecasting: the
 #' forecast package for \code{R}. \emph{Journal of Statistical Software}. 26(3),
