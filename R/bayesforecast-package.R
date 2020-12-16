@@ -1,4 +1,4 @@
-#' Bayesian Time Series Modeling With \pkg{Stan}.
+#' Bayesian Time Series Modeling with \pkg{Stan}.
 #'
 #' @description
 #' Fit univariate time series models using 'Stan' for full Bayesian inference.

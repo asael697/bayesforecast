@@ -1,11 +1,11 @@
-<img src="man/figures/bflogo.png" width = 120 alt="bayesforecast Logo"/>[<img src="https://raw.githubusercontent.com/stan-dev/logos/master/logo_tm.png" align="right" width=120 alt="Stan Logo"/>](http://mc-stan.org)
+<img src="man/figures/bflogo.png" width = 120 alt="bayesforecast Logo"/>[<img src="https://raw.githubusercontent.com/stan-dev/logos/master/logo_tm.png" align="right" width=120 alt="Stan Logo"/>](https://mc-stan.org)
 
 Automatic forecasting and Bayesian modeling for time series
 ===========================================================
 
 The *bayesforecast* package implements Bayesian estimation of structured
 time series models, using the Hamiltonian Monte Carlo method,
-implemented with [Stan](http://mc-stan.org/), a probabilistic language
+implemented with [Stan](https://mc-stan.org/), a probabilistic language
 model in C++. The aim of this package is to provide an interface for
 forecasting and Bayesian modeling of the most popular time series
 models.
