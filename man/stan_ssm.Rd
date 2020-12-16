@@ -12,7 +12,7 @@ stan_ssm(
   xreg = NULL,
   period = 0,
   genT = FALSE,
-  chains = 1,
+  chains = 4,
   iter = 4000,
   warmup = floor(iter/2),
   adapt.delta = 0.9,
@@ -54,7 +54,7 @@ default the value frequency(ts) is used.}
 \item{genT}{a boolean value to specify for a generalized t-student SSM model.}
 
 \item{chains}{An integer of the number of Markov Chains chains to be run,
-by default 1 chain is run.}
+by default 4 chains are run.}
 
 \item{iter}{An integer of total iterations per chain including the warm-up,
 by default  the number of iterations are 2000.}

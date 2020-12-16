@@ -11,7 +11,7 @@ stan_garch(
   xreg = NULL,
   genT = FALSE,
   asym = "none",
-  chains = 1,
+  chains = 4,
   iter = 4000,
   warmup = floor(iter/2),
   adapt.delta = 0.9,
@@ -50,7 +50,7 @@ the value \code{"none"} for standard GARCH process. If \code{"logit"} a logistic
 is used for asymmetry, and if \code{"exp"} an exponential function is used.}
 
 \item{chains}{An integer of the number of Markov Chains chains to be run,
-by default 1 chain is run.}
+by default 4 chains are run.}
 
 \item{iter}{An integer of total iterations per chain including the warm-up,
 by default  the number of iterations are 2000.}

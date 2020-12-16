@@ -8,7 +8,7 @@ stan_naive(
   ts,
   seasonal = FALSE,
   m = 0,
-  chains = 1,
+  chains = 4,
   iter = 4000,
   warmup = floor(iter/2),
   adapt.delta = 0.9,
@@ -28,7 +28,7 @@ stan_naive(
 \item{m}{an optional integer value for the seasonal period.}
 
 \item{chains}{An integer of the number of Markov Chains chains to be run,
-by default 1 chain is run.}
+by default 4 chains are run.}
 
 \item{iter}{An integer of total iterations per chain including the warm-up,
 by default  the number of iterations are 2000.}

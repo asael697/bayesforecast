@@ -16,7 +16,7 @@ auto.sarima(ts,xreg = NULL,chains=1,iter=4000,warmup=floor(iter/2),
 which must have the same number of rows as ts. It should not be a data frame.}
 
 \item{chains}{An integer of the number of Markov Chains chains to be run,
-by default 1 chain is run.}
+by default 4 chains are run.}
 
 \item{iter}{An integer of total iterations per chain including the warm-up,
 by default  the number of iterations are 2000.}
