@@ -4,12 +4,12 @@
 \name{bayesforecast-package}
 \alias{bayesforecast-package}
 \alias{bayesforecast}
-\title{Bayesian time series modeling with \pkg{Stan}.}
+\title{Bayesian Time Series Modeling With \pkg{Stan}.}
 \description{
 Fit univariate time series models using 'Stan' for full Bayesian inference.
 A wide range of distributions and models are supported,  allowing users to
 fit Seasonal ARIMA, ARIMAX, Dynamic Harmonic Regression,  GARCH, t-student
-innovation GARCH models, Asymetric GARCH, Random Walks, and Stochastic
+innovation GARCH models, Asymmetric GARCH, Random Walks, and Stochastic
 Volatility models. Prior specifications are flexible and explicitly encourage
 users to apply prior distributions that actually reflect their beliefs. Model
 fit can  easily  be assessed and compared with typical visualization methods,
