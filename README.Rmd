@@ -54,7 +54,7 @@ On the beta version 1.0.0, the available models are:
 
 Additionally the forecast function is implemented for automatic forecast, by default a Generalized additive model from the [prophet](https://facebook.github.io/prophet/docs/installation.html#r) package is used.
 
-### Instalation 
+### Installation 
 
 This is still a beta version package, so currently installing it could be challenging, we recommend to install the current R version (**R4.0**) and the **Rtools4.0**. After that, install the package [rstan](https://mc-stan.org/users/interfaces/rstan.html), you can follow the installation procedure [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started)
 
@@ -119,7 +119,7 @@ autoplot(forecast(object = sf1,h = 12))
 
 ### Automatic forecast with prophet
 
-Automatic prediction is posible using the **forecast** function, by default the prediction is done
+Automatic prediction is possible using the **forecast** function, by default the prediction is done
 using Generalized additive models from the [prophet](https://facebook.github.io/prophet/docs/quick_start.html#python-api) package.
 
 ```{r,message=FALSE}
