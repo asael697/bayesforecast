@@ -2,7 +2,7 @@
 % Please edit documentation in R/prior.R
 \name{exponential}
 \alias{exponential}
-\title{Define an exponetial prior distribution}
+\title{Define an exponential prior distribution}
 \usage{
 exponential(rate = 1)
 }
@@ -13,7 +13,7 @@ exponential(rate = 1)
 a numerical vector interpreted as a prior in Stan
 }
 \description{
-exponetial(rate)
+exponential(rate)
 }
 \details{
 Define a gamma prior distribution using the rate hyper parameter,

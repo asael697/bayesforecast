@@ -20,7 +20,7 @@ probability mass to include in the intervals. The default is to report
 An autoplot object from ggplot2 class.
 }
 \description{
-Preliminar autoplot methods for varstan models only valid for univariate time series models.
+Preliminary autoplot methods for varstan models only valid for univariate time series models.
 The function prints the fitted values time series, the trace and density plots for the
 sampled model parameters, or the residuals' posterior mean time series.
 }

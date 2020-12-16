@@ -27,16 +27,16 @@ setting a prior distribution to an specify model parameter.
 varstan provides its own functions to manipulate the parameter prior, this functions return
 a \code{prior_dist} class, the \code{dist} argument only accepts this objects.
 
-\code{lag} parameter is an optional value to change te prior distribution of one parameter in particular,
+\code{lag} parameter is an optional value to change the prior distribution of one parameter in particular,
 this argument is only valid for: "ar","ma", "arch", "garch", "mgarch", or "breg" par arguments. lag has to
 be a integer lower than the total amount of lagged parameters of the model. For example, to  ONLY
-change the prior of the second "arch" paramater in a garch(3,1) model, a lag = 2 values must be specified.
+change the prior of the second "arch" parameter in a garch(3,1) model, a lag = 2 values must be specified.
 
 For varma and Bekk models the covariance matrix Sigma is factorized as follows:\preformatted{              Sigma = D' Omega D
 }
 
 Where Omega is the correlation matrix that accepts an LKJ prior distribution D is a diagonal matrix with
-the inverse std desviations
+the inverse std deviations
 
 For changing the degree freedom in a LKJ distribution for omega use par = "LKJ" and dist = LKJ(df),
 where df are the desired degree freedom.

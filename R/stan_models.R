@@ -545,7 +545,7 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 4000,
 #'
 #' @details
 #' By  default  the  \code{ssm()}  function generates a local level model (or a ets("A","N","N") or
-#' exponential smoothing model from the \pkg{forecast} pacakge). If \code{trend} is set \code{TRUE},
+#' exponential smoothing model from the \pkg{forecast} package). If \code{trend} is set \code{TRUE},
 #' then  a  local  trend ssm model is defined (a equivalent ets("A","A","N") or Holt model from the
 #' \pkg{forecast} package). For damped trend models set \code{damped} to \code{TRUE}. If \code{seasonal}
 #' is  set  to  \code{TRUE} a seasonal local level model is defined (a equivalent ets("A","N","A") model

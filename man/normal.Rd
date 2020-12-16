@@ -9,7 +9,7 @@ normal(mu = 0, sd = 1)
 \arguments{
 \item{mu}{the location parameter mu}
 
-\item{sd}{the standard desviation parameter sigma}
+\item{sd}{the standard deviation parameter sigma}
 }
 \value{
 a numerical vector interpreted as a prior in Stan

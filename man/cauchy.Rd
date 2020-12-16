@@ -9,7 +9,7 @@ cauchy(mu = 0, sd = 1)
 \arguments{
 \item{mu}{the location parameter mu}
 
-\item{sd}{the standard desviation parameter sigma}
+\item{sd}{the standard deviation parameter sigma}
 }
 \value{
 a numerical vector interpreted as a prior in Stan
@@ -18,7 +18,7 @@ a numerical vector interpreted as a prior in Stan
 cauchy(mu,sd)
 }
 \details{
-Define a cauchy prior distribution using the hyper parameters
-mu and sigma, by default a standard cauchy(0,1) distribution is
+Define a Cauchy prior distribution using the hyper parameters
+mu and sigma, by default a standard Cauchy(0,1) distribution is
 return.
 }

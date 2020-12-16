@@ -312,7 +312,7 @@ ggpacf = function(y,title = NULL){
 }
 #' plot methods for varstan models.
 #'
-#' Preliminar plot methods for varstan models only valid for univariate time series models.
+#' Preliminary plot methods for varstan models only valid for univariate time series models.
 #' The function prints the fitted values time series, the trace and density plots for the
 #' sampled model parameters, or the residuals' posterior mean time series.
 #'
@@ -365,7 +365,7 @@ plot.varstan = function(x,prob = 0.95,...){
 }
 #' autoplot methods for varstan models.
 #'
-#' Preliminar autoplot methods for varstan models only valid for univariate time series models.
+#' Preliminary autoplot methods for varstan models only valid for univariate time series models.
 #' The function prints the fitted values time series, the trace and density plots for the
 #' sampled model parameters, or the residuals' posterior mean time series.
 #'

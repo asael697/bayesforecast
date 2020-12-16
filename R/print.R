@@ -13,7 +13,7 @@ print.Sarima = function(x,...){
 }
 #' Print a naive model
 #'
-#' @param  x a navie model from the varstan package
+#' @param  x a naive model from the varstan package
 #'
 #' @method print naive
 #' @param ... additional values need in print methods

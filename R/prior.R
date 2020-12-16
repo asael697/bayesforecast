@@ -15,17 +15,17 @@
 #' varstan provides its own functions to manipulate the parameter prior, this functions return
 #' a \code{prior_dist} class, the \code{dist} argument only accepts this objects.
 #'
-#' \code{lag} parameter is an optional value to change te prior distribution of one parameter in particular,
+#' \code{lag} parameter is an optional value to change the prior distribution of one parameter in particular,
 #' this argument is only valid for: "ar","ma", "arch", "garch", "mgarch", or "breg" par arguments. lag has to
 #' be a integer lower than the total amount of lagged parameters of the model. For example, to  ONLY
-#' change the prior of the second "arch" paramater in a garch(3,1) model, a lag = 2 values must be specified.
+#' change the prior of the second "arch" parameter in a garch(3,1) model, a lag = 2 values must be specified.
 #'
 #' For varma and Bekk models the covariance matrix Sigma is factorized as follows:
 #'
 #'                   Sigma = D' Omega D
 #'
 #' Where Omega is the correlation matrix that accepts an LKJ prior distribution D is a diagonal matrix with
-#' the inverse std desviations
+#' the inverse std deviations
 #'
 #' For changing the degree freedom in a LKJ distribution for omega use par = "LKJ" and dist = LKJ(df),
 #' where df are the desired degree freedom.
@@ -230,7 +230,7 @@ get_prior = function(model,par,lag = 0){
 #' normal(mu,sd)
 #'
 #' @param mu the location parameter mu
-#' @param sd the standard desviation parameter sigma
+#' @param sd the standard deviation parameter sigma
 #'
 #' @details
 #' Define a normal prior distribution using the hyper parameters
@@ -327,12 +327,12 @@ print.uniform = function(x,...){
 #' student(mu,sd)
 #'
 #' @param mu the location parameter mu
-#' @param sd the standard desviation parameter sigma
+#' @param sd the standard deviation parameter sigma
 #' @param df the degree freedom parameter df
 #'
 #' @details
 #' Define a t student prior distribution using the hyper parameters
-#' mu, sigma and df as degree freedom, by default a standard t-sutdent(0,1,5)
+#' mu, sigma and df as degree freedom, by default a standard t-student(0,1,5)
 #' distribution with 5 degree freedom is return.
 #'
 #' @return a numerical vector interpreted as a prior in Stan
@@ -359,11 +359,11 @@ print.student = function(x,...){
 #' cauchy(mu,sd)
 #'
 #' @param mu the location parameter mu
-#' @param sd the standard desviation parameter sigma
+#' @param sd the standard deviation parameter sigma
 #'
 #' @details
-#' Define a cauchy prior distribution using the hyper parameters
-#' mu and sigma, by default a standard cauchy(0,1) distribution is
+#' Define a Cauchy prior distribution using the hyper parameters
+#' mu and sigma, by default a standard Cauchy(0,1) distribution is
 #' return.
 #'
 #' @return a numerical vector interpreted as a prior in Stan
@@ -513,9 +513,9 @@ print.gamma = function(x,...){
     stop("The current class is not a prior_dist object")
   cat(get.dist(x$x[4]),"( shape = ",x$x[1],",rate = ",x$x[2],")" )
 }
-#' Define an exponetial prior distribution
+#' Define an exponential prior distribution
 #'
-#' exponetial(rate)
+#' exponential(rate)
 #'
 #' @param rate  the rate parameter lambda in exponential distribution
 #'
@@ -576,7 +576,7 @@ print.chisq = function(x,...){
 #' laplace(mu,sd)
 #'
 #' @param mu the location parameter mu
-#' @param sd the standard desviation parameter sigma
+#' @param sd the standard deviation parameter sigma
 #'
 #' @details
 #' Define a Laplace prior distribution using the hyper parameters

@@ -7,7 +7,7 @@
 \method{print}{naive}(x, ...)
 }
 \arguments{
-\item{x}{a navie model from the varstan package}
+\item{x}{a naive model from the varstan package}
 
 \item{...}{additional values need in print methods}
 }
