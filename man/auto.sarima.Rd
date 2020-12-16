@@ -4,7 +4,7 @@
 \alias{auto.sarima}
 \title{Automatic estimate of a Seasonal ARIMA model}
 \usage{
-auto.sarima(ts,xreg = NULL,chains=1,iter=4000,warmup=floor(iter/2),
+auto.sarima(ts,xreg = NULL,chains=4,iter=4000,warmup=floor(iter/2),
                 adapt.delta = 0.9,tree.depth =10,stepwise = TRUE, series.name = NULL,
                 prior_mu0 = NULL,prior_sigma0 = NULL,prior_ar = NULL, prior_ma = NULL,
                 prior_sar = NULL,prior_sma = NULL, prior_breg = NULL,...)
