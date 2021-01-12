@@ -33,7 +33,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(astsa)
 #' # Fitting a seasonal ARIMA model
 #' mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
@@ -54,7 +54,7 @@ bridge_sampler.varstan <- function(samples, ...) {
   if(!is.varstan(samples))
     stop("The current object is not a varstan class")
 
-  out <- try(bridge_sampler(samples$stanfit, ...))
+  out = try(bridge_sampler(samples$stanfit, ...))
   return(out)
 }
 #' Bayes Factors from Marginal Likelihoods.
@@ -86,7 +86,7 @@ bridge_sampler.varstan <- function(samples, ...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  # Fitting a seasonal arima model
 #'  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
@@ -101,9 +101,9 @@ bridge_sampler.varstan <- function(samples, ...) {
 #' }
 #'
 bayes_factor.varstan <- function(x1, x2, log = FALSE, ...) {
-  bridge1 <- bridge_sampler(x1, ...)
-  bridge2 <- bridge_sampler(x2, ...)
-  out <- bayes_factor(bridge1, bridge2, log = log)
-  attr(out, "model_names") <- c("model1", "model2")
+  bridge1 = bridge_sampler(x1, ...)
+  bridge2 = bridge_sampler(x2, ...)
+  out = bayes_factor(bridge1, bridge2, log = log)
+  attr(out, "model_names") = c("model1", "model2")
   return(out)
 }
