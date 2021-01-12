@@ -32,7 +32,7 @@ in pars should be included (TRUE) or excluded (FALSE).}
 Extract chains of an stanfit object implemented in rstan package
 }
 \examples{
-\dontrun{
+\donttest{
  library(astsa)
  # Fitting a GARCH(1,1) model
  dat = garch(ipc,order = c(1,1,0))

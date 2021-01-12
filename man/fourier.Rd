@@ -42,7 +42,7 @@ seasonal periods. Then the matrix returned will have \code{2*sum(K)}
 columns.
 }
 \examples{
-\dontrun{
+\donttest{
  library(astsa)
  # Dynaimc Harmonic regression
  sf1 = auto.sarima(birth,xreg = fourier(birth,K= 6))

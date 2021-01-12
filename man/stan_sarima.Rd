@@ -116,7 +116,7 @@ The default priors used in Sarima are:
 }
 }
 \examples{
-\dontrun{
+\donttest{
  library(astsa)
  # Declare a multiplicative seasonal ARIMA model for the birth data.
  sf1 = stan_Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))

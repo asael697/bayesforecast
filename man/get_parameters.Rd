@@ -16,7 +16,7 @@ a vector with the sampled parameters
 Get the sampled parameters of a varstan object.
 }
 \examples{
-\dontrun{
+\donttest{
  library(astsa)
  sf1 = auto.sarima(birth)
  get_parameters(sf1)

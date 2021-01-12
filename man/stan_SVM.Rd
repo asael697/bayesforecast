@@ -91,7 +91,7 @@ Fitting a Stochastic Volatility model (SVM) in \pkg{Stan}.
 The function returns a \code{varstan} object with the fitted model.
 }
 \examples{
-\dontrun{
+\donttest{
  # Declares a SVM model for the IPC data
  sf1 = stan_SVM(ipc,arma = c(1,1))
 }

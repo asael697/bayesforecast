@@ -18,7 +18,7 @@ leave-one-out cross-validation using Pareto smoothed importance
 sampling (PSIS-LOO CV).
 }
 \examples{
-\dontrun{
+\donttest{
 library(astsa)
 model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 fit1 = varstan(model,chains = 1)

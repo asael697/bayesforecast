@@ -79,7 +79,7 @@ The seasonal naive model is
 where  \eqn{epsilon_t}{epsilon[t]} is a normal iid error.
 }
 \examples{
-\dontrun{
+\donttest{
  library(astsa)
  # A seasonal Random-walk model.
  sf1 = stan_naive(birth,seasonal = TRUE)

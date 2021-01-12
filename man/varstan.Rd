@@ -77,7 +77,7 @@ suggesting to increase \code{max_treedepth}. For more details on the \code{contr
 argument see \code{\link[rstan:stan]{stan}}.
 }
 \examples{
-\dontrun{
+\donttest{
  library(astsa)
  # Fitting a seasonal ARIMA model
  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))

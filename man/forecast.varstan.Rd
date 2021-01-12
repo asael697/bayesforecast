@@ -77,7 +77,7 @@ If \code{model} is not \code{NULL}, \code{forecast.ts} will apply the
 accordingly.
 }
 \examples{
-\dontrun{
+\donttest{
  fit = auto.Sarima(ts = birth)
  fc = forecast(fit,h = 12)
 }

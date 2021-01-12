@@ -147,7 +147,7 @@ The default priors used in a ssm( ) model are:
 For changing the default prior use the function \code{set_prior()}.
 }
 \examples{
-\dontrun{
+\donttest{
  # Declaring a local level model model for the ipc data.
  sf1 = stan_ssm(ipc)
 

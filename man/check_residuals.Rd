@@ -19,7 +19,7 @@ Performs a visual check of residuals in time series models, this method is inspi
 the \code{check.residuals} function provided by the \code{forecast} package.
 }
 \examples{
-\dontrun{
+\donttest{
  library(astsa)
  sf1 = auto.sarima(ts = birth)
  # fitted model
