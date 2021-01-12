@@ -234,8 +234,8 @@ my_sum = function(x,robust = FALSE,conf){
     qq = stats::qnorm(c(1-conf,conf))
     sum = c(mean(x),
             stats::sd(x)/sqrt(length(x)),
-            mean(x)+qq[1]*stats::sd(x)/sqrt(length(x)),
-            mean(x)+qq[2]*stats::sd(x)/sqrt(length(x)),
+            stats::quantile(x,1-conf),
+            stats::quantile(x,conf),
             rstan::ess_bulk(x),
             rstan::Rhat(x)
     )
@@ -298,7 +298,7 @@ positive_check = function(x,x0 = 1){
       y[i] = x[i]
     }
     else{
-      if(x[i]< 0) cat("Value lower than 0, the default value",x0,"will be used \n")
+      if(x[i]< 0) message("Value lower than 0, the default value",x0,"will be used \n")
       y[i] = x0
     }
   }
@@ -328,7 +328,7 @@ no_negative_check = function(x,x0 = 0){
       y[i] = x[i]
     }
     else{
-      if(x[i]< 0) cat("Value lower than 0, the default value",x0,"will be used \n")
+      if(x[i]< 0) message("Value lower than 0, the default value",x0,"will be used \n")
       y[i] = x0
     }
   }
@@ -354,7 +354,7 @@ arma_check = function(x){
   d = length(x)
   for(i in 1:d){
     if(x[i] <= -1 || x[i] >= 1 ){
-      print( "Value not in range, 0 will be used")
+      message( "Value not in range, 0 will be used")
       y[i] = 0
     }
   }
