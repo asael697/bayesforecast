@@ -90,7 +90,7 @@ per chain (\code{iter}).
 For more information look at \code{auto.arima()} function of forecast package.
 }
 \examples{
-\dontrun{
+\donttest{
  # Automatic Sarima model for the birth data
  auto.sarima(birth)
 

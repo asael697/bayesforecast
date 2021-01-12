@@ -32,7 +32,7 @@ multiple times to check the stability of the results.
 For  more details check the \pkg{bridgesampling} package.
 }
 \examples{
-\dontrun{
+\donttest{
  library(astsa)
  # Fitting a seasonal arima model
  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))

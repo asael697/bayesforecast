@@ -88,7 +88,7 @@
 #' 1-22.\code{doi:	10.18637/jss.v027.i03}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  # Fitting a seasonal ARIMA model
 #'  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
@@ -168,7 +168,7 @@ is.varstan = function(object){
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  # Fitting a GARCH(1,1) model
 #'  dat = garch(ipc,order = c(1,1,0))
@@ -203,7 +203,7 @@ extract_stan = function(object,pars,permuted = TRUE,
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  # Fitting a GARCH(1,1) model
 #'  dat = garch(ipc,order = c(1,1,0))
 #'  fit1 = varstan(dat,chains = 1)

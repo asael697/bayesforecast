@@ -25,7 +25,7 @@ The function prints the fitted values time series, the trace and density plots f
 sampled model parameters, or the residuals' posterior mean time series.
 }
 \examples{
-\dontrun{
+\donttest{
  library(astsa)
  sf1 = auto.sarima(ts = birth)
  # fitted model

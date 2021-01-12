@@ -17,7 +17,7 @@ Convert a \code{varstan} object to a \code{stanfit} object of the
 \pkg{rstan} package.
 }
 \examples{
-\dontrun{
+\donttest{
  # Fitting a GARCH(1,1) model
  dat = garch(ipc,order = c(1,1,0))
  fit1 = varstan(dat,chains = 1)

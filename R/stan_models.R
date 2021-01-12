@@ -89,7 +89,7 @@
 #' @seealso \code{\link{garch}} \code{\link{set_prior}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  # Declare a multiplicative seasonal ARIMA model for the birth data.
 #'  sf1 = stan_Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
@@ -240,7 +240,7 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  # Declaring a garch(1,1) model for the ipc data.
 #'  sf1 = stan_garch(ipc,order = c(1,1,0))
 #'
@@ -350,7 +350,7 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #' \code{url: https://EconPapers.repec.org/RePEc:eee:intfor:v:8:y:1992:i:4:p:647-648}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  # A seasonal Random-walk model.
 #'  sf1 = stan_naive(birth,seasonal = TRUE)
@@ -446,7 +446,7 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 4000,warmup = 
 #' @seealso \code{\link{garch}} \code{\link{set_prior}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  # Declares a SVM model for the IPC data
 #'  sf1 = stan_SVM(ipc,arma = c(1,1))
 #' }
@@ -585,7 +585,7 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 4000,
 #' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  # Declaring a local level model model for the ipc data.
 #'  sf1 = stan_ssm(ipc)
 #'

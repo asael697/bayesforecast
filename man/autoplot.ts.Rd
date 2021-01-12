@@ -3,7 +3,6 @@
 \name{autoplot.ts}
 \alias{autoplot.ts}
 \alias{fortify.ts}
-\alias{autoplot.numeric}
 \title{Automatically create a ggplot for time series objects.}
 \usage{
 \method{autoplot}{ts}(
@@ -18,15 +17,6 @@
 )
 
 \method{fortify}{ts}(model, data, ...)
-
-\method{autoplot}{numeric}(
-  object,
-  series = NULL,
-  xlab = "Time",
-  ylab = deparse(substitute(object)),
-  main = NULL,
-  ...
-)
 }
 \arguments{
 \item{object}{Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.}
