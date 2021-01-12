@@ -87,7 +87,7 @@
 #' \code{url: https://EconPapers.repec.org/RePEc:eee:intfor:v:8:y:1992:i:4:p:647-648}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  # Automatic Sarima model for the birth data
 #'  auto.sarima(birth)
 #'
@@ -175,7 +175,7 @@ auto.sarima = function(ts,xreg= NULL,chains = 4,iter = 4000,warmup = floor(iter/
 #' @keywords forecast
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  # Dynaimc Harmonic regression
 #'  sf1 = auto.sarima(birth,xreg = fourier(birth,K= 6))
@@ -184,6 +184,6 @@ auto.sarima = function(ts,xreg= NULL,chains = 4,iter = 4000,warmup = floor(iter/
 #' @importFrom forecast fourier
 #' @export
 #'
-fourier <- function(x, K, h = NULL) {
+fourier = function(x, K, h = NULL) {
   return(forecast::fourier(x = x,K = K,h = h))
 }
