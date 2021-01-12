@@ -78,7 +78,7 @@ accordingly.
 }
 \examples{
 \donttest{
- fit = auto.Sarima(ts = birth)
+ fit = auto.sarima(ts = birth)
  fc = forecast(fit,h = 12)
 }
 

@@ -23,7 +23,7 @@ the \code{check.residuals} function provided by the \code{forecast} package.
  library(astsa)
  sf1 = auto.sarima(ts = birth)
  # fitted model
- check_resiudals(sf1)
+ check_residuals(sf1)
 }
 
 }

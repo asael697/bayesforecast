@@ -9,8 +9,8 @@
 Fit univariate time series models using 'Stan' for full Bayesian inference.
 A wide range of distributions and models are supported,  allowing users to
 fit Seasonal ARIMA, ARIMAX, Dynamic Harmonic Regression,  GARCH, t-student
-innovation GARCH models, Asymmetric GARCH, Random Walks, and Stochastic
-Volatility models. Prior specifications are flexible and explicitly encourage
+innovation GARCH models, asymmetric GARCH, Random Walks, and stochastic
+volatility models. Prior specifications are flexible and explicitly encourage
 users to apply prior distributions that actually reflect their beliefs. Model
 fit can  easily  be assessed and compared with typical visualization methods,
 information criteria such as loglik, AIC, BIC WAIC, Bayes factor and

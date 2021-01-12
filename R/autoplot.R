@@ -424,7 +424,7 @@ autoplot.varstan = function(object,prob = 0.95,...){
 #'  library(astsa)
 #'  sf1 = auto.sarima(ts = birth)
 #'  # fitted model
-#'  check_resiudals(sf1)
+#'  check_residuals(sf1)
 #' }
 #'
 check_residuals = function(object,...){
