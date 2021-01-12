@@ -324,6 +324,7 @@ ggpacf = function(y,title = NULL){
 #' @import ggplot2
 #' @importFrom bayesplot mcmc_combo
 #' @importFrom stats quantile
+#' @export
 #'
 plot.varstan = function(x,prob = 0.95,...){
 
