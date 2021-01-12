@@ -331,23 +331,7 @@ plot.varstan = function(x,prob = 0.95,...){
   if( !is.varstan(x))
     stop("The current object is not a varstan class")
 
-  pp = posterior_predict(x)
-  pI = posterior_interval(pp,prob = prob)
-  pM = apply(pp, 2, FUN = mean)
-
-  data = data.frame(time = as.numeric(time(x$ts)),y = as.numeric(x$ts))
-  data$yhat = pM; data = cbind(data,pI)
-  colnames(data) = c("time","y","yhat","low","hi")
-
-  colors = c("yhat" = "#0000CC", "y" = "#000000")
-
-  g = ggplot2::ggplot(aes(x = ~time,y = ~yhat),data = data)+
-    ggplot2::geom_line(aes(y = ~yhat,color = "yhat"))+
-    ggplot2::geom_point(aes(y = ~y,color = "y"))+
-    ggplot2::geom_smooth(aes(ymin = ~low, ymax = ~hi),fill="#333333", color="#0000CC",
-                         stat = "identity",size = 0.5)+
-    ggplot2::labs(x = "time",y = x$series.name,color = "Legend",title = "posterior predict") +
-    ggplot2::scale_color_manual(values = colors)
+  g = autoplot.varstan(object = x, prob = prob,...)
 
   return(g)
 }

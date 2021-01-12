@@ -119,11 +119,11 @@ The default priors used in Sarima are:
 \donttest{
  library(astsa)
  # Declare a multiplicative seasonal ARIMA model for the birth data.
- sf1 = stan_Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
+ sf1 = stan_sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 
 
  #Declare an Dynamic Harmonic Regression model for the birth data.
- sf2 = stan_Sarima(birth,order = c(1,0,1),xreg = fourier(birth,K = 2))
+ sf2 = stan_sarima(birth,order = c(1,0,1),xreg = fourier(birth,K = 2))
 }
 
 }
