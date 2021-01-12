@@ -21,7 +21,6 @@
 #' @param data Not used (required for \link{fortify} method)
 #' @param ... Other plotting parameters to affect the plot.
 #'
-#'
 #' @return None. Function produces a ggplot2 graph.
 #'
 #' @author Mitchell O'Hara-Wild.
@@ -76,7 +75,7 @@ autoplot.ts <- function(object, series=NULL, xlab = "Time", ylab = deparse(subst
 #' @importFrom zoo as.Date
 #' @export
 #'
-fortify.ts <- function(model, data, ...) {
+fortify.ts = function(model, data, ...) {
   # Use ggfortify version if it is loaded
   # to prevent cran errors
   if (exists("ggfreqplot")) {
@@ -98,7 +97,7 @@ fortify.ts <- function(model, data, ...) {
 ggplot2::autoplot
 #'
 #'
-ggAddExtras <- function(xlab=NA, ylab=NA, main=NA) {
+ggAddExtras = function(xlab=NA, ylab=NA, main=NA) {
   dots <- eval.parent(quote(list(...)))
   extras <- list()
   if ("xlab" %in% names(dots) || is.null(xlab) || any(!is.na(xlab))) {
@@ -136,22 +135,9 @@ ggAddExtras <- function(xlab=NA, ylab=NA, main=NA) {
 #'
 #' @noRd
 #'
-ggtsbreaks <- function(x) {
+ggtsbreaks = function(x) {
   # Make x axis contain only whole numbers (e.g., years)
   return(unique(round(pretty(floor(x[1]):ceiling(x[2])))))
-}
-#'
-#' @rdname autoplot.ts
-#' @method autoplot numeric
-#' @export
-#'
-autoplot.numeric = function(object, series=NULL, xlab = "Time", ylab = deparse(substitute(object)),
-                            main = NULL,  ...) {
-  if(is.numeric(object))
-    y = ts(object)
-  g = forecast::autoplot(y,series=NULL, xlab = "Time", ylab = deparse(substitute(object)),
-                  main = NULL,  ...)
-  return(g)
 }
 #' Histogram with optional normal density functions
 #'
@@ -327,7 +313,7 @@ ggpacf = function(y,title = NULL){
 #' @return A plot object from ggplot2 class.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  sf1 = auto.sarima(ts = birth)
 #'  # fitted model
@@ -380,7 +366,7 @@ plot.varstan = function(x,prob = 0.95,...){
 #' @return An autoplot object from ggplot2 class.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  sf1 = auto.sarima(ts = birth)
 #'  # fitted model
@@ -434,7 +420,7 @@ autoplot.varstan = function(object,prob = 0.95,...){
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  sf1 = auto.sarima(ts = birth)
 #'  # fitted model
