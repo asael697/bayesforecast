@@ -63,7 +63,7 @@
 #' @seealso The \code{"forecast"} methods of the forecast package.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  fit = auto.Sarima(ts = birth)
 #'  fc = forecast(fit,h = 12)
 #' }

@@ -41,7 +41,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #'  fit1 = varstan(model,chains = 1)
@@ -88,7 +88,7 @@ log_lik.varstan = function(object,permuted = TRUE,...){
 #' \emph{The Journal of Machine Learning Research}. 11, 3571-3594.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #'  fit1 = varstan(model,chains = 1)
@@ -150,7 +150,7 @@ loglik = function(object,permuted = TRUE){
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(astsa)
 #' model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #' fit1 = varstan(model,chains = 1)
@@ -200,7 +200,7 @@ loo.varstan = function(x,...){
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #'  fit1 = varstan(model,chains = 1)
@@ -231,7 +231,7 @@ waic.varstan = function(x,...){
 #' @author  Asael Alonzo Matamoros
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #'  fit1 = varstan(model,chains = 1)
@@ -264,7 +264,7 @@ aic = function(x){
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #'  fit1 = varstan(model,chains = 1)
@@ -298,7 +298,7 @@ bic = function(x){
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #'  fit1 = varstan(model,chains = 1)

@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'  library(astsa)
 #'  sf1 = auto.sarima(birth)
 #'  get_parameters(sf1)
