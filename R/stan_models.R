@@ -246,9 +246,6 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #'
 #'  # Declaring a t-student M-GARCH(2,3,1)-ARMA(1,1) process for the ipc data.
 #'  sf2 = stan_garch(ipc,order = c(2,3,1),arma = c(1,1),genT = TRUE)
-#'
-#'  # Declaring a logistic Asymmetric GARCH(1,1) process.
-#'  sf3 = stan_garch(ipc,order = c(1,1,0),asym = "logit")
 #' }
 #'
 stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE,
@@ -591,9 +588,6 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 4000,
 #'
 #'  # Declaring a Holt model for the ipc data.
 #'  sf2 = stan_ssm(ipc,trend = TRUE,damped = TRUE)
-#'
-#'  # Declaring an additive Holt-Winters model for the birth data
-#'  sf3 = stan_ssm(birth,trend = TRUE,damped = TRUE,seasonal = TRUE)
 #' }
 #'
 stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,

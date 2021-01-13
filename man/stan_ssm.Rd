@@ -153,9 +153,6 @@ For changing the default prior use the function \code{set_prior()}.
 
  # Declaring a Holt model for the ipc data.
  sf2 = stan_ssm(ipc,trend = TRUE,damped = TRUE)
-
- # Declaring an additive Holt-Winters model for the birth data
- sf3 = stan_ssm(birth,trend = TRUE,damped = TRUE,seasonal = TRUE)
 }
 
 }

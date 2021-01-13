@@ -145,9 +145,6 @@ For changing the default prior use the function \code{set_prior()}.
 
  # Declaring a t-student M-GARCH(2,3,1)-ARMA(1,1) process for the ipc data.
  sf2 = stan_garch(ipc,order = c(2,3,1),arma = c(1,1),genT = TRUE)
-
- # Declaring a logistic Asymmetric GARCH(1,1) process.
- sf3 = stan_garch(ipc,order = c(1,1,0),asym = "logit")
 }
 
 }
