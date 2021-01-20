@@ -14,7 +14,7 @@
 #' defined model inside of the object. If \code{object} is one of the model classes (like Sarima or garch)
 #' then it will print the report information as well.
 #'
-#' @author  Asael Alonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
 #' @export
 #'
@@ -28,9 +28,8 @@
 report <- function(object,...) {
   UseMethod("report")
 }
-#'
+#' @aliases report
 #' @method report varstan
-#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.varstan = function(object,...){
@@ -43,9 +42,8 @@ report.varstan = function(object,...){
   if( is.SVM(object$model))    report.SVM(object$model)
   if( is.ssm(object$model))    report.ssm(object$model)
 }
-#'
+#' @aliases report
 #' @method report Sarima
-#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.Sarima = function(object,...){
@@ -70,9 +68,8 @@ report.Sarima = function(object,...){
     get_prior(model = object,par = "breg")
   }
 }
-#'
+#' @aliases report
 #' @method report naive
-#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.naive = function(object,...){
@@ -89,9 +86,8 @@ report.naive = function(object,...){
     cat("\n period:",object$period,"\n")
   }
 }
-#'
+#' @aliases report
 #' @method report garch
-#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.garch = function(object,...){
@@ -127,9 +123,8 @@ report.garch = function(object,...){
     get_prior(model = object,par = "gamma")
   }
 }
-#'
+#' @aliases report
 #' @method report SVM
-#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.SVM = function(object,...){
@@ -154,9 +149,8 @@ report.SVM = function(object,...){
     get_prior(model = object,par = "breg")
   }
 }
-#'
+#' @aliases report
 #' @method report ssm
-#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.ssm = function(object,...){
@@ -201,7 +195,7 @@ report.ssm = function(object,...){
 #'
 #' @return none. prints a string with the defined time series model report
 #'
-#' @author  Asael Alonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
 #' @method prior_summary varstan
 #' @importFrom rstantools prior_summary
