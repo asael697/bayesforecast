@@ -33,7 +33,7 @@ during each iteration. By default is 10.}
 \value{
 a \code{varstan} object with the estimated time series model.
 
-A \Code{varstan} object is a list that contains the following values:
+A \code{varstan} object is a list that contains the following values:
 
 \itemize{
 \item{Stanfit} a Stanfit object returned by \code{rstan} pacakge.
