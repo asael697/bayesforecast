@@ -110,6 +110,9 @@ are used.}
 
 \item{...}{Further arguments passed to  \code{varstan} function.}
 }
+\value{
+A \code{varstan} object with the fitted GARCH model.
+}
 \description{
 Fitting a \code{GARCH(s,k,h)} model in \pkg{Stan}.
 }

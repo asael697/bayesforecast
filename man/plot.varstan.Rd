@@ -17,7 +17,7 @@ probability mass to include in the intervals. The default is to report
 \item{...}{Further arguments passed to  \code{mcmc_combo}.}
 }
 \value{
-A plot object from ggplot2 class.
+None. Function produces a ggplot2 graph.
 }
 \description{
 Preliminary plot methods for varstan models only valid for univariate time series models.

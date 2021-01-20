@@ -32,6 +32,16 @@ during each iteration. By default is 10.}
 }
 \value{
 a \code{varstan} object with the estimated time series model.
+
+A \Code{varstan} object is a list that contains the following values:
+
+\itemize{
+\item{Stanfit} a Stanfit object returned by \code{rstan} pacakge.
+\item{stan.parmaters} The parameters used in Stan for the sample.
+\item{model} The defined model for the time series.
+\item{series.name} The time series' name.
+\item{ts} The provided time series data.
+}
 }
 \description{
 Constructor of the varstan object for Bayesian estimation in \pkg{Stan}.

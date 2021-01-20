@@ -13,6 +13,9 @@
 \item{...}{Additional arguments passed to
 \code{\link[bridgesampling:bridge_sampler]{bridge_sampler.stanfit}}.}
 }
+\value{
+the model's marginals likelihood from the \code{bridge_sampler} package.
+}
 \description{
 Computes log marginal likelihood via bridge sampling,
 which can be used in the computation of Bayes factors

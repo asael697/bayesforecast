@@ -14,7 +14,7 @@ ggnorm(y, title = NULL, add.normal = TRUE)
 \item{add.normal}{Add a normal density function for comparison.}
 }
 \value{
-None.
+None. Function produces a ggplot2 graph.
 }
 \description{
 Plot the quantile-quantile plot and quantile-quantile line using ggplot.

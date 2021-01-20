@@ -11,6 +11,9 @@
 
 \item{...}{additional values need in print methods}
 }
+\value{
+None. prints the object
+}
 \description{
 Print a garch model
 }

@@ -18,6 +18,10 @@ which must have the same number of rows as ts. It should not be a data frame.}
 
 \item{series.name}{an optional string vector with the time series names.}
 }
+\value{
+The function returns a list with the data for running \code{stan()} function of
+\pkg{rstan} package.
+}
 \description{
 Constructor of the Stochastic Volatility model (SVM) for Bayesian estimation in \pkg{Stan}.
 }

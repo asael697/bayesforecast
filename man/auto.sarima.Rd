@@ -65,7 +65,7 @@ are used.}
 \item{...}{Further arguments passed to  \code{auto.arima} function.}
 }
 \value{
-a varstan model
+A varstan object with the "best" fitted ARIMA model to the data
 }
 \description{
 Returns the best seasonal ARIMA model using a \code{bic} value, this

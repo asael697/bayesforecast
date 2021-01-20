@@ -15,6 +15,9 @@ get_prior(model,par,lag = 0)
 \item{lag}{an optional integer value, indicates the desired lag of the parameter which the prior
 is defined if lag = 0, then the prior distribution will be applied for all lags}
 }
+\value{
+None. Prints the prior distribution of a desired parameter.
+}
 \description{
 The functions gets the defined distribution of a defined model parameter
 }

@@ -13,7 +13,8 @@
 \item{...}{additional values need in waic methods}
 }
 \value{
-An object of class \code{loo}.
+An object of class \code{loo}. With the estimates of the
+Watanabe-Akaike Information criteria.
 }
 \description{
 Compute the widely applicable information criterion (WAIC)

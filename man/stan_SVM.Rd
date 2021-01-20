@@ -84,6 +84,9 @@ are used.}
 
 \item{...}{Further arguments passed to  \code{varstan} function.}
 }
+\value{
+A \code{varstan} object with the fitted SVM model.
+}
 \description{
 Fitting a Stochastic Volatility model (SVM) in \pkg{Stan}.
 }

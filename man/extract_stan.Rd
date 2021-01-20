@@ -28,6 +28,9 @@ in pars should be included (TRUE) or excluded (FALSE).}
 
 \item{...}{Further arguments passed to  \code{extract} function.}
 }
+\value{
+a list with the posterior samples of the provided parameters.
+}
 \description{
 Extract chains of an stanfit object implemented in rstan package
 }

@@ -13,7 +13,7 @@
 \item{...}{additional values need in print methods}
 }
 \value{
-a  string with the defined time series report
+none. prints a string with the defined time series model report
 }
 \description{
 The function returns a report with the users defined model for the given time series data

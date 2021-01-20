@@ -25,6 +25,10 @@ default the value frequency(ts) is used.}
 
 \item{series.name}{an optional string vector with the series names.}
 }
+\value{
+The function returns a list with the data for running \code{stan()} function of
+\pkg{rstan} package.
+}
 \description{
 Constructor of the SARIMA model  for Bayesian estimation in \pkg{Stan}.
 }

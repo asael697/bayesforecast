@@ -93,6 +93,9 @@ are used.}
 
 \item{...}{Further arguments passed to  \code{varstan} function.}
 }
+\value{
+A \code{varstan} object with the fitted SARIMA model.
+}
 \description{
 Fitting a SARIMA model  in \pkg{Stan}.
 }

@@ -17,6 +17,9 @@ The default value is FALSE.}
 
 \item{...}{Additional arguments passed to \code{bayes_factor}.}
 }
+\value{
+The bayes factors of two models.
+}
 \description{
 Compute Bayes factors from marginal likelihoods.
 }

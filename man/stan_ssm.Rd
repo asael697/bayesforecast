@@ -112,6 +112,9 @@ are used.}
 
 \item{...}{Further arguments passed to  \code{varstan} function.}
 }
+\value{
+A \code{varstan} object with the fitted SSM model.
+}
 \description{
 Fitting an Additive linear State space model in \pkg{Stan}.
 }

@@ -12,7 +12,7 @@ ggacf(y, title = NULL)
 \item{title}{a string with the plot's title.}
 }
 \value{
-None.
+None. Function produces a ggplot2 graph.
 }
 \description{
 Plot of the auto-correlation function for a univariate time series.

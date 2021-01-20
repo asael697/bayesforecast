@@ -22,7 +22,7 @@ using the Friedman-Diaconis rule.}
 by default \code{add.normal = TRUE}.}
 }
 \value{
-None.
+None. Function produces a ggplot2 graph.
 }
 \description{
 Plots a histogram and density estimates using ggplot.

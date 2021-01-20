@@ -12,7 +12,7 @@ check_residuals(object, ...)
 \item{...}{Other plotting parameters to affect the plot.}
 }
 \value{
-A graph object from ggplot2.
+None. Function produces a ggplot2 graph.
 }
 \description{
 Performs a visual check of residuals in time series models, this method is inspired in

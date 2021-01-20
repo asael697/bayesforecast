@@ -59,8 +59,7 @@ the value is set \code{NULL}, then the default student(7,0,1) prior is used.}
 \item{...}{Further arguments passed to  \code{varstan} function.}
 }
 \value{
-The function returns a list with the data for running \code{stan()} function of
-\pkg{rstan} package.
+A \code{varstan} object with the fitted naive Random Walk model.
 }
 \description{
 naive is the model constructor for a random walk  model applied to \code{y}.

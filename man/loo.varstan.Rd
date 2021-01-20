@@ -12,6 +12,10 @@
 
 \item{...}{additional values need in loo methods}
 }
+\value{
+an object from the loo class with the results of the Pareto-Smooth
+Importance Sampling, leave one out cross validation for model selection.
+}
 \description{
 The \code{loo} method for varstan objects. Computes approximate
 leave-one-out cross-validation using Pareto smoothed importance
