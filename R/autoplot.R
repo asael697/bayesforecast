@@ -153,7 +153,7 @@ ggtsbreaks = function(x) {
 #' @param bins The number of bins to use for the histogram. Selected by default
 #' using the Friedman-Diaconis rule.
 #'
-#' @return None.
+#' @return None. Function produces a ggplot2 graph.
 #'
 #' @author Rob J Hyndman
 #'
@@ -216,7 +216,7 @@ gghist = function(y,title = NULL,xlab = NULL,ylab = "counts",bins,add.normal = T
 #' @param add.normal Add a normal density function for comparison.
 #' @param title a string with the plot's title.
 #'
-#' @return None.
+#' @return None. Function produces a ggplot2 graph.
 #'
 #' @author Asael Alonzo Matamoros
 #'
@@ -250,7 +250,7 @@ ggnorm = function(y,title = NULL,add.normal = TRUE){
 #' @param y a numeric vector or an object of the \code{ts} class containing a stationary time series.
 #' @param title a string with the plot's title.
 #'
-#' @return None.
+#' @return None. Function produces a ggplot2 graph.
 #'
 #' @author Asael Alonzo Matamoros
 #'
@@ -310,7 +310,7 @@ ggpacf = function(y,title = NULL){
 #'   \eqn{95\%}.
 #' @param ... Further arguments passed to  \code{mcmc_combo}.
 #'
-#' @return A plot object from ggplot2 class.
+#' @return None. Function produces a ggplot2 graph.
 #'
 #' @examples
 #' \donttest{
@@ -348,7 +348,7 @@ plot.varstan = function(x,prob = 0.95,...){
 #'   \code{95\%}.
 #' @param ... Further arguments passed to  \code{mcmc_combo}.
 #'
-#' @return An autoplot object from ggplot2 class.
+#' @return None. Function produces a ggplot2 graph.
 #'
 #' @examples
 #' \donttest{
@@ -397,7 +397,7 @@ autoplot.varstan = function(object,prob = 0.95,...){
 #' @param object a varstan object.
 #' @param ... Other plotting parameters to affect the plot.
 #'
-#' @return A graph object from ggplot2.
+#' @return None. Function produces a ggplot2 graph.
 #'
 #' @author Asael Alonzo Matamoros.
 #'

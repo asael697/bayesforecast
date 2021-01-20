@@ -18,7 +18,7 @@
 #'
 #' @export
 #'
-#' @return  a  string with the defined time series report
+#' @return none. prints a string with the defined time series model report
 #'
 #' @examples
 #' library(astsa)
@@ -30,6 +30,7 @@ report <- function(object,...) {
 }
 #'
 #' @method report varstan
+#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.varstan = function(object,...){
@@ -44,6 +45,7 @@ report.varstan = function(object,...){
 }
 #'
 #' @method report Sarima
+#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.Sarima = function(object,...){
@@ -70,6 +72,7 @@ report.Sarima = function(object,...){
 }
 #'
 #' @method report naive
+#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.naive = function(object,...){
@@ -88,6 +91,7 @@ report.naive = function(object,...){
 }
 #'
 #' @method report garch
+#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.garch = function(object,...){
@@ -125,6 +129,7 @@ report.garch = function(object,...){
 }
 #'
 #' @method report SVM
+#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.SVM = function(object,...){
@@ -151,6 +156,7 @@ report.SVM = function(object,...){
 }
 #'
 #' @method report ssm
+#' @return none. prints a string with the defined time series model report
 #' @export
 #'
 report.ssm = function(object,...){
@@ -193,7 +199,7 @@ report.ssm = function(object,...){
 #' defined model inside of the object. If \code{object} is one of the model classes (like Sarima or garch)
 #' then it will print the report information as well.
 #'
-#' @return  a  string with the defined time series report
+#' @return none. prints a string with the defined time series model report
 #'
 #' @author  Asael Alonzo Matamoros
 #'

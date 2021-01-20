@@ -27,6 +27,8 @@
 #'
 #' For  more details check the \pkg{bridgesampling} package.
 #'
+#' @return the model's marginals likelihood from the \code{bridge_sampler} package.
+#'
 #' @method bridge_sampler varstan
 #' @importFrom bridgesampling bridge_sampler
 #' @export bridge_sampler
@@ -79,6 +81,8 @@ bridge_sampler.varstan <- function(samples, ...) {
 #' multiple times to check the stability of the results.
 #'
 #' For  more details check the \pkg{bridgesampling} package.
+#'
+#' @return The bayes factors of two models.
 #'
 #' @method bayes_factor varstan
 #' @importFrom bridgesampling bayes_factor

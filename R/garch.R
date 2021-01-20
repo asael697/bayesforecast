@@ -44,6 +44,9 @@
 #'
 #' For changing the default prior use the function \code{set_prior()}.
 #'
+#' @return The function returns a list with the data for running \code{stan()} function of
+#'  \pkg{rstan} package.
+#'
 #' @author Asael Alonzo Matamoros.
 #'
 #' @export

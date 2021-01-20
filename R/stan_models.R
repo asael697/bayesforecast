@@ -69,6 +69,8 @@
 #'
 #' @author  Asael Alonzo Matamoros
 #'
+#' @return A \code{varstan} object with the fitted SARIMA model.
+#'
 #' @importFrom stats as.ts time frequency
 #' @importFrom utils tail
 #' @export
@@ -217,6 +219,8 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #'
 #' @author Asael Alonzo Matamoros.
 #'
+#' @return A \code{varstan} object with the fitted GARCH model.
+#'
 #' @export
 #' @importFrom stats as.ts time
 #'
@@ -324,8 +328,7 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #' @param series.name an optional string vector with the series names.
 #' @param ... Further arguments passed to  \code{varstan} function.
 #'
-#' @return The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
+#' @return A \code{varstan} object with the fitted naive Random Walk model.
 #'
 #' @author Asael Alonzo Matamoros
 #'
@@ -423,6 +426,8 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 4000,warmup = 
 #' are used.
 #' @param series.name an optional string vector with the series names.
 #' @param ... Further arguments passed to  \code{varstan} function.
+#'
+#' @return A \code{varstan} object with the fitted SVM model.
 #'
 #' @author Asael Alonzo Matamoros
 #'
@@ -571,6 +576,7 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 4000,
 #'
 #' @author Asael Alonzo Matamoros.
 #'
+#' @return A \code{varstan} object with the fitted SSM model.
 #' @export
 #' @importFrom stats as.ts time frequency
 #'

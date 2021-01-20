@@ -135,7 +135,8 @@ set_prior = function(model,par = "ar",dist = normal(),lag = 0){
 #' @param lag an optional integer value, indicates the desired lag of the parameter which the prior
 #' is defined if lag = 0, then the prior distribution will be applied for all lags
 #'
-#' @author  Asael Alonzo Matamoros
+#' @return None. Prints the prior distribution of a desired parameter.
+#' @author Asael Alonzo Matamoros
 #'
 #' @export
 #'
@@ -248,6 +249,7 @@ normal = function(mu = 0,sd = 1){
   return(m)
 }
 #' @method print normal
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -279,6 +281,7 @@ beta= function(shape1 = 2,shape2 = 2){
   return(m)
 }
 #' @method print beta
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -314,6 +317,7 @@ uniform= function(min = 0,max = 1){
   return(m)
 }
 #' @method print uniform
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -346,6 +350,7 @@ student = function(mu= 0,sd = 1,df = 5){
   return(m)
 }
 #' @method print student
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -377,6 +382,7 @@ cauchy = function(mu= 0,sd = 1){
   return(m)
 }
 #' @method print cauchy
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -411,6 +417,7 @@ inverse.gamma = function(shape= 2,rate = 1){
   return(m)
 }
 #' @method print inverse.gamma
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -443,6 +450,7 @@ inverse.chisq = function(df = 7){
   return(m)
 }
 #' @method print inverse.chisq
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -474,6 +482,7 @@ jeffrey = function(){
   return(m)
 }
 #' @method print jeffrey
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -505,6 +514,7 @@ gamma = function(shape= 2,rate = 1){
   return(m)
 }
 #' @method print gamma
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -534,6 +544,7 @@ exponential= function(rate = 1){
   return(m)
 }
 #' @method print exponential
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -563,6 +574,7 @@ chisq = function(df = 7){
   return(m)
 }
 #' @method print chisq
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -596,6 +608,7 @@ laplace = function(mu = 0,sd = 1){
   return(m)
 }
 #' @method print laplace
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -632,6 +645,7 @@ LKJ = function(df = 2){
   return(m)
 }
 #' @method print LKJ
+#' @return None. prints the object
 #' @export
 #' @noRd
 #'
@@ -770,4 +784,3 @@ check_par <- function(x) {
   if(identical(x,"seasonal1"))y = TRUE
   return(y)
 }
-

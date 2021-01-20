@@ -17,6 +17,9 @@
 #'
 #' @author Asael Alonzo Matamoros
 #'
+#' @return The function returns a list with the data for running \code{stan()} function of
+#'  \pkg{rstan} package.
+#'
 #' @export
 #'
 #' @references

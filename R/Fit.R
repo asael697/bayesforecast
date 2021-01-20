@@ -20,7 +20,7 @@
 #'
 #' @noRd
 #'
-#' @return  a stanfit object
+#' @return a stanfit object
 #'
 fit_Sarima = function(model,chains=4,iter=2000,warmup=floor(iter/2),adapt.delta = 0.90,tree.depth,...){
   stanfit = rstan::sampling(stanmodels$Sarima,
@@ -50,11 +50,11 @@ fit_Sarima = function(model,chains=4,iter=2000,warmup=floor(iter/2),adapt.delta 
 #'
 #' @import rstan
 #'
-#' @author  Asael Alonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
 #' @noRd
 #'
-#' @return  a stanfit object
+#' @return a stanfit object
 #'
 fit_garch = function(model,chains=4,iter=2000,warmup=floor(iter/2),adapt.delta = 0.90,tree.depth,...){
 
@@ -90,7 +90,7 @@ fit_garch = function(model,chains=4,iter=2000,warmup=floor(iter/2),adapt.delta =
 #'
 #' @noRd
 #'
-#' @return  a stanfit object
+#' @return a stanfit object
 #'
 fit_SVM = function(model,chains=4,iter=2000,warmup=floor(iter/2),adapt.delta = 0.90,tree.depth,...){
 
@@ -126,7 +126,7 @@ fit_SVM = function(model,chains=4,iter=2000,warmup=floor(iter/2),adapt.delta = 0
 #'
 #' @noRd
 #'
-#' @return  a stanfit object
+#' @return a stanfit object
 #'
 fit_ssm = function(model,chains=4,iter=2000,warmup=floor(iter/2),adapt.delta = 0.90,tree.depth,...){
 

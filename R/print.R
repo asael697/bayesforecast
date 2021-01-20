@@ -3,6 +3,7 @@
 #' @param  x a Sarima model from the varstan package
 #' @param ... additional values need in print methods
 #'
+#' @return None. prints the object
 #' @method print Sarima
 #' @export
 #'
@@ -14,6 +15,8 @@ print.Sarima = function(x,...){
 #' Print a naive model
 #'
 #' @param  x a naive model from the varstan package
+#'
+#' @return None. prints the object
 #'
 #' @method print naive
 #' @param ... additional values need in print methods
@@ -29,6 +32,8 @@ print.naive = function(x,...){
 #' @param x a garch model from the varstan package
 #' @param ... additional values need in print methods
 #'
+#' @return None. prints the object
+#'
 #' @method print garch
 #' @export
 #'
@@ -41,6 +46,8 @@ print.garch = function(x,...){
 #'
 #' @param x a SVM model from the varstan package
 #' @param ... additional values need in print methods
+#'
+#' @return None. prints the object
 #'
 #' @method print SVM
 #' @export
@@ -55,6 +62,8 @@ print.SVM = function(x,...){
 #' @param x a ssm model from the varstan package
 #' @param ... additional values need in print methods
 #'
+#' @return None. prints the object.
+#'
 #' @method print ssm
 #' @export
 #'
@@ -67,6 +76,8 @@ print.ssm = function(x,...){
 #'
 #' @param x a varstan object
 #' @param ... additional values need in print methods
+#'
+#' @return None. prints the object.
 #'
 #' @method print varstan
 #' @export

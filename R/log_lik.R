@@ -122,6 +122,9 @@ loglik = function(object,permuted = TRUE){
 #' @param x A varstan object
 #' @param ... additional values need in loo methods
 #'
+#' @return an object from the loo class with the results of the Pareto-Smooth
+#' Importance Sampling, leave one out cross validation for model selection.
+#'
 #' @seealso
 #'  * The **loo** package [vignettes](https://mc-stan.org/loo/articles/index.html)
 #'    for demonstrations.
@@ -179,7 +182,8 @@ loo.varstan = function(x,...){
 #' @details See the \code{loo_compare} function of the \pkg{loo} package
 #' for more details on model comparisons.
 #'
-#' @return An object of class \code{loo}.
+#' @return An object of class \code{loo}. With the estimates of the
+#' Watanabe-Akaike Information criteria.
 #'
 #' @references
 #' Vehtari, A., Gelman, A., & Gabry J. (2016). Practical Bayesian model
@@ -228,7 +232,7 @@ waic.varstan = function(x,...){
 #'
 #' @export
 #'
-#' @author  Asael Alonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
 #' @examples
 #' \donttest{

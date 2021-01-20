@@ -68,6 +68,16 @@
 #'
 #' @return  a \code{varstan} object with the estimated time series model.
 #'
+#' A \Code{varstan} object is a list that contains the following values:
+#'
+#' \itemize{
+#'  \item{Stanfit} a Stanfit object returned by \code{rstan} pacakge.
+#'  \item{stan.parmaters} The parameters used in Stan for the sample.
+#'  \item{model} The defined model for the time series.
+#'  \item{series.name} The time series' name.
+#'  \item{ts} The provided time series data.
+#' }
+#'
 #' @seealso \code{\link[rstan:stan]{rstan:stan}}.
 #'
 #' @references
@@ -164,6 +174,8 @@ is.varstan = function(object){
 #'
 #' @author Asael Alonzo Matamoros
 #'
+#' @return a list with the posterior samples of the provided parameters.
+#'
 #' @importFrom rstan extract
 #' @export
 #'
@@ -222,6 +234,7 @@ as.stan = function(object){
 #' Extracts all the order coefficients in a list
 #'
 #' @param object A varstan object
+#' @return A vector with the orders of the different parameters of the model.
 #' @noRd
 #'
 get_order = function(object){

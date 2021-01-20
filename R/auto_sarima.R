@@ -69,7 +69,7 @@
 #' @importFrom forecast auto.arima
 #' @export
 #'
-#' @return a varstan model
+#' @return A varstan object with the "best" fitted ARIMA model to the data
 #'
 #' @seealso \code{Sarima} \code{varstan}.
 #'
