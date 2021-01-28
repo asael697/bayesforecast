@@ -33,7 +33,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_ets");
-    reader.add_event(247, 245, "end", "model_ets");
+    reader.add_event(250, 248, "end", "model_ets");
     return reader;
 }
 template <typename T0__>
@@ -692,11 +692,6 @@ public:
                         stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
                         level1, 
                         "assigning variable l");
-            current_statement_begin__ = 65;
-            stan::model::assign(mu, 
-                        stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
-                        (stan::model::rvalue(mu, stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), "mu") + level1), 
-                        "assigning variable mu");
             current_statement_begin__ = 66;
             stan::model::assign(epsilon, 
                         stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
@@ -732,17 +727,16 @@ public:
             current_statement_begin__ = 75;
             for (int i = 2; i <= n; ++i) {
                 current_statement_begin__ = 78;
+                stan::model::assign(l, 
+                            stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                            ((level * (get_base1(y, i, "y", 1) - get_base1(mu, i, "mu", 1))) + ((1 - level) * get_base1(l, (i - 1), "l", 1))), 
+                            "assigning variable l");
+                current_statement_begin__ = 79;
                 if (as_bool((primitive_value(logical_eq(is_ss, 1)) && primitive_value(logical_gt(i, m))))) {
-                    current_statement_begin__ = 78;
-                    stan::model::assign(l, 
-                                stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                                ((level * (get_base1(y, i, "y", 1) - get_base1(s, (i - m), "s", 1))) + ((1 - level) * get_base1(l, (i - 1), "l", 1))), 
-                                "assigning variable l");
-                } else {
                     current_statement_begin__ = 79;
                     stan::model::assign(l, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                                ((level * get_base1(y, i, "y", 1)) + ((1 - level) * get_base1(l, (i - 1), "l", 1))), 
+                                (stan::model::rvalue(l, stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), "l") + (-(level) * get_base1(s, (i - m), "s", 1))), 
                                 "assigning variable l");
                 }
                 current_statement_begin__ = 81;
@@ -775,19 +769,27 @@ public:
                 if (as_bool(logical_eq(is_ss, 1))) {
                     current_statement_begin__ = 93;
                     if (as_bool(logical_gt(i, m))) {
-                        current_statement_begin__ = 93;
+                        current_statement_begin__ = 94;
                         stan::model::assign(s, 
                                     stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                     ((get_base1(seasonal, 1, "seasonal", 1) * (get_base1(y, i, "y", 1) - get_base1(l, i, "l", 1))) + ((1 - get_base1(seasonal, 1, "seasonal", 1)) * get_base1(s, (i - m), "s", 1))), 
                                     "assigning variable s");
+                        current_statement_begin__ = 95;
+                        if (as_bool(logical_eq(is_td, 1))) {
+                            current_statement_begin__ = 95;
+                            stan::model::assign(s, 
+                                        stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                                        (stan::model::rvalue(s, stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), "s") + (-(get_base1(seasonal, 1, "seasonal", 1)) * get_base1(b, i, "b", 1))), 
+                                        "assigning variable s");
+                        }
+                        current_statement_begin__ = 96;
+                        stan::model::assign(mu, 
+                                    stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                                    (stan::model::rvalue(mu, stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), "mu") + get_base1(s, (i - m), "s", 1)), 
+                                    "assigning variable mu");
                     }
-                    current_statement_begin__ = 94;
-                    stan::model::assign(mu, 
-                                stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                                (stan::model::rvalue(mu, stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), "mu") + get_base1(s, i, "s", 1)), 
-                                "assigning variable mu");
                 }
-                current_statement_begin__ = 97;
+                current_statement_begin__ = 100;
                 stan::model::assign(epsilon, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(y, i, "y", 1) - get_base1(mu, i, "mu", 1)), 
@@ -852,303 +854,303 @@ public:
             }
             check_greater_or_equal(function__, "v1", v1, 1);
             // model body
-            current_statement_begin__ = 104;
+            current_statement_begin__ = 107;
             if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 1))) {
-                current_statement_begin__ = 104;
+                current_statement_begin__ = 107;
                 lp_accum__.add(normal_log(sigma0, get_base1(prior_sigma0, 1, "prior_sigma0", 1), get_base1(prior_sigma0, 2, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 2))) {
-                current_statement_begin__ = 105;
+                current_statement_begin__ = 108;
                 lp_accum__.add(beta_log(sigma0, get_base1(prior_sigma0, 1, "prior_sigma0", 1), get_base1(prior_sigma0, 2, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 3))) {
-                current_statement_begin__ = 106;
+                current_statement_begin__ = 109;
                 lp_accum__.add(uniform_log(sigma0, get_base1(prior_sigma0, 1, "prior_sigma0", 1), get_base1(prior_sigma0, 2, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 4))) {
-                current_statement_begin__ = 107;
+                current_statement_begin__ = 110;
                 lp_accum__.add(student_t_log(sigma0, get_base1(prior_sigma0, 3, "prior_sigma0", 1), get_base1(prior_sigma0, 1, "prior_sigma0", 1), get_base1(prior_sigma0, 2, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 5))) {
-                current_statement_begin__ = 108;
+                current_statement_begin__ = 111;
                 lp_accum__.add(cauchy_log(sigma0, get_base1(prior_sigma0, 1, "prior_sigma0", 1), get_base1(prior_sigma0, 2, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 6))) {
-                current_statement_begin__ = 109;
+                current_statement_begin__ = 112;
                 lp_accum__.add(inv_gamma_log(sigma0, get_base1(prior_sigma0, 1, "prior_sigma0", 1), get_base1(prior_sigma0, 2, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 7))) {
-                current_statement_begin__ = 110;
+                current_statement_begin__ = 113;
                 lp_accum__.add(inv_chi_square_log(sigma0, get_base1(prior_sigma0, 3, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 8))) {
-                current_statement_begin__ = 111;
+                current_statement_begin__ = 114;
                 lp_accum__.add(-(stan::math::log(sigma0)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 9))) {
-                current_statement_begin__ = 112;
+                current_statement_begin__ = 115;
                 lp_accum__.add(gamma_log(sigma0, get_base1(prior_sigma0, 1, "prior_sigma0", 1), get_base1(prior_sigma0, 2, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 10))) {
-                current_statement_begin__ = 113;
+                current_statement_begin__ = 116;
                 lp_accum__.add(exponential_log(sigma0, get_base1(prior_sigma0, 2, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 11))) {
-                current_statement_begin__ = 114;
+                current_statement_begin__ = 117;
                 lp_accum__.add(chi_square_log(sigma0, get_base1(prior_sigma0, 3, "prior_sigma0", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_sigma0, 4, "prior_sigma0", 1), 12))) {
-                current_statement_begin__ = 115;
+                current_statement_begin__ = 118;
                 lp_accum__.add(double_exponential_log(sigma0, get_base1(prior_sigma0, 1, "prior_sigma0", 1), get_base1(prior_sigma0, 2, "prior_sigma0", 1)));
             }
-            current_statement_begin__ = 118;
+            current_statement_begin__ = 121;
             if (as_bool(logical_gt(d1, 0))) {
-                current_statement_begin__ = 119;
+                current_statement_begin__ = 122;
                 for (int i = 1; i <= d1; ++i) {
-                    current_statement_begin__ = 120;
+                    current_statement_begin__ = 123;
                     if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 1))) {
-                        current_statement_begin__ = 120;
+                        current_statement_begin__ = 123;
                         lp_accum__.add(normal_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 1, "prior_breg", 1), get_base1(prior_breg, i, 2, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 2))) {
-                        current_statement_begin__ = 121;
+                        current_statement_begin__ = 124;
                         lp_accum__.add(beta_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 1, "prior_breg", 1), get_base1(prior_breg, i, 2, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 3))) {
-                        current_statement_begin__ = 122;
+                        current_statement_begin__ = 125;
                         lp_accum__.add(uniform_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 1, "prior_breg", 1), get_base1(prior_breg, i, 2, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 4))) {
-                        current_statement_begin__ = 123;
+                        current_statement_begin__ = 126;
                         lp_accum__.add(student_t_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 3, "prior_breg", 1), get_base1(prior_breg, i, 1, "prior_breg", 1), get_base1(prior_breg, i, 2, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 5))) {
-                        current_statement_begin__ = 124;
+                        current_statement_begin__ = 127;
                         lp_accum__.add(cauchy_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 1, "prior_breg", 1), get_base1(prior_breg, i, 2, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 6))) {
-                        current_statement_begin__ = 125;
+                        current_statement_begin__ = 128;
                         lp_accum__.add(inv_gamma_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 1, "prior_breg", 1), get_base1(prior_breg, i, 2, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 7))) {
-                        current_statement_begin__ = 126;
+                        current_statement_begin__ = 129;
                         lp_accum__.add(inv_chi_square_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 3, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 8))) {
-                        current_statement_begin__ = 127;
+                        current_statement_begin__ = 130;
                         lp_accum__.add(-(stan::math::log(sigma0)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 9))) {
-                        current_statement_begin__ = 128;
+                        current_statement_begin__ = 131;
                         lp_accum__.add(gamma_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 1, "prior_breg", 1), get_base1(prior_breg, i, 2, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 10))) {
-                        current_statement_begin__ = 129;
+                        current_statement_begin__ = 132;
                         lp_accum__.add(exponential_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 2, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 11))) {
-                        current_statement_begin__ = 130;
+                        current_statement_begin__ = 133;
                         lp_accum__.add(chi_square_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 3, "prior_breg", 1)));
                     } else if (as_bool(logical_eq(get_base1(prior_breg, i, 4, "prior_breg", 1), 12))) {
-                        current_statement_begin__ = 131;
+                        current_statement_begin__ = 134;
                         lp_accum__.add(double_exponential_log(get_base1(breg, i, "breg", 1), get_base1(prior_breg, i, 1, "prior_breg", 1), get_base1(prior_breg, i, 2, "prior_breg", 1)));
                     }
                 }
             }
-            current_statement_begin__ = 135;
+            current_statement_begin__ = 138;
             if (as_bool(logical_eq(get_base1(prior_level, 4, "prior_level", 1), 1))) {
-                current_statement_begin__ = 135;
+                current_statement_begin__ = 138;
                 lp_accum__.add(normal_log(level, get_base1(prior_level, 1, "prior_level", 1), get_base1(prior_level, 2, "prior_level", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level, 4, "prior_level", 1), 2))) {
-                current_statement_begin__ = 136;
+                current_statement_begin__ = 139;
                 lp_accum__.add(beta_log(level, get_base1(prior_level, 1, "prior_level", 1), get_base1(prior_level, 2, "prior_level", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level, 4, "prior_level", 1), 3))) {
-                current_statement_begin__ = 137;
+                current_statement_begin__ = 140;
                 lp_accum__.add(uniform_log(level, get_base1(prior_level, 1, "prior_level", 1), get_base1(prior_level, 2, "prior_level", 1)));
             }
-            current_statement_begin__ = 140;
+            current_statement_begin__ = 143;
             if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 1))) {
-                current_statement_begin__ = 140;
+                current_statement_begin__ = 143;
                 lp_accum__.add(normal_log(level1, get_base1(prior_level1, 1, "prior_level1", 1), get_base1(prior_level1, 2, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 2))) {
-                current_statement_begin__ = 141;
+                current_statement_begin__ = 144;
                 lp_accum__.add(beta_log(level1, get_base1(prior_level1, 1, "prior_level1", 1), get_base1(prior_level1, 2, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 3))) {
-                current_statement_begin__ = 142;
+                current_statement_begin__ = 145;
                 lp_accum__.add(uniform_log(level1, get_base1(prior_level1, 1, "prior_level1", 1), get_base1(prior_level1, 2, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 4))) {
-                current_statement_begin__ = 143;
+                current_statement_begin__ = 146;
                 lp_accum__.add(student_t_log(level1, get_base1(prior_level1, 3, "prior_level1", 1), get_base1(prior_level1, 1, "prior_level1", 1), get_base1(prior_level1, 2, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 5))) {
-                current_statement_begin__ = 144;
+                current_statement_begin__ = 147;
                 lp_accum__.add(cauchy_log(level1, get_base1(prior_level1, 1, "prior_level1", 1), get_base1(prior_level1, 2, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 6))) {
-                current_statement_begin__ = 145;
+                current_statement_begin__ = 148;
                 lp_accum__.add(inv_gamma_log(level1, get_base1(prior_level1, 1, "prior_level1", 1), get_base1(prior_level1, 2, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 7))) {
-                current_statement_begin__ = 146;
+                current_statement_begin__ = 149;
                 lp_accum__.add(inv_chi_square_log(level1, get_base1(prior_level1, 3, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 8))) {
-                current_statement_begin__ = 147;
+                current_statement_begin__ = 150;
                 lp_accum__.add(-(stan::math::log(sigma0)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 9))) {
-                current_statement_begin__ = 148;
+                current_statement_begin__ = 151;
                 lp_accum__.add(gamma_log(level1, get_base1(prior_level1, 1, "prior_level1", 1), get_base1(prior_level1, 2, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 10))) {
-                current_statement_begin__ = 149;
+                current_statement_begin__ = 152;
                 lp_accum__.add(exponential_log(level1, get_base1(prior_level1, 2, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 11))) {
-                current_statement_begin__ = 150;
+                current_statement_begin__ = 153;
                 lp_accum__.add(chi_square_log(level1, get_base1(prior_level1, 3, "prior_level1", 1)));
             } else if (as_bool(logical_eq(get_base1(prior_level1, 4, "prior_level1", 1), 12))) {
-                current_statement_begin__ = 151;
+                current_statement_begin__ = 154;
                 lp_accum__.add(double_exponential_log(level1, get_base1(prior_level1, 1, "prior_level1", 1), get_base1(prior_level1, 2, "prior_level1", 1)));
             }
-            current_statement_begin__ = 154;
+            current_statement_begin__ = 157;
             if (as_bool(logical_eq(is_td, 1))) {
-                current_statement_begin__ = 155;
+                current_statement_begin__ = 158;
                 if (as_bool(logical_eq(get_base1(prior_trend, 4, "prior_trend", 1), 1))) {
-                    current_statement_begin__ = 155;
+                    current_statement_begin__ = 158;
                     lp_accum__.add(normal_log(get_base1(trend, 1, "trend", 1), get_base1(prior_trend, 1, "prior_trend", 1), get_base1(prior_trend, 2, "prior_trend", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend, 4, "prior_trend", 1), 2))) {
-                    current_statement_begin__ = 156;
+                    current_statement_begin__ = 159;
                     lp_accum__.add(beta_log(get_base1(trend, 1, "trend", 1), get_base1(prior_trend, 1, "prior_trend", 1), get_base1(prior_trend, 2, "prior_trend", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend, 4, "prior_trend", 1), 3))) {
-                    current_statement_begin__ = 157;
+                    current_statement_begin__ = 160;
                     lp_accum__.add(uniform_log(get_base1(trend, 1, "trend", 1), get_base1(prior_trend, 1, "prior_trend", 1), get_base1(prior_trend, 2, "prior_trend", 1)));
                 }
-                current_statement_begin__ = 160;
+                current_statement_begin__ = 163;
                 if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 1))) {
-                    current_statement_begin__ = 160;
+                    current_statement_begin__ = 163;
                     lp_accum__.add(normal_log(trend1, get_base1(prior_trend1, 1, "prior_trend1", 1), get_base1(prior_trend1, 2, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 2))) {
-                    current_statement_begin__ = 161;
+                    current_statement_begin__ = 164;
                     lp_accum__.add(beta_log(trend1, get_base1(prior_trend1, 1, "prior_trend1", 1), get_base1(prior_trend1, 2, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 3))) {
-                    current_statement_begin__ = 162;
+                    current_statement_begin__ = 165;
                     lp_accum__.add(uniform_log(trend1, get_base1(prior_trend1, 1, "prior_trend1", 1), get_base1(prior_trend1, 2, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 4))) {
-                    current_statement_begin__ = 163;
+                    current_statement_begin__ = 166;
                     lp_accum__.add(student_t_log(trend1, get_base1(prior_trend1, 3, "prior_trend1", 1), get_base1(prior_trend1, 1, "prior_trend1", 1), get_base1(prior_trend1, 2, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 5))) {
-                    current_statement_begin__ = 164;
+                    current_statement_begin__ = 167;
                     lp_accum__.add(cauchy_log(trend1, get_base1(prior_trend1, 1, "prior_trend1", 1), get_base1(prior_trend1, 2, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 6))) {
-                    current_statement_begin__ = 165;
+                    current_statement_begin__ = 168;
                     lp_accum__.add(inv_gamma_log(trend1, get_base1(prior_trend1, 1, "prior_trend1", 1), get_base1(prior_trend1, 2, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 7))) {
-                    current_statement_begin__ = 166;
+                    current_statement_begin__ = 169;
                     lp_accum__.add(inv_chi_square_log(trend1, get_base1(prior_trend1, 3, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 8))) {
-                    current_statement_begin__ = 167;
+                    current_statement_begin__ = 170;
                     lp_accum__.add(-(stan::math::log(sigma0)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 9))) {
-                    current_statement_begin__ = 168;
+                    current_statement_begin__ = 171;
                     lp_accum__.add(gamma_log(trend1, get_base1(prior_trend1, 1, "prior_trend1", 1), get_base1(prior_trend1, 2, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 10))) {
-                    current_statement_begin__ = 169;
+                    current_statement_begin__ = 172;
                     lp_accum__.add(exponential_log(trend1, get_base1(prior_trend1, 2, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 11))) {
-                    current_statement_begin__ = 170;
+                    current_statement_begin__ = 173;
                     lp_accum__.add(chi_square_log(trend1, get_base1(prior_trend1, 3, "prior_trend1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_trend1, 4, "prior_trend1", 1), 12))) {
-                    current_statement_begin__ = 171;
+                    current_statement_begin__ = 174;
                     lp_accum__.add(double_exponential_log(trend1, get_base1(prior_trend1, 1, "prior_trend1", 1), get_base1(prior_trend1, 2, "prior_trend1", 1)));
                 }
             }
-            current_statement_begin__ = 175;
+            current_statement_begin__ = 178;
             if (as_bool(logical_eq(is_dp, 1))) {
-                current_statement_begin__ = 176;
+                current_statement_begin__ = 179;
                 if (as_bool(logical_eq(get_base1(prior_damped, 4, "prior_damped", 1), 1))) {
-                    current_statement_begin__ = 176;
+                    current_statement_begin__ = 179;
                     lp_accum__.add(normal_log(get_base1(damped, 1, "damped", 1), get_base1(prior_damped, 1, "prior_damped", 1), get_base1(prior_damped, 2, "prior_damped", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_damped, 4, "prior_damped", 1), 2))) {
-                    current_statement_begin__ = 177;
+                    current_statement_begin__ = 180;
                     lp_accum__.add(beta_log(get_base1(damped, 1, "damped", 1), get_base1(prior_damped, 1, "prior_damped", 1), get_base1(prior_damped, 2, "prior_damped", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_damped, 4, "prior_damped", 1), 3))) {
-                    current_statement_begin__ = 178;
+                    current_statement_begin__ = 181;
                     lp_accum__.add(uniform_log(get_base1(damped, 1, "damped", 1), get_base1(prior_damped, 1, "prior_damped", 1), get_base1(prior_damped, 2, "prior_damped", 1)));
                 }
             }
-            current_statement_begin__ = 182;
+            current_statement_begin__ = 185;
             if (as_bool(logical_eq(is_ss, 1))) {
-                current_statement_begin__ = 183;
+                current_statement_begin__ = 186;
                 if (as_bool(logical_eq(get_base1(prior_seasonal, 4, "prior_seasonal", 1), 1))) {
-                    current_statement_begin__ = 183;
+                    current_statement_begin__ = 186;
                     lp_accum__.add(normal_log(get_base1(seasonal, 1, "seasonal", 1), get_base1(prior_seasonal, 1, "prior_seasonal", 1), get_base1(prior_seasonal, 2, "prior_seasonal", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal, 4, "prior_seasonal", 1), 2))) {
-                    current_statement_begin__ = 184;
+                    current_statement_begin__ = 187;
                     lp_accum__.add(beta_log(get_base1(seasonal, 1, "seasonal", 1), get_base1(prior_seasonal, 1, "prior_seasonal", 1), get_base1(prior_seasonal, 2, "prior_seasonal", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal, 4, "prior_seasonal", 1), 3))) {
-                    current_statement_begin__ = 185;
+                    current_statement_begin__ = 188;
                     lp_accum__.add(uniform_log(get_base1(seasonal, 1, "seasonal", 1), get_base1(prior_seasonal, 1, "prior_seasonal", 1), get_base1(prior_seasonal, 2, "prior_seasonal", 1)));
                 }
-                current_statement_begin__ = 188;
+                current_statement_begin__ = 191;
                 if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 1))) {
-                    current_statement_begin__ = 188;
+                    current_statement_begin__ = 191;
                     lp_accum__.add(normal_log(seasonal1, get_base1(prior_seasonal, 1, "prior_seasonal", 1), get_base1(prior_seasonal, 2, "prior_seasonal", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 2))) {
-                    current_statement_begin__ = 189;
+                    current_statement_begin__ = 192;
                     lp_accum__.add(beta_log(seasonal1, get_base1(prior_seasonal1, 1, "prior_seasonal1", 1), get_base1(prior_seasonal1, 2, "prior_seasonal1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 3))) {
-                    current_statement_begin__ = 190;
+                    current_statement_begin__ = 193;
                     lp_accum__.add(uniform_log(seasonal1, get_base1(prior_seasonal1, 1, "prior_seasonal1", 1), get_base1(prior_seasonal1, 2, "prior_seasonal1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 4))) {
-                    current_statement_begin__ = 191;
+                    current_statement_begin__ = 194;
                     lp_accum__.add(student_t_log(seasonal1, get_base1(prior_seasonal1, 3, "prior_seasonal1", 1), get_base1(prior_seasonal1, 1, "prior_seasonal1", 1), get_base1(prior_seasonal1, 2, "prior_seasonal1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 5))) {
-                    current_statement_begin__ = 192;
+                    current_statement_begin__ = 195;
                     lp_accum__.add(cauchy_log(seasonal1, get_base1(prior_seasonal1, 1, "prior_seasonal1", 1), get_base1(prior_seasonal1, 2, "prior_seasonal1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 6))) {
-                    current_statement_begin__ = 193;
+                    current_statement_begin__ = 196;
                     lp_accum__.add(inv_gamma_log(seasonal1, get_base1(prior_seasonal1, 1, "prior_seasonal1", 1), get_base1(prior_seasonal1, 2, "prior_seasonal1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 7))) {
-                    current_statement_begin__ = 194;
+                    current_statement_begin__ = 197;
                     lp_accum__.add(inv_chi_square_log(seasonal1, get_base1(prior_seasonal1, 3, "prior_seasonal1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 8))) {
-                    current_statement_begin__ = 195;
+                    current_statement_begin__ = 198;
                     lp_accum__.add(-(stan::math::log(sigma0)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 9))) {
-                    current_statement_begin__ = 196;
+                    current_statement_begin__ = 199;
                     lp_accum__.add(gamma_log(seasonal1, get_base1(prior_seasonal1, 1, "prior_seasonal1", 1), get_base1(prior_seasonal1, 2, "prior_seasonal1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 10))) {
-                    current_statement_begin__ = 197;
+                    current_statement_begin__ = 200;
                     lp_accum__.add(exponential_log(seasonal1, get_base1(prior_seasonal1, 2, "prior_seasonal1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 11))) {
-                    current_statement_begin__ = 198;
+                    current_statement_begin__ = 201;
                     lp_accum__.add(chi_square_log(seasonal1, get_base1(prior_seasonal1, 3, "prior_seasonal1", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_seasonal1, 4, "prior_seasonal1", 1), 12))) {
-                    current_statement_begin__ = 199;
+                    current_statement_begin__ = 202;
                     lp_accum__.add(double_exponential_log(seasonal1, get_base1(prior_seasonal1, 1, "prior_seasonal1", 1), get_base1(prior_seasonal1, 2, "prior_seasonal1", 1)));
                 }
             }
-            current_statement_begin__ = 203;
+            current_statement_begin__ = 206;
             if (as_bool(logical_eq(genT, 1))) {
-                current_statement_begin__ = 205;
+                current_statement_begin__ = 208;
                 if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 1))) {
-                    current_statement_begin__ = 205;
+                    current_statement_begin__ = 208;
                     lp_accum__.add(normal_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 1, "prior_dfv", 1), get_base1(prior_dfv, 2, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 2))) {
-                    current_statement_begin__ = 206;
+                    current_statement_begin__ = 209;
                     lp_accum__.add(beta_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 1, "prior_dfv", 1), get_base1(prior_dfv, 2, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 3))) {
-                    current_statement_begin__ = 207;
+                    current_statement_begin__ = 210;
                     lp_accum__.add(uniform_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 1, "prior_dfv", 1), get_base1(prior_dfv, 2, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 4))) {
-                    current_statement_begin__ = 208;
+                    current_statement_begin__ = 211;
                     lp_accum__.add(student_t_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 3, "prior_dfv", 1), get_base1(prior_dfv, 1, "prior_dfv", 1), get_base1(prior_dfv, 2, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 5))) {
-                    current_statement_begin__ = 209;
+                    current_statement_begin__ = 212;
                     lp_accum__.add(cauchy_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 1, "prior_dfv", 1), get_base1(prior_dfv, 2, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 6))) {
-                    current_statement_begin__ = 210;
+                    current_statement_begin__ = 213;
                     lp_accum__.add(inv_gamma_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 1, "prior_dfv", 1), get_base1(prior_dfv, 2, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 7))) {
-                    current_statement_begin__ = 211;
+                    current_statement_begin__ = 214;
                     lp_accum__.add(inv_chi_square_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 3, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 8))) {
-                    current_statement_begin__ = 212;
+                    current_statement_begin__ = 215;
                     lp_accum__.add(stan::math::log(Jpv(get_base1(v, 1, "v", 1), pstream__)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 9))) {
-                    current_statement_begin__ = 213;
+                    current_statement_begin__ = 216;
                     lp_accum__.add(gamma_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 1, "prior_dfv", 1), get_base1(prior_dfv, 2, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 10))) {
-                    current_statement_begin__ = 214;
+                    current_statement_begin__ = 217;
                     lp_accum__.add(exponential_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 2, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 11))) {
-                    current_statement_begin__ = 215;
+                    current_statement_begin__ = 218;
                     lp_accum__.add(chi_square_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 3, "prior_dfv", 1)));
                 } else if (as_bool(logical_eq(get_base1(prior_dfv, 4, "prior_dfv", 1), 12))) {
-                    current_statement_begin__ = 216;
+                    current_statement_begin__ = 219;
                     lp_accum__.add(double_exponential_log(get_base1(v, 1, "v", 1), get_base1(prior_dfv, 1, "prior_dfv", 1), get_base1(prior_dfv, 2, "prior_dfv", 1)));
                 }
-                current_statement_begin__ = 219;
+                current_statement_begin__ = 222;
                 lp_accum__.add(gamma_log(get_base1(v, 1, "v", 1), 2, 0.1));
-                current_statement_begin__ = 220;
+                current_statement_begin__ = 223;
                 lp_accum__.add(inv_gamma_log(get_base1(lambda, 1, "lambda", 1), (get_base1(v, 1, "v", 1) / 2), (get_base1(v, 1, "v", 1) / 2)));
-                current_statement_begin__ = 221;
+                current_statement_begin__ = 224;
                 lp_accum__.add(normal_log(epsilon, 0, (get_base1(v1, 1, "v1", 1) * sigma0)));
             } else {
-                current_statement_begin__ = 224;
+                current_statement_begin__ = 227;
                 lp_accum__.add(normal_log(epsilon, 0, sigma0));
             }
         } catch (const std::exception& e) {
@@ -1368,11 +1370,6 @@ public:
                         stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
                         level1, 
                         "assigning variable l");
-            current_statement_begin__ = 65;
-            stan::model::assign(mu, 
-                        stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
-                        (stan::model::rvalue(mu, stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), "mu") + level1), 
-                        "assigning variable mu");
             current_statement_begin__ = 66;
             stan::model::assign(epsilon, 
                         stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
@@ -1408,17 +1405,16 @@ public:
             current_statement_begin__ = 75;
             for (int i = 2; i <= n; ++i) {
                 current_statement_begin__ = 78;
+                stan::model::assign(l, 
+                            stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                            ((level * (get_base1(y, i, "y", 1) - get_base1(mu, i, "mu", 1))) + ((1 - level) * get_base1(l, (i - 1), "l", 1))), 
+                            "assigning variable l");
+                current_statement_begin__ = 79;
                 if (as_bool((primitive_value(logical_eq(is_ss, 1)) && primitive_value(logical_gt(i, m))))) {
-                    current_statement_begin__ = 78;
-                    stan::model::assign(l, 
-                                stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                                ((level * (get_base1(y, i, "y", 1) - get_base1(s, (i - m), "s", 1))) + ((1 - level) * get_base1(l, (i - 1), "l", 1))), 
-                                "assigning variable l");
-                } else {
                     current_statement_begin__ = 79;
                     stan::model::assign(l, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                                ((level * get_base1(y, i, "y", 1)) + ((1 - level) * get_base1(l, (i - 1), "l", 1))), 
+                                (stan::model::rvalue(l, stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), "l") + (-(level) * get_base1(s, (i - m), "s", 1))), 
                                 "assigning variable l");
                 }
                 current_statement_begin__ = 81;
@@ -1451,19 +1447,27 @@ public:
                 if (as_bool(logical_eq(is_ss, 1))) {
                     current_statement_begin__ = 93;
                     if (as_bool(logical_gt(i, m))) {
-                        current_statement_begin__ = 93;
+                        current_statement_begin__ = 94;
                         stan::model::assign(s, 
                                     stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                     ((get_base1(seasonal, 1, "seasonal", 1) * (get_base1(y, i, "y", 1) - get_base1(l, i, "l", 1))) + ((1 - get_base1(seasonal, 1, "seasonal", 1)) * get_base1(s, (i - m), "s", 1))), 
                                     "assigning variable s");
+                        current_statement_begin__ = 95;
+                        if (as_bool(logical_eq(is_td, 1))) {
+                            current_statement_begin__ = 95;
+                            stan::model::assign(s, 
+                                        stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                                        (stan::model::rvalue(s, stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), "s") + (-(get_base1(seasonal, 1, "seasonal", 1)) * get_base1(b, i, "b", 1))), 
+                                        "assigning variable s");
+                        }
+                        current_statement_begin__ = 96;
+                        stan::model::assign(mu, 
+                                    stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
+                                    (stan::model::rvalue(mu, stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), "mu") + get_base1(s, (i - m), "s", 1)), 
+                                    "assigning variable mu");
                     }
-                    current_statement_begin__ = 94;
-                    stan::model::assign(mu, 
-                                stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
-                                (stan::model::rvalue(mu, stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), "mu") + get_base1(s, i, "s", 1)), 
-                                "assigning variable mu");
                 }
-                current_statement_begin__ = 97;
+                current_statement_begin__ = 100;
                 stan::model::assign(epsilon, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(y, i, "y", 1) - get_base1(mu, i, "mu", 1)), 
@@ -1504,75 +1508,75 @@ public:
             }
             if (!include_gqs__) return;
             // declare and define generated quantities
-            current_statement_begin__ = 227;
+            current_statement_begin__ = 230;
             double loglik;
             (void) loglik;  // dummy to suppress unused var warning
             stan::math::initialize(loglik, DUMMY_VAR__);
             stan::math::fill(loglik, DUMMY_VAR__);
             stan::math::assign(loglik,0);
-            current_statement_begin__ = 228;
+            current_statement_begin__ = 231;
             validate_non_negative_index("log_lik", "n", n);
             Eigen::Matrix<double, Eigen::Dynamic, 1> log_lik(n);
             stan::math::initialize(log_lik, DUMMY_VAR__);
             stan::math::fill(log_lik, DUMMY_VAR__);
-            current_statement_begin__ = 229;
+            current_statement_begin__ = 232;
             validate_non_negative_index("fit", "n", n);
             Eigen::Matrix<double, Eigen::Dynamic, 1> fit(n);
             stan::math::initialize(fit, DUMMY_VAR__);
             stan::math::fill(fit, DUMMY_VAR__);
-            current_statement_begin__ = 230;
+            current_statement_begin__ = 233;
             validate_non_negative_index("residuals", "n", n);
             Eigen::Matrix<double, Eigen::Dynamic, 1> residuals(n);
             stan::math::initialize(residuals, DUMMY_VAR__);
             stan::math::fill(residuals, DUMMY_VAR__);
             // generated quantities statements
-            current_statement_begin__ = 232;
+            current_statement_begin__ = 235;
             for (int i = 1; i <= n; ++i) {
-                current_statement_begin__ = 233;
+                current_statement_begin__ = 236;
                 if (as_bool(logical_eq(genT, 1))) {
-                    current_statement_begin__ = 234;
+                    current_statement_begin__ = 237;
                     stan::model::assign(residuals, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                 student_t_rng(get_base1(v, 1, "v", 1), get_base1(epsilon, i, "epsilon", 1), sigma0, base_rng__), 
                                 "assigning variable residuals");
-                    current_statement_begin__ = 235;
+                    current_statement_begin__ = 238;
                     stan::model::assign(log_lik, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                 student_t_log(get_base1(y, i, "y", 1), get_base1(v, 1, "v", 1), get_base1(mu, i, "mu", 1), sigma0), 
                                 "assigning variable log_lik");
-                    current_statement_begin__ = 236;
+                    current_statement_begin__ = 239;
                     stan::math::assign(loglik, (loglik + get_base1(log_lik, i, "log_lik", 1)));
                 } else {
-                    current_statement_begin__ = 239;
+                    current_statement_begin__ = 242;
                     stan::model::assign(residuals, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                 normal_rng(get_base1(epsilon, i, "epsilon", 1), sigma0, base_rng__), 
                                 "assigning variable residuals");
-                    current_statement_begin__ = 240;
+                    current_statement_begin__ = 243;
                     stan::model::assign(log_lik, 
                                 stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                                 normal_log(get_base1(y, i, "y", 1), get_base1(mu, i, "mu", 1), sigma0), 
                                 "assigning variable log_lik");
-                    current_statement_begin__ = 241;
+                    current_statement_begin__ = 244;
                     stan::math::assign(loglik, (loglik + get_base1(log_lik, i, "log_lik", 1)));
                 }
             }
-            current_statement_begin__ = 244;
+            current_statement_begin__ = 247;
             stan::math::assign(fit, subtract(y, residuals));
             // validate, write generated quantities
-            current_statement_begin__ = 227;
+            current_statement_begin__ = 230;
             vars__.push_back(loglik);
-            current_statement_begin__ = 228;
+            current_statement_begin__ = 231;
             size_t log_lik_j_1_max__ = n;
             for (size_t j_1__ = 0; j_1__ < log_lik_j_1_max__; ++j_1__) {
                 vars__.push_back(log_lik(j_1__));
             }
-            current_statement_begin__ = 229;
+            current_statement_begin__ = 232;
             size_t fit_j_1_max__ = n;
             for (size_t j_1__ = 0; j_1__ < fit_j_1_max__; ++j_1__) {
                 vars__.push_back(fit(j_1__));
             }
-            current_statement_begin__ = 230;
+            current_statement_begin__ = 233;
             size_t residuals_j_1_max__ = n;
             for (size_t j_1__ = 0; j_1__ < residuals_j_1_max__; ++j_1__) {
                 vars__.push_back(residuals(j_1__));

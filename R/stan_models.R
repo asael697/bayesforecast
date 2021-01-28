@@ -102,7 +102,7 @@
 #' }
 #'
 stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
-                       period = 0,chains = 4,iter = 4000,warmup = floor(iter/2),
+                       period = 0,chains = 4,iter = 2000,warmup = floor(iter/2),
                        adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
                        prior_mu0 = NULL,prior_sigma0 = NULL,prior_ar = NULL,
                        prior_ma = NULL, prior_sar = NULL,prior_sma = NULL,
@@ -253,7 +253,7 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #' }
 #'
 stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE,
-                      asym = "none",chains = 4,iter = 4000,warmup = floor(iter/2),
+                      asym = "none",chains = 4,iter = 2000,warmup = floor(iter/2),
                       adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,prior_mu0 = NULL,
                       prior_sigma0 = NULL,prior_ar = NULL, prior_ma = NULL,prior_mgarch = NULL,
                       prior_arch = NULL,prior_garch = NULL, prior_breg = NULL,prior_gamma = NULL,
@@ -356,7 +356,7 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #'  sf1 = stan_naive(birth,seasonal = TRUE)
 #' }
 #'
-stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 4000,warmup = floor(iter/2),
+stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 2000,warmup = floor(iter/2),
                       adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
                       prior_mu0 = NULL,prior_sigma0 = NULL,series.name = NULL,...){
 
@@ -453,7 +453,7 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 4000,warmup = 
 #'  sf1 = stan_SVM(ipc,arma = c(1,1))
 #' }
 #'
-stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 4000,
+stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 2000,
                     warmup = floor(iter/2),adapt.delta = 0.9,tree.depth = 10,
                     stepwise = TRUE,prior_mu0 = NULL,prior_sigma0 = NULL,prior_ar = NULL,
                        prior_ma = NULL, prior_alpha = NULL,prior_beta = NULL,
@@ -597,7 +597,7 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 4000,
 #' }
 #'
 stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
-                    period = 0,genT = FALSE,chains = 4,iter = 4000,warmup = floor(iter/2),
+                    period = 0,genT = FALSE,chains = 4,iter = 2000,warmup = floor(iter/2),
                     adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,prior_sigma0 = NULL,
                     prior_level = NULL,prior_level1 = NULL, prior_trend = NULL,prior_trend1 = NULL,
                     prior_damped = NULL,prior_seasonal = NULL, prior_seasonal1 = NULL,prior_breg = NULL,

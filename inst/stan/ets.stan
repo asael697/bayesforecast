@@ -62,7 +62,7 @@ transformed parameters{
   else mu = rep_vector(0,n);
 
   // initial values
-  l[1] = level1;mu[1] += level1;
+  l[1] = level1;
   epsilon[1] = y[1] - mu[1];
   if(is_td == 1) b[1] = trend1[1];
   if(is_ss == 1) for(i in 1:m) s[i] = seasonal1[i];
@@ -75,8 +75,8 @@ transformed parameters{
   for (i in 2:n){
 
     // local level
-    if(is_ss == 1 && i > m) l[i] = level*(y[i] - s[i-m]) + (1 - level)*l[i-1];
-    else  l[i] = level*y[i] + (1 - level)*l[i-1];
+    l[i] = level*(y[i] - mu[i]) + (1 - level)*l[i-1];
+    if(is_ss == 1 && i > m) l[i] += -level*s[i-m];
 
     mu[i] += l[i-1];
 
@@ -90,8 +90,11 @@ transformed parameters{
 
     // Seasonal component
     if( is_ss == 1){
-       if(i > m) s[i] = seasonal[1]*(y[i] - l[i]) + (1 - seasonal[1])*s[i-m];
-      mu[i] += s[i];
+       if(i > m){
+         s[i] = seasonal[1]*(y[i] - l[i]) + (1 - seasonal[1])*s[i-m];
+         if(is_td == 1)  s[i] += -seasonal[1]*b[i];
+         mu[i] += s[i-m];
+       }
     }
     // Errors estimate
     epsilon[i] = y[i] - mu[i];
