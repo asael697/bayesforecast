@@ -11,7 +11,7 @@ stan_sarima(
   xreg = NULL,
   period = 0,
   chains = 4,
-  iter = 4000,
+  iter = 2000,
   warmup = floor(iter/2),
   adapt.delta = 0.9,
   tree.depth = 10,
