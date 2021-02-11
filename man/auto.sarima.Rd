@@ -19,7 +19,7 @@ which must have the same number of rows as ts. It should not be a data frame.}
 by default 4 chains are run.}
 
 \item{iter}{An integer of total iterations per chain including the warm-up,
-by default  the number of iterations are 2000.}
+by default  the number of iterations are 4000.}
 
 \item{warmup}{A positive integer specifying number of warm-up (aka burn-in)
 iterations. This also specifies the number of iterations used for step-size
