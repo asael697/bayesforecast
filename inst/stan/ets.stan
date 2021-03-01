@@ -62,7 +62,7 @@ transformed parameters{
   else mu = rep_vector(0,n);
 
   // initial values
-  l[1] = level1;
+  l[1] = level1;mu[1] += level1;
   epsilon[1] = y[1] - mu[1];
   if(is_td == 1) b[1] = trend1[1];
   if(is_ss == 1) for(i in 1:m) s[i] = seasonal1[i];
