@@ -208,6 +208,9 @@ is.model = function(object){
   if(is(object,"naive"))  y = TRUE
   if(is(object,"SVM"))    y = TRUE
   if(is(object,"ssm"))    y = TRUE
+  if(is(object,"LocalLevel")) y = TRUE
+  if(is(object,"Holt"))   y = TRUE
+  if(is(object,"Hw"))     y = TRUE
   return (y)
 }
 #' A function with all the desired indicators in summary function
