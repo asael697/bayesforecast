@@ -589,7 +589,7 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 2000,
 #'
 #' @examples
 #' \donttest{
-#'  # Declaring a local level model model for the ipc data.
+#'  # Declaring a local level model for the ipc data.
 #'  sf1 = stan_ssm(ipc)
 #'
 #'  # Declaring a Holt model for the ipc data.
@@ -610,6 +610,365 @@ stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL
 
   dat = ssm(ts = ts,trend = trend,damped = damped,seasonal = seasonal,xreg = xreg,period = period,
             genT = genT,series.name = sn)
+
+  # Priors selection
+  if(!is.null(prior_sigma0)) dat = set_prior(model = dat,par = "sigma0",dist = prior_sigma0)
+  if(!is.null(prior_level)) dat = set_prior(model = dat,par = "level",dist = prior_level)
+  if(!is.null(prior_level1)) dat = set_prior(model = dat,par = "level1",dist = prior_level1)
+  if(!is.null(prior_trend)) dat = set_prior(model = dat,par = "trend",dist = prior_trend)
+  if(!is.null(prior_trend1)) dat = set_prior(model = dat,par = "trend1",dist = prior_trend1)
+  if(!is.null(prior_damped)) dat = set_prior(model = dat,par = "damped",dist = prior_damped)
+  if(!is.null(prior_seasonal)) dat = set_prior(model = dat,par = "seasonal",dist = prior_seasonal)
+  if(!is.null(prior_seasonal1)) dat = set_prior(model = dat,par = "seasonal1",dist = prior_seasonal1)
+  if(!is.null(prior_breg)) dat = set_prior(model = dat,par = "breg",dist = prior_breg)
+  if(!is.null(prior_df)) dat = set_prior(model = dat,par = "df",dist = prior_df)
+
+  # Fitting the SSM model.
+  sf1 = varstan(model = dat,
+                chains = chains,
+                iter = iter,
+                warmup = warmup,
+                adapt.delta = adapt.delta,
+                tree.depth = tree.depth,...)
+  return(sf1)
+}
+#' Fitting a Local level state-space model.
+#'
+#' Fitting a Local level state-space model in \pkg{Stan}.
+#'
+#' The function returns a \code{varstan} object with the fitted model.
+#'
+#' @param ts a numeric or ts object with the univariate time series.
+#' @param xreg Optionally, a numerical matrix of external regressors,
+#' which must have the same number of rows as ts. It should not be a data frame.
+#' @param genT a boolean value to specify for a generalized t-student SSM model.
+#' @param chains An integer of the number of Markov Chains chains to be run,
+#' by default 4 chains are run.
+#' @param iter An integer of total iterations per chain including the warm-up,
+#' by default  the number of iterations are 2000.
+#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
+#'   iterations. This also specifies the number of iterations used for step-size
+#'   adaptation, so warm-up samples should not be used for inference. The number
+#'   of warmup should not be larger than \code{iter} and the default is
+#'   \code{iter/2}.
+#' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
+#' in a HMC method. By default is 0.9.
+#' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
+#' during each iteration. By default is 10.
+#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
+#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
+#' @param prior_sigma0 The prior distribution for the scale parameter in an SSM model. By default
+#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
+#' @param prior_level The prior distribution for the level parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
+#' @param prior_level1 The prior distribution for the initial level parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default student(6,0,2.5) priors are used.
+#' @param prior_breg The prior distribution for the regression coefficient parameters in a
+#' ARMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
+#' are used.
+#' @param prior_df The prior distribution for the degree freedom parameters in a t-student innovations
+#' SSM model. By default the value is set \code{NULL}, then the default gamma(2,0.1) priors
+#' are used.
+#' @param series.name an optional string vector with the series names.
+#' @param ... Further arguments passed to  \code{varstan} function.
+#'
+#' @details
+#' When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
+#' see Fonseca, et. al (2019) for more details.
+#'
+#' The default priors used in a Local_level( ) model are:
+#'
+#' \itemize{
+#'  \item{level ~ normal(0,0.5)}
+#'  \item{sigma0 ~ t-student(0,1,7)}
+#'  \item{level1 ~ normal(0,1)}
+#'  \item{dfv ~ gamma(2,0.1)}
+#'  \item{breg ~ t-student(0,2.5,6)}
+#' }
+#'
+#' For changing the default prior use the function \code{set_prior()}.
+#'
+#' @author Asael Alonzo Matamoros.
+#'
+#' @return A \code{varstan} object with the fitted Local Level model.
+#' @export
+#' @importFrom stats as.ts time frequency
+#'
+#' @references
+#' Fonseca, T. and Cequeira, V. and Migon, H. and Torres, C. (2019). The effects of
+#' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
+#' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
+#'
+#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#'
+#' @examples
+#' \donttest{
+#'  # Declaring a local level model for the ipc data.
+#'  sf1 = stan_LocalLevel(ipc)
+#' }
+#'
+stan_LocalLevel = function(ts,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,warmup = floor(iter/2),
+                            adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,prior_sigma0 = NULL,
+                            prior_level = NULL,prior_level1 = NULL,prior_breg = NULL,prior_df = NULL,series.name = NULL,...){
+
+  if(is.null(series.name))
+    sn = deparse(substitute(ts))
+  else
+    sn = as.character(series.name)
+
+  dat = LocalLevel(ts = ts,xreg = xreg,genT = genT,series.name = sn)
+
+    # Priors selection
+    if(!is.null(prior_sigma0)) dat = set_prior(model = dat,par = "sigma0",dist = prior_sigma0)
+    if(!is.null(prior_level)) dat = set_prior(model = dat,par = "level",dist = prior_level)
+    if(!is.null(prior_level1)) dat = set_prior(model = dat,par = "level1",dist = prior_level1)
+    if(!is.null(prior_breg)) dat = set_prior(model = dat,par = "breg",dist = prior_breg)
+    if(!is.null(prior_df)) dat = set_prior(model = dat,par = "df",dist = prior_df)
+
+    # Fitting the SSM model.
+    sf1 = varstan(model = dat,
+                  chains = chains,
+                  iter = iter,
+                  warmup = warmup,
+                  adapt.delta = adapt.delta,
+                  tree.depth = tree.depth,...)
+    return(sf1)
+}
+#' Fitting an Holt state-space model.
+#'
+#' Fitting an Holt state-space model in \pkg{Stan}.
+#'
+#' The function returns a \code{varstan} object with the fitted model.
+#'
+#' @param ts a numeric or ts object with the univariate time series.
+#' @param damped a boolean value to specify a damped trend local level model. By default
+#' is \code{FALSE}. If \code{trend} option is \code{FALSE} then \code{damped} is set to
+#' \code{FALSE} automatically.
+#' @param xreg Optionally, a numerical matrix of external regressors,
+#' which must have the same number of rows as ts. It should not be a data frame.
+#' @param genT a boolean value to specify for a generalized t-student SSM model.
+#' @param chains An integer of the number of Markov Chains chains to be run,
+#' by default 4 chains are run.
+#' @param iter An integer of total iterations per chain including the warm-up,
+#' by default  the number of iterations are 2000.
+#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
+#'   iterations. This also specifies the number of iterations used for step-size
+#'   adaptation, so warm-up samples should not be used for inference. The number
+#'   of warmup should not be larger than \code{iter} and the default is
+#'   \code{iter/2}.
+#' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
+#' in a HMC method. By default is 0.9.
+#' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
+#' during each iteration. By default is 10.
+#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
+#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
+#' @param prior_sigma0 The prior distribution for the scale parameter in an SSM model. By default
+#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
+#' @param prior_level The prior distribution for the level parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
+#' @param prior_trend The prior distribution for the trend parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
+#' @param prior_damped The prior distribution for the damped trend parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
+#' @param prior_level1 The prior distribution for the initial level parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default student(6,0,2.5) priors are used.
+#' @param prior_trend1 The prior distribution for the initial trend parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default student(6,0,2.5)  priors are used.
+#' @param prior_breg The prior distribution for the regression coefficient parameters in a
+#' ARMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
+#' are used.
+#' @param prior_df The prior distribution for the degree freedom parameters in a t-student innovations
+#' SSM model. By default the value is set \code{NULL}, then the default gamma(2,0.1) priors
+#' are used.
+#' @param series.name an optional string vector with the series names.
+#' @param ... Further arguments passed to  \code{varstan} function.
+#'
+#' @details
+#' When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
+#' see Fonseca, et. al (2019) for more details.
+#'
+#' The default priors used in a ssm( ) model are:
+#'
+#' \itemize{
+#'  \item{level ~ normal(0,0.5)}
+#'  \item{Trend ~ normal(0,0.5)}
+#'  \item{damped~ normal(0,0.5)}
+#'  \item{sigma0 ~ t-student(0,1,7)}
+#'  \item{level1 ~ normal(0,1)}
+#'  \item{trend1 ~ normal(0,1)}
+#'  \item{dfv ~ gamma(2,0.1)}
+#'  \item{breg ~ t-student(0,2.5,6)}
+#' }
+#'
+#' For changing the default prior use the function \code{set_prior()}.
+#'
+#' @author Asael Alonzo Matamoros.
+#'
+#' @return A \code{varstan} object with the fitted SSM model.
+#' @export
+#' @importFrom stats as.ts time frequency
+#'
+#' @references
+#' Fonseca, T. and Cequeira, V. and Migon, H. and Torres, C. (2019). The effects of
+#' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
+#' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
+#'
+#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#'
+#' @examples
+#' \donttest{
+#'  # Declaring a Holt model for the ipc data.
+#'  sf1 = stan_Holt(ipc)
+#'
+#'  # Declaring a Holt damped trend model for the ipc data.
+#'  sf2 = stan_Holt(ipc,damped = TRUE)
+#' }
+#'
+stan_Holt = function(ts,damped = FALSE,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,
+                     warmup = floor(iter/2),adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
+                     prior_sigma0 = NULL,prior_level = NULL,prior_level1 = NULL, prior_trend = NULL,
+                     prior_trend1 = NULL,prior_damped = NULL,prior_breg = NULL,
+                     prior_df = NULL,series.name = NULL,...){
+
+  if(is.null(series.name))
+    sn = deparse(substitute(ts))
+  else
+    sn = as.character(series.name)
+
+
+  dat = Holt(ts = ts,damped = damped,xreg = xreg,genT = genT,series.name = sn)
+
+  # Priors selection
+  if(!is.null(prior_sigma0)) dat = set_prior(model = dat,par = "sigma0",dist = prior_sigma0)
+  if(!is.null(prior_level))  dat = set_prior(model = dat,par = "level",dist = prior_level)
+  if(!is.null(prior_level1)) dat = set_prior(model = dat,par = "level1",dist = prior_level1)
+  if(!is.null(prior_trend))  dat = set_prior(model = dat,par = "trend",dist = prior_trend)
+  if(!is.null(prior_trend1)) dat = set_prior(model = dat,par = "trend1",dist = prior_trend1)
+  if(!is.null(prior_damped)) dat = set_prior(model = dat,par = "damped",dist = prior_damped)
+  if(!is.null(prior_breg))   dat = set_prior(model = dat,par = "breg",dist = prior_breg)
+  if(!is.null(prior_df))     dat = set_prior(model = dat,par = "df",dist = prior_df)
+
+  # Fitting the SSM model.
+  sf1 = varstan(model = dat,
+                chains = chains,
+                iter = iter,
+                warmup = warmup,
+                adapt.delta = adapt.delta,
+                tree.depth = tree.depth,...)
+  return(sf1)
+}
+#' Fitting a Holt-Winters state-space model.
+#'
+#' Fitting a Holt-Winters state-space model in \pkg{Stan}.
+#'
+#' The function returns a \code{varstan} object with the fitted model.
+#'
+#' @param ts a numeric or ts object with the univariate time series.
+#' @param damped a boolean value to specify a damped trend local level model. By default
+#' is \code{FALSE}. If \code{trend} option is \code{FALSE} then \code{damped} is set to
+#' \code{FALSE} automatically.
+#' @param xreg Optionally, a numerical matrix of external regressors,
+#' which must have the same number of rows as ts. It should not be a data frame.
+#' @param period an integer specifying the periodicity of the time series by
+#' default the value frequency(ts) is used.
+#' @param genT a boolean value to specify for a generalized t-student SSM model.
+#' @param chains An integer of the number of Markov Chains chains to be run,
+#' by default 4 chains are run.
+#' @param iter An integer of total iterations per chain including the warm-up,
+#' by default  the number of iterations are 2000.
+#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
+#'   iterations. This also specifies the number of iterations used for step-size
+#'   adaptation, so warm-up samples should not be used for inference. The number
+#'   of warmup should not be larger than \code{iter} and the default is
+#'   \code{iter/2}.
+#' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
+#' in a HMC method. By default is 0.9.
+#' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
+#' during each iteration. By default is 10.
+#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
+#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
+#' @param prior_sigma0 The prior distribution for the scale parameter in an SSM model. By default
+#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
+#' @param prior_level The prior distribution for the level parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
+#' @param prior_trend The prior distribution for the trend parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
+#' @param prior_damped The prior distribution for the damped trend parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
+#' @param prior_seasonal The prior distribution for the seasonal parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
+#' @param prior_level1 The prior distribution for the initial level parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default student(6,0,2.5) priors are used.
+#' @param prior_trend1 The prior distribution for the initial trend parameter in a SSM model.
+#' By default the value is set \code{NULL}, then the default student(6,0,2.5)  priors are used.
+#' @param prior_seasonal1 The prior distribution for the initial seasonal parameters in a SSM model.
+#' The prior is specified for the first m seasonal parameters, where m is the periodicity of the
+#' defined time series. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
+#' are used.
+#' @param prior_breg The prior distribution for the regression coefficient parameters in a
+#' ARMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
+#' are used.
+#' @param prior_df The prior distribution for the degree freedom parameters in a t-student innovations
+#' SSM model. By default the value is set \code{NULL}, then the default gamma(2,0.1) priors
+#' are used.
+#' @param series.name an optional string vector with the series names.
+#' @param ... Further arguments passed to  \code{varstan} function.
+#'
+#' @details
+#' When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
+#' see Fonseca, et. al (2019) for more details.
+#'
+#' The default priors used in a ssm( ) model are:
+#'
+#' \itemize{
+#'  \item{level ~ normal(0,0.5)}
+#'  \item{Trend ~ normal(0,0.5)}
+#'  \item{damped~ normal(0,0.5)}
+#'  \item{Seasonal ~ normal(0,0.5)}
+#'  \item{sigma0 ~ t-student(0,1,7)}
+#'  \item{level1 ~ normal(0,1)}
+#'  \item{trend1 ~ normal(0,1)}
+#'  \item{seasonal1 ~ normal(0,1)}
+#'  \item{dfv ~ gamma(2,0.1)}
+#'  \item{breg ~ t-student(0,2.5,6)}
+#' }
+#'
+#' For changing the default prior use the function \code{set_prior()}.
+#'
+#' @author Asael Alonzo Matamoros.
+#'
+#' @return A \code{varstan} object with the fitted SSM model.
+#' @export
+#' @importFrom stats as.ts time frequency
+#'
+#' @references
+#' Fonseca, T. and Cequeira, V. and Migon, H. and Torres, C. (2019). The effects of
+#' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
+#' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
+#'
+#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#'
+#' @examples
+#' \donttest{
+#'  # Declaring a Holt-Winters model for the ipc data.
+#'  sf1 = stan_Hw(ipc)
+#'
+#'  # Declaring a Holt-Winters damped trend model for the ipc data.
+#'  sf2 = stan_ssm(ipc,damped = TRUE)
+#' }
+#'
+stan_Hw = function(ts,damped = FALSE,xreg = NULL,period = 0,genT = FALSE,chains = 4,iter = 2000,
+                    warmup = floor(iter/2),adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
+                    prior_sigma0 = NULL,prior_level = NULL,prior_level1 = NULL, prior_trend = NULL,
+                    prior_trend1 = NULL,prior_damped = NULL,prior_seasonal = NULL,
+                    prior_seasonal1 = NULL,prior_breg = NULL,prior_df = NULL,series.name = NULL,...){
+
+  if(is.null(series.name))
+    sn = deparse(substitute(ts))
+  else
+    sn = as.character(series.name)
+
+  dat = Hw(ts = ts,damped = damped,xreg = xreg,period = period,genT = genT,series.name = sn)
 
   # Priors selection
   if(!is.null(prior_sigma0)) dat = set_prior(model = dat,par = "sigma0",dist = prior_sigma0)
