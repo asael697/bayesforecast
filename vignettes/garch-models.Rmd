@@ -1,0 +1,102 @@
+---
+title: "Estimating GARCH models"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{garch-models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE,comment = "#>")
+knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  dev = "png",
+  dpi = 150,
+  fig.asp = 0.8,
+  fig.width = 10,
+  out.width = "60%",
+  fig.align = "center")
+```
+
+
+```{r,warning=TRUE}
+library(bayesGARCH)
+library(bayesforecast)
+
+options(mc.cores = parallel::detectCores())
+```
+
+# Introduction
+
+En este trabajo modelaremos la volatilidad de la serie de observaciones diarias de la tasa de cambio entre Alemania y Reino Unido propuesto por [Ardia y Hoogerheide (2010)](https://journal.r-project.org/archive/2010/RJ-2010-014/RJ-2010-014.pdf). Los resigstros corresponden del el 3 de enero de 1985 hasta diciembre el 31 de diciembre de 1984. Peropara este trabajo utilizaremos las primeras 350 observaciones.
+
+```{r}
+data(dem2gbp)
+demgbp = ts(dem2gbp[1:350],start = c(1975,1,3),frequency = 365)
+autoplot(demgbp,main ="DEM/GBP foreign exchange",ylab ="log-returns",x = "Days" )
+
+```
+
+
+
+
+El modelo propuesto por ellos en su paquete [bayesGARCH](https://cran.r-project.org/web/packages/bayesGARCH/index.html) es un GARCH(1,1) con inovaciones t-student de la forma:
+
+$$y_t = \mu + \left(\dfrac{v-2}{v}\lambda_t \sigma_t \right)^{1/2} \epsilon_t$$
+$$\sigma^2_t = \sigma_0 + \alpha_1\epsilon_{t-1}^2 + \beta_1\sigma^2_{t-1}$$
+$$\epsilon_t \sim N(0,1)$$
+$$\lambda_t \sim IG(v/2,v/2)$$
+
+donde $\sigma_0 > 0$,$\alpha_1,\beta_1$ y $v > 2$. El modelo puede ser ejecutado en *bayesforecast* como:
+
+
+```{r,results='hide',warning=FALSE}
+sf1 = stan_garch(ts = demgbp,order = c(1,1,0),genT = TRUE)
+sf1
+```
+
+
+```{r,echo=FALSE}
+sf1
+```
+
+
+Las prioris por defecto utilizadas en el modelo son:
+```{r}
+prior_summary(sf1)
+```
+
+Estas fueron definidas por defecto siguiendo las recomendaciones propuestas por [Stan](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations). Las posterioris obtenidas son:
+
+```{r}
+mcmc_plot(sf1)
+```
+
+
+Al observar el ajuste del modelo, no se ajusta completamente a los datos debido a que el modelo no captura la estructura de depedncia en el parametro de locación.
+```{r}
+check_residuals(sf1)
+```
+# Forecast
+
+Finally, we predict the model for the next year:
+
+```{r}
+autoplot(object = forecast(sf1,h = 12),ylab="CPI")
+```
+
+# Reference
+
+ - Ardia, D. (2008). Financial Risk Management with Bayesian Estimation of GARCH Models: Theory and Applications.
+volume 612 series Lecture Notes in Economics and Mathematical Systems. Springer-Verlag, Berlin, Germany.
+https://doi.org/10.1007/978-3-540-78657-3
+
+- Vrontos, I., Dellaportas, P., & Politis, D. (2000). Full Bayesian Inference for GARCH and EGARCH Models. Journal of Business & Economic Statistics, 18(2), 187-198. doi:10.2307/1392556
+
+- Engle, R. (1982). Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. Econometrica, 50(4), 987-1007. url: http://www.jstor.org/stable/1912773.
+
+- Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity. Journal of Econometrics. 31(3), 307-327. doi: https://doi.org/10.1016/0304-4076(86)90063

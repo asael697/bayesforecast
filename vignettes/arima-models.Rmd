@@ -1,5 +1,5 @@
 ---
-title: "stimating ARIMA Models"
+title: "Estimating ARIMA Models"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{arima-models}
@@ -30,6 +30,7 @@ library(ggplot2)
 options(mc.cores = parallel::detectCores())
 ```
 # Introduction
+
 The core inflation index is used to measure aggregate demand pressures that the action of monetary policy can modify; it is a partial measure derived from inflation calculated through the Consumer Price Index (CPI). This vignette explains how to estimate a ARIMA model to predict the CPI in Honduras for the next years using the functions <code>check_residuals</code> and <code>stan_sarima</code> in the  **bayesforecast** package.
 
 Here we will show how to carry out a few parts of the analysis from Chapter 8.7 of <a href="http://dx.doi.org/10.18637/jss.v027.i03">Hyndman & Khandakar, 2008</a> that is:
@@ -103,7 +104,7 @@ The series of residuals (*upper part*) shows that the model does not explain the
 
 # Forecast
 
-Finally, we make a prediction of the model for the following year:
+Finally, we predict the model for the next year:
 
 ```{r}
 autoplot(object = forecast(sf1,h = 12),ylab="CPI")
