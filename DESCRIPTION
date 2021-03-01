@@ -1,8 +1,9 @@
 Package: bayesforecast
 Title: Bayesian Time Series Modeling with Stan
-Version: 0.0.1
+Version: 1.0.0
 Authors@R: c(person("Asael","Alonzo Matamoros", role = c("aut", "cre"),email = "asael.alonzo@gmail.com"),
      person("Cristian","Cruz Torres", role = 'aut', email = "cristian.cruz@unah.edu.hn"),
+     person("Andres", "Dala", role = "ctb",email = "andresht6@hotmail.com"),
      person("Rob", "Hyndman", email="Rob.Hyndman@monash.edu", role = "ctb"),
      person("Mitchell", "O'Hara-Wild", role = "ctb")
     )
@@ -33,8 +34,8 @@ SystemRequirements: GNU make
 Collate: 'autoplot.R' 'auto_sarima.R' 'bayes_factor.R'
         'bayesforecast-package.R' 'Birth.R' 'Fit.R' 'forecast.R'
         'garch.R' 'get_params.R' 'ipc.R' 'log_lik.R' 'Misc.R' 'model.R'
-        'naive.R' 'posterior_intervals.R' 'posterior_predict.R'
-        'predictive_error.R' 'print.R' 'prior.R' 'report.R' 'Sarima.R'
+        'naive.R' 'posterior_intervals.R' 'posterior_predict.R' 'ets.R'
+        'predictive_error.R' 'print.R' 'prior.R' 'report.R' 'Sarima.R' 
         'summary.R' 'ssm.R' 'stanmodels.R' 'SVM.R' 'varstan.R' 'stan_models.R'
 NeedsCompilation: yes
 Packaged: 2020-11-29 18:06:44 UTC; asael
@@ -42,3 +43,4 @@ Author: Asael Alonzo Matamoros [aut, cre],
   Cristian Cruz Torres [aut], Rob Hyndman [ctb],
   Mitchell O'Hara-Wild [ctb]
 Maintainer: Asael Alonzo Matamoros <asael.alonzo@gmail.com>
+VignetteBuilder: knitr
