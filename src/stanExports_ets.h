@@ -692,6 +692,11 @@ public:
                         stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
                         level1, 
                         "assigning variable l");
+            current_statement_begin__ = 65;
+            stan::model::assign(mu, 
+                        stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
+                        (stan::model::rvalue(mu, stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), "mu") + level1), 
+                        "assigning variable mu");
             current_statement_begin__ = 66;
             stan::model::assign(epsilon, 
                         stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
@@ -1370,6 +1375,11 @@ public:
                         stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
                         level1, 
                         "assigning variable l");
+            current_statement_begin__ = 65;
+            stan::model::assign(mu, 
+                        stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
+                        (stan::model::rvalue(mu, stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), "mu") + level1), 
+                        "assigning variable mu");
             current_statement_begin__ = 66;
             stan::model::assign(epsilon, 
                         stan::model::cons_list(stan::model::index_uni(1), stan::model::nil_index_list()), 
