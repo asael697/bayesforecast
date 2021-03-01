@@ -5,12 +5,14 @@
 #' to select the seasonal ARIMA model and estimates the model using a
 #' HMC sampler.
 #'
-#' @usage auto.sarima(ts,xreg = NULL,chains=4,iter=4000,warmup=floor(iter/2),
+#' @usage auto.sarima(ts,seasonal = TRUE,xreg = NULL,chains=4,iter=4000,warmup=floor(iter/2),
 #'                 adapt.delta = 0.9,tree.depth =10,stepwise = TRUE, series.name = NULL,
 #'                 prior_mu0 = NULL,prior_sigma0 = NULL,prior_ar = NULL, prior_ma = NULL,
 #'                 prior_sar = NULL,prior_sma = NULL, prior_breg = NULL,...)
 #'
 #' @param ts a numeric or ts object with the univariate time series.
+#' @param seasonal optionally, a logical value for seasonal ARIMA models.
+#' By default \code{seasonal = TRUE}.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param chains An integer of the number of Markov Chains chains to be run,
@@ -95,7 +97,7 @@
 #'  auto.sarima(birth,xreg = fourier(birth,K= 6))
 #'}
 #'
-auto.sarima = function(ts,xreg= NULL,chains = 4,iter = 4000,warmup = floor(iter/2),
+auto.sarima = function(ts,seasonal = TRUE,xreg= NULL,chains = 4,iter = 4000,warmup = floor(iter/2),
                        adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
                        series.name = NULL,prior_mu0 = NULL,prior_sigma0 = NULL,
                        prior_ar = NULL, prior_ma = NULL, prior_sar = NULL,
@@ -103,7 +105,7 @@ auto.sarima = function(ts,xreg= NULL,chains = 4,iter = 4000,warmup = floor(iter/
 
 
   # Selecting the "best" Arima model using forecast package
-  y  = auto.arima(y = ts,xreg = xreg,ic = "bic",stepwise = stepwise,...)
+  y  = auto.arima(y = ts,seasonal = seasonal,xreg = xreg,ic = "bic",stepwise = stepwise,...)
   arma = y$arma
   ord = c(arma[1],arma[6],arma[2])
   season = c(arma[3],arma[7],arma[4])
