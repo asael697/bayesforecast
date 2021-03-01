@@ -30,7 +30,7 @@
 #' model1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #' model(model1)
 #'
-model <- function(object,...) {
+model = function(object,...) {
   UseMethod("model")
 }
 #'
@@ -47,6 +47,9 @@ model.varstan = function(object,...){
   if( is.garch(object$model))  model.garch(object$model)
   if( is.SVM(object$model))    model.SVM(object$model)
   if( is.ssm(object$model))    model.ssm(object$model)
+  if( is.LocalLevel(object$model))model.LocalLevel(object$model)
+  if( is.Holt(object$model))   model.Holt(object$model)
+  if( is.Hw(object$model))     model.Hw(object$model)
 }
 #'
 #' @method  model Sarima
@@ -159,6 +162,64 @@ model.ssm = function(object,...){
     else log = paste0(log,"-trend")
   }
   if(object$is_ss)log = paste0(log,"-seasonal")
+  if(object$d1 > 0) log = paste0(log,".reg[",object$d1,"]")
+  cat(log,"\n")
+  cat("state-space model \n")
+  if(object$genT) cat("Generalized t-student model \n")
+  cat(object$n,"observations and 1 dimension \n \n")
+}
+#'
+#' @method model LocalLevel
+#' @export model
+#' @export
+#'
+model.LocalLevel = function(object,...){
+  if(!is.LocalLevel(object))
+    stop("The object is not a Local level model \n")
+
+  cat("\n")
+  log = "Local level"
+
+  if(object$d1 > 0) log = paste0(log,".reg[",object$d1,"]")
+  cat(log,"\n")
+  cat("state-space model \n")
+  if(object$genT) cat("Generalized t-student model \n")
+  cat(object$n,"observations and 1 dimension \n \n")
+}
+#'
+#' @method model Holt
+#' @export model
+#' @export
+#'
+model.Holt = function(object,...){
+  if(!is.Holt(object))
+    stop("The object is not a Holt model \n")
+
+  cat("\n")
+  log = "Holt"
+  if(object$is_td){
+    if(object$is_dp)log = paste0(log,"-damped trend")
+  }
+  if(object$d1 > 0) log = paste0(log,".reg[",object$d1,"]")
+  cat(log,"\n")
+  cat("state-space model \n")
+  if(object$genT) cat("Generalized t-student model \n")
+  cat(object$n,"observations and 1 dimension \n \n")
+}
+#'
+#' @method model Hw
+#' @export model
+#' @export
+#'
+model.Hw = function(object,...){
+  if(!is.Hw(object))
+    stop("The object is not a Holt-Winters model \n")
+
+  cat("\n")
+  log = "Holt-Winters"
+  if(object$is_td){
+    if(object$is_dp)log = paste0(log,"-damped trend")
+  }
   if(object$d1 > 0) log = paste0(log,".reg[",object$d1,"]")
   cat(log,"\n")
   cat("state-space model \n")

@@ -25,6 +25,9 @@ get_parameters = function(object){
   if(is.garch(object$model))  gp = get_params_garch(object$model)
   if(is.SVM(object$model))    gp = get_params_svm(object$model)
   if(is.ssm(object$model))    gp = get_params_ssm(object$model)
+  if(is.LocalLevel(object$model))gp = get_params_ssm(object$model)
+  if(is.Holt(object$model))   gp = get_params_ssm(object$model)
+  if(is.Hw(object$model))     gp = get_params_ssm(object$model)
 
   return(gp$include)
 }

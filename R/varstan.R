@@ -124,6 +124,9 @@ varstan = function(model,chains = 4,iter = 2000,warmup = floor(iter/2),
   if(is.garch(model))  sft = fit_garch(model,chains,iter,warmup,adapt.delta,tree.depth)
   if(is.SVM(model))    sft = fit_SVM(model,chains,iter,warmup,adapt.delta,tree.depth)
   if(is.ssm(model))    sft = fit_ssm(model,chains,iter,warmup,adapt.delta,tree.depth)
+  if(is.LocalLevel(model))sft = fit_ssm(model,chains,iter,warmup,adapt.delta,tree.depth)
+  if(is.Holt(model))   sft = fit_ssm(model,chains,iter,warmup,adapt.delta,tree.depth)
+  if(is.Hw(model))     sft = fit_ssm(model,chains,iter,warmup,adapt.delta,tree.depth)
 
   sp = list(Algorithm = "HMC NUTS",chains = chains,iter = iter,warmup = warmup,
             adapt.delta =adapt.delta,max_treedepth = tree.depth)

@@ -72,6 +72,51 @@ print.ssm = function(x,...){
     stop("The current object is not a ssm model")
   report(x)
 }
+#' Print a Local Level model
+#'
+#' @param x a LocalLevel model from the varstan package
+#' @param ... additional values need in print methods
+#'
+#' @return None. prints the object.
+#'
+#' @method print LocalLevel
+#' @export
+#'
+print.LocalLevel = function(x,...){
+  if(!is.LocalLevel(x))
+    stop("The current object is not a ssm model")
+  report(x)
+}
+#' Print a Holt model
+#'
+#' @param x a Holt model from the varstan package
+#' @param ... additional values need in print methods
+#'
+#' @return None. prints the object.
+#'
+#' @method print Holt
+#' @export
+#'
+print.Holt = function(x,...){
+  if(!is.Holt(x))
+    stop("The current object is not a ssm model")
+  report(x)
+}
+#' Print a Holt-Winter model
+#'
+#' @param x a Hw from the varstan package
+#' @param ... additional values need in print methods
+#'
+#' @return None. prints the object.
+#'
+#' @method print Hw
+#' @export
+#'
+print.Hw = function(x,...){
+  if(!is.Hw(x))
+    stop("The current object is not a ssm model")
+  report(x)
+}
 #' Print a varstan object
 #'
 #' @param x a varstan object

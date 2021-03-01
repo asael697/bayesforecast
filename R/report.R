@@ -41,6 +41,9 @@ report.varstan = function(object,...){
   if( is.garch(object$model))  report.garch(object$model)
   if( is.SVM(object$model))    report.SVM(object$model)
   if( is.ssm(object$model))    report.ssm(object$model)
+  if( is.LocalLevel(object$model))report.LocalLevel(object$model)
+  if( is.Holt(object$model))   report.Holt(object$model)
+  if( is.Hw(object$model))     report.Hw(object$model)
 }
 #' @aliases report
 #' @method report Sarima
@@ -180,14 +183,14 @@ report.ssm = function(object,...){
   }
 }
 #' @aliases report
-#' @method report Local level
+#' @method report LocalLevel
 #' @export
 #'
-report.local_level = function(object,...){
-  if(!is.ssm(object))
+report.LocalLevel = function(object,...){
+  if(!is.LocalLevel(object))
     stop("The object is not a Local level model \n")
 
-  model.local_level(object)
+  model.LocalLevel(object)
   cat("Priors: \n Scale Parameter:\n")
   get_prior(object,par = "sigma0")
   cat("\n")
@@ -233,7 +236,7 @@ report.Holt = function(object,...){
   }
 }
 #' @aliases report
-#' @method report Holt Winters
+#' @method report Hw
 #' @export
 #'
 report.Hw = function(object,...){

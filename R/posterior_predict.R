@@ -63,6 +63,15 @@ posterior_predict.varstan = function(object,h = 0,xreg = NULL,robust = FALSE,
 
     if(is.ssm(object$model))
       fc = posterior_predict_ets(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+
+    if(is.LocalLevel(object$model))
+      fc = posterior_predict_ets(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+
+    if(is.Holt(object$model))
+      fc = posterior_predict_ets(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+
+    if(is.Hw(object$model))
+      fc = posterior_predict_ets(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
   }
   return(fc)
 }
