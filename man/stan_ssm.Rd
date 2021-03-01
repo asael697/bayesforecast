@@ -151,7 +151,7 @@ For changing the default prior use the function \code{set_prior()}.
 }
 \examples{
 \donttest{
- # Declaring a local level model model for the ipc data.
+ # Declaring a local level model for the ipc data.
  sf1 = stan_ssm(ipc)
 
  # Declaring a Holt model for the ipc data.
