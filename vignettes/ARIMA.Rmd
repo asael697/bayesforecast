@@ -1,0 +1,130 @@
+---
+title: "Estimating ARIMA Models"
+author: "Daniel Dala and Asael Alonzo Matamoros"
+date: "`r Sys.Date()`"
+output: 
+  html_vignette: 
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Estimating ARIMA Models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r SETTINGS-knitr, include = FALSE}
+stopifnot(require(knitr))
+
+options(width = 90)
+knitr::opts_chunk$set(collapse = TRUE,comment = "#>")
+knitr::opts_chunk$set(echo = TRUE,message = FALSE,warning = FALSE,
+  dev = "png",dpi = 150,fig.asp = 0.8,fig.width = 5,out.width = "60%",fig.align = "center")
+
+library(bayesforecast)
+library(ggplot2)
+```
+
+## Introduction
+
+The core inflation index is used to measure aggregate demand pressures that the action of monetary policy can modify; it is a partial measure derived from inflation calculated through the Consumer Price Index (CPI). This vignette explains how to estimate a ARIMA model to predict the CPI in Honduras for the next years using the functions <code>check_residuals</code> and <code>stan_sarima</code> in the **bayesforecast** package.
+
+Here we will show how to carry out a few parts of the analysis from Chapter 8.7 of <a href="http://dx.doi.org/10.18637/jss.v027.i03">Hyndman & Khandakar, 2008</a> that is:
+
+<ol>
+
+<li>
+
+Plot the data and identify any unusual observations.
+
+</li>
+
+<li>
+
+Choose a model and check the residuals from your chosen model by plotting the ACF of the residuals.
+
+<li>
+
+If residuals look like white noise, we calculate the forecasts; otherwise, we choose another model, an adaptation of the Hyndman process and not the whole process as such since, in Bayesian statistics, the AIC and BIC are not commonly used.
+
+</li>
+
+</ol>
+
+Graphing the data:
+
+```{r}
+autoplot(object = ipc,main = "Inflation rate in Honduras",ylab="CPI")
+```
+
+The previous figure shows that the series does not seem to follow a stationary behavior and has some asymmetry, then the series will be differentiated, and we will graph the correlation graphs.
+
+```{r}
+g1 = autoplot(object = diff(ipc),main = "Differentiated series on inflation in Honduras",y = "CPI")
+g2 = ggacf(y = diff(ipc))
+g3 = ggpacf(y = diff(ipc))
+
+
+gridExtra::grid.arrange(g1,g2,g3,
+                        layout_matrix = matrix(c(1,2,1,3),nrow = 2))
+```
+
+The autocorrelation functions (ACF) and partial autocorrelation (PACF) show a mild correlation of at most a data lag, then the order of the ARIMA Model to be considered is p = 1, d = 1, q = 1, additionally both graphs show weak periodic patterns. Hence the order of the seasonal component is P = 1, D = 0, Q = 1. We consider weakly informative prior distributions, using the priors by defect for the location, scale, autoregressive, and moving average parameters. For the seasonals components, we will use a beta(2,2) distribution with domain $D = [1,-1]$. As a result, the complete model is:
+
+$$Inflacion \sim SARIMA(1,1,1)_\times(1,0,1)$$ $$\mu_0 \sim t(0,2.5,7)$$ $$\sigma_0 \sim t(7)$$ $$ar_1, ma_1 \sim N(0,0.5)$$ $$sar_1,sma_1 \sim beta(2,2)$$
+
+**bayesforecast** offers a similar interface to the [rstanarm](https://mc-stan.org/rstanarm/) and [forecast](https://github.com/robjhyndman/forecast) packages, the model can be estimated using the following instructions:
+
+```{r,echo=FALSE}
+set.seed(6551)
+
+options(mc.cores = parallel::detectCores())
+sf1 = stan_sarima(ts = ipc,order = c(1,1,1),seasonal = c(1,1,1),
+                  prior_sar = beta(2,2),prior_sma = beta(2,2))
+```
+
+```{r,eval=FALSE}
+
+sf1 = stan_sarima(ts = ipc,order = c(1,1,1),seasonal = c(1,1,1),
+                  prior_sar = beta(2,2),prior_sma = beta(2,2))
+
+sf1
+```
+
+```{r,echo=FALSE}
+sf1
+```
+
+To check the adjustment of each parameter, we review the chains and density graphs of each model:
+
+```{r,fig.height = 10}
+#mcmc_plot(object = sf1)
+```
+
+The chains seem to converge and not observed multimodality in the parameter distributions. Therefore, we consider accepting the estimation of the parameters; we proceed to review the fit.
+
+```{r}
+autoplot(sf1)+labs(title = "Posterior Predict", y="CPI")
+```
+
+The model seems to fit the series, we proceed to review the model residuals, the <code>check_residuals</code> function estimates the posterior mean of the residuals and plots them. This plot is not sufficient to corroborate the assumptions of normality and stationarity but is an initial indicator of the adjustment.
+
+```{r}
+check_residuals(sf1)
+```
+
+The series of residuals (*upper part*) shows that the model does not explain the period between 1900-2000 due to the intense volatility present in that decade. The histogram and quantile graph (*middle part*) show that the model has heavy tails due to the high volatility of the series. Finally, the residuals' auto-correlation presents a certain periodicity. Therefore, a seasonal period was not enough to model the seasonal pattern.
+
+## Forecast
+
+Finally, we predict the model for the next year:
+
+```{r}
+autoplot(object = forecast(sf1,h = 12),ylab="CPI")
+```
+
+## References
+
+-   Hyndman, R.J., & Athanasopoulos, G. (2018) *Forecasting: principles and practice*, 2nd edition, OTexts: Melbourne, Australia. OTexts.com/fpp2. Accessed on February 17, 2021.
+
+-   Carpenter, B., Gelman, A., Hoffman, M., Lee, D., Goodrich, B., Betancourt, M., Brubaker, M., Guo, J., Li, P., & Riddell, A. (2017). *Stan: A Probabilistic Programming Language*. Journal of Statistical Software, 76(1), 1 - 32. doi:<a href="http://dx.doi.org/10.18637/jss.v076.i01">http://dx.doi.org/10.18637/jss.v076.i01</a>,
+
+-   Hyndman, R., & Khandakar, Y. (2008). *Automatic Time Series Forecasting: The forecast Package for R*. Journal of Statistical Software, 27(3), 1 - 22. doi:<a href="http://dx.doi.org/10.18637/jss.v027.i03">http://dx.doi.org/10.18637/jss.v027.i03</a>.
