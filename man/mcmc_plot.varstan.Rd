@@ -35,6 +35,12 @@ combo = c("dens","trace"). Supported types are (as names) \code{hist},
 For an overview on the various plot types see
 \code{\link[bayesplot:MCMC-overview]{MCMC-overview}}.}
 
+\item{fixed}{Indicates whether parameter names
+should be matched exactly (\code{TRUE}) or treated as
+regular expressions (\code{FALSE}). Default is \code{FALSE}.}
+
+\item{exact_match}{Deprecated alias of argument \code{fixed}.}
+
 \item{...}{Additional arguments passed to the plotting functions.
 See \code{\link[bayesplot:MCMC-overview]{MCMC-overview}} for
 more details.}

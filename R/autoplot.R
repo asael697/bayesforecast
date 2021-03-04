@@ -450,6 +450,10 @@ check_residuals = function(object,...){
 #'   \code{nuts_stepsize}, \code{nuts_treedepth}, and \code{nuts_energy}.
 #'   For an overview on the various plot types see
 #'   \code{\link[bayesplot:MCMC-overview]{MCMC-overview}}.
+#' @param fixed Indicates whether parameter names
+#'   should be matched exactly (\code{TRUE}) or treated as
+#'   regular expressions (\code{FALSE}). Default is \code{FALSE}.
+#' @param exact_match Deprecated alias of argument \code{fixed}.
 #' @param ... Additional arguments passed to the plotting functions.
 #'   See \code{\link[bayesplot:MCMC-overview]{MCMC-overview}} for
 #'   more details.
@@ -457,7 +461,6 @@ check_residuals = function(object,...){
 #' @return A \code{\link[ggplot2:ggplot]{ggplot}} object
 #'   that can be further customized using the \pkg{ggplot2} package.
 #'
-#' @export
 #' @import bayesplot
 #' @examples
 #' \dontrun{
