@@ -81,9 +81,7 @@ where $\sigma_0 > 0$,$\alpha_1,\beta_1$ and $v > 2$, moreover $N(0,1)$ denotes t
 
 This model can be run in **bayesforecast** like:
 
-
-
-```{r,echo=FALSE}
+```{r,echo=FALSE,results='hide'}
 set.seed(6551)
 sf1 = stan_garch(ts = demgbp,order = c(1,1,0),genT = TRUE,chains = 1)
 ```

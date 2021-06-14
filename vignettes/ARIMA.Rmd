@@ -86,7 +86,7 @@ $$
 
 **bayesforecast** offers a similar interface to the [rstanarm](https://mc-stan.org/rstanarm/) and [forecast](https://github.com/robjhyndman/forecast) packages, the model can be estimated using the following instructions:
 
-```{r,echo=FALSE}
+```{r,echo=FALSE,results='hide'}
 set.seed(6551)
 sf1 = stan_sarima(ts = ipc,order = c(1,1,1),seasonal = c(1,1,1),
                   prior_sar = beta(2,2),prior_sma = beta(2,2),chains = 1)
@@ -105,8 +105,8 @@ summary(sf1)
 
 To check the adjustment of each parameter, we review the chains and density graphs of each model:
 
-```{r,fig.height = 10}
-#mcmc_plot(object = sf1)
+```{r,fig.height = 15}
+mcmc_plot(object = sf1)
 ```
 
 The chains seem to converge and not observed multimodality in the parameter distributions. Therefore, we consider accepting the estimation of the parameters; we proceed to review the fit.
