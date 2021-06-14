@@ -100,7 +100,7 @@ For changing the default prior use the function \code{set_prior()}.
 \examples{
 \donttest{
  # Declaring a local level model for the ipc data.
- sf1 = stan_LocalLevel(ipc)
+ sf1 = stan_LocalLevel(ipc,iter = 500,chains = 1)
 }
 
 }

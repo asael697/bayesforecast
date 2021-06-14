@@ -20,7 +20,7 @@ Convert a \code{varstan} object to a \code{stanfit} object of the
 \donttest{
  # Fitting a GARCH(1,1) model
  dat = garch(ipc,order = c(1,1,0))
- fit1 = varstan(dat,chains = 1)
+ fit1 = varstan(dat,iter = 500,chains = 1)
 
  # Converting to a Stanfit object
  stanfit1 = as.stan(fit1)

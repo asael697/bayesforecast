@@ -135,7 +135,7 @@ Sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 
     if(m1$d > 0){
       m1$xreg = diff(m1$xreg,differences = m1$d)
-      m1$xlast = matrix(,nrow = m1$d,ncol = m1$d1)
+      m1$xlast = matrix(0,nrow = m1$d,ncol = m1$d1)
       m1$xlast[1,] = utils::tail(xreg,n=1)
       if(m1$d > 1)
         for(i in 2:m1$d) m1$xlast[i,] = utils::tail( diff(xreg,differences = i-1),n=1)

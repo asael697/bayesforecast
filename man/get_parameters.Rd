@@ -18,7 +18,7 @@ Get the sampled parameters of a varstan object.
 \examples{
 \donttest{
  library(astsa)
- sf1 = auto.sarima(birth)
+ sf1 = auto.sarima(birth,iter = 500,chains = 1)
  get_parameters(sf1)
 }
 

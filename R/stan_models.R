@@ -94,11 +94,13 @@
 #' \donttest{
 #'  library(astsa)
 #'  # Declare a multiplicative seasonal ARIMA model for the birth data.
-#'  sf1 = stan_sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
+#'  sf1 = stan_sarima(birth,order = c(0,1,2),
+#'                    seasonal = c(1,1,1),iter = 500,chains = 1)
 #'
 #'
 #'  #Declare an Dynamic Harmonic Regression model for the birth data.
-#'  sf2 = stan_sarima(birth,order = c(1,0,1),xreg = fourier(birth,K = 2))
+#'  sf2 = stan_sarima(birth,order = c(1,0,1),
+#'                    xreg = fourier(birth,K = 2),iter = 500,chains = 1)
 #' }
 #'
 stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
@@ -246,10 +248,10 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #' @examples
 #' \donttest{
 #'  # Declaring a garch(1,1) model for the ipc data.
-#'  sf1 = stan_garch(ipc,order = c(1,1,0))
+#'  sf1 = stan_garch(ipc,order = c(1,1,0),iter = 500,chains = 1)
 #'
 #'  # Declaring a t-student M-GARCH(2,3,1)-ARMA(1,1) process for the ipc data.
-#'  sf2 = stan_garch(ipc,order = c(2,3,1),arma = c(1,1),genT = TRUE)
+#'  sf2 = stan_garch(ipc,order = c(2,3,1),arma = c(1,1),genT = TRUE,iter = 500,chains = 1)
 #' }
 #'
 stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE,
@@ -353,7 +355,7 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #' \donttest{
 #'  library(astsa)
 #'  # A seasonal Random-walk model.
-#'  sf1 = stan_naive(birth,seasonal = TRUE)
+#'  sf1 = stan_naive(birth,seasonal = TRUE,iter = 500,chains = 1)
 #' }
 #'
 stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 2000,warmup = floor(iter/2),
@@ -450,7 +452,7 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 2000,warmup = 
 #' @examples
 #' \donttest{
 #'  # Declares a SVM model for the IPC data
-#'  sf1 = stan_SVM(ipc,arma = c(1,1))
+#'  sf1 = stan_SVM(ipc,arma = c(1,1),iter = 500,chains = 1)
 #' }
 #'
 stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 2000,
@@ -590,10 +592,10 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 2000,
 #' @examples
 #' \donttest{
 #'  # Declaring a local level model for the ipc data.
-#'  sf1 = stan_ssm(ipc)
+#'  sf1 = stan_ssm(ipc,iter = 500,chains = 1)
 #'
 #'  # Declaring a Holt model for the ipc data.
-#'  sf2 = stan_ssm(ipc,trend = TRUE,damped = TRUE)
+#'  sf2 = stan_ssm(ipc,trend = TRUE,damped = TRUE,iter = 500,chains = 1)
 #' }
 #'
 stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
@@ -704,7 +706,7 @@ stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL
 #' @examples
 #' \donttest{
 #'  # Declaring a local level model for the ipc data.
-#'  sf1 = stan_LocalLevel(ipc)
+#'  sf1 = stan_LocalLevel(ipc,iter = 500,chains = 1)
 #' }
 #'
 stan_LocalLevel = function(ts,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,warmup = floor(iter/2),
@@ -818,10 +820,10 @@ stan_LocalLevel = function(ts,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,wa
 #' @examples
 #' \donttest{
 #'  # Declaring a Holt model for the ipc data.
-#'  sf1 = stan_Holt(ipc)
+#'  sf1 = stan_Holt(ipc,iter = 500,chains = 1)
 #'
 #'  # Declaring a Holt damped trend model for the ipc data.
-#'  sf2 = stan_Holt(ipc,damped = TRUE)
+#'  sf2 = stan_Holt(ipc,damped = TRUE,iter = 500,chains = 1)
 #' }
 #'
 stan_Holt = function(ts,damped = FALSE,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,
@@ -951,10 +953,10 @@ stan_Holt = function(ts,damped = FALSE,xreg = NULL,genT = FALSE,chains = 4,iter 
 #' @examples
 #' \donttest{
 #'  # Declaring a Holt-Winters model for the ipc data.
-#'  sf1 = stan_Hw(ipc)
+#'  sf1 = stan_Hw(ipc,iter = 500,chains = 1)
 #'
 #'  # Declaring a Holt-Winters damped trend model for the ipc data.
-#'  sf2 = stan_ssm(ipc,damped = TRUE)
+#'  sf2 = stan_ssm(ipc,damped = TRUE,iter = 500,chains = 1)
 #' }
 #'
 stan_Hw = function(ts,damped = FALSE,xreg = NULL,period = 0,genT = FALSE,chains = 4,iter = 2000,
