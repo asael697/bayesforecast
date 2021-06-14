@@ -1,7 +1,7 @@
 **bayesforecast NEWS**
 ============
 
-**Bayesforecast 1.0.0. Date: 04/02/2021**
+**Bayesforecast 1.0.1. Date: 14/06/2021**
 ----------------------------------
 
 ### Features:
@@ -9,6 +9,8 @@
 - Local level models using local_level() and stan_local_level() methods
 
 - Adding introductory vignette.
+
+- Add mcmc_plot for posterior check
 
 ### Improvements:
 
@@ -23,7 +25,7 @@
 
 - Correcting the default number of iterations per chain to 2000.
 
-- Correcting ets stan code, for seasonality. 
+- Correcting ets Stan code, for seasonality. 
 
 
 **Bayesforecast 0.1.1. Date: 29/01/2021**
