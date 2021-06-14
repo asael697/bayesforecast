@@ -21,7 +21,6 @@ knitr::opts_chunk$set(
 
 <img src="man/figures/bflogo.png" width = 120 alt="bayesforecast Logo"/>[<img src="https://raw.githubusercontent.com/stan-dev/logos/master/logo_tm.png" align="right" width=120 alt="Stan Logo"/>](https://mc-stan.org) 
 
-
 # Automatic forecasting and Bayesian modeling for time series
 
 ```{r,include=FALSE}
@@ -34,8 +33,7 @@ library(bayesforecast)
 lay1 =  matrix(c(1,1,2,3,4,5),ncol = 2,byrow = TRUE)
 ```
 
-
-The *bayesforecast* package implements Bayesian estimation of structured time series models, using the Hamiltonian Monte Carlo method, implemented with [Stan](https://mc-stan.org/), a probabilistic language model in C++. The aim of this package is to provide an interface for forecasting and Bayesian modeling of the most popular time series models.
+The *bayesforecast* package implements Bayesian estimation of structured time series models, using the Hamiltonian Monte Carlo method, implemented with [Stan](https://mc-stan.org/), a probabilistic language model in C++. The aim of this package is to provide an interface for forecasting and Bayesian modelling of the most popular time series models.
 
 On the beta version 1.0.0, the available models are:
  
@@ -56,13 +54,15 @@ Additionally the forecast function is implemented for automatic forecast, by def
 
 ### Installation 
 
-This is still a beta version package, so currently installing it could be challenging, we recommend to install the current R version (**R4.0**) and the **Rtools4.0**. After that, install the package [rstan](https://mc-stan.org/users/interfaces/rstan.html), you can follow the installation procedure [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started)
+This is still a beta version package, so currently installing it could be challenging, we recommend to install the current R version (**R4.0**) and the **Rtools4.0**. After that, install the package [rstan](https://mc-stan.org/users/interfaces/rstan.html), you can follow the installation procedure [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started).
 
+To install the latest release version from CRAN use
 
-### Installation from Github
+```{r, eval=FALSE}
+install.packages("bayesforecast")
+```
 
-
-For installing *bayesforecast* package from Github, use the code on the next chunk:
+The current developmental version can be downloaded from github via:
 
 ```{r, eval = FALSE}
 if (!requireNamespace("remotes")) install.packages("remotes")
@@ -70,11 +70,9 @@ if (!requireNamespace("remotes")) install.packages("remotes")
 remotes::install_github("asael697/bayesforecast",dependencies = TRUE)
 ```
  
- 
-
 ### Case study: Analyzing the monthly live birth in U.S. an example
 
-As an example, we provide a time series modeling for the monthly live births in the United States 1948-1979, published by [Stoffer (2019)](https://github.com/nickpoison/astsa). In **figure 1** , the data has a seasonal behavior that repeats every year. The series *waves* in the whole 40 years period (*superior part*). In addition, the partial (*pacf*) and auto-correlation (*acf*) functions  are far from zero (*middle part*). After applying a difference to the data, the acf and pacf plots still have some non-zero values every 12 lags (*inferior part*).
+As an example, we provide a time series modelling for the monthly live births in the United States 1948-1979, published by [Stoffer (2019)](https://github.com/nickpoison/astsa). In **figure 1** , the data has a seasonal behaviour that repeats every year. The series *waves* in the whole 40 years period (*superior part*). In addition, the partial (*pacf*) and auto-correlation (*acf*) functions  are far from zero (*middle part*). After applying a difference to the data, the ACF and PACF plots still have some non-zero values every 12 lags (*inferior part*).
 
 ```{r fig1,fig.cap="\\label{fig:fig1}Monthly live birth U.S.A",echo=FALSE}
 dbirth = diff(birth)
@@ -97,7 +95,6 @@ sf1 = stan_sarima(ts = birth,order = c(1,1,1),seasonal = c(1,1,1),
                   prior_mu0 = student(mu = 0,sd = 1,df = 7))
 ```
 
-
 All fitted models are *varstan* objects, these  are S3 classes with the *stanfit* results provided by the [rstan](https://mc-stan.org/users/interfaces/rstan.html) package, and other useful elements that make the modeling process easier. 
 
 ```{r}
@@ -115,7 +112,6 @@ A white noise behavior indicates a good model fit. The model's residuals in figu
 ```{r}
 autoplot(forecast(object = sf1,h = 12))
 ```
-
 
 ### Automatic forecast with prophet
 
