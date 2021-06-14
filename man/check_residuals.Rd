@@ -21,7 +21,7 @@ the \code{check.residuals} function provided by the \code{forecast} package.
 \examples{
 \donttest{
  library(astsa)
- sf1 = auto.sarima(ts = birth)
+ sf1 = auto.sarima(ts = birth,iter = 500,chains = 1)
  # fitted model
  check_residuals(sf1)
 }

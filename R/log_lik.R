@@ -44,9 +44,9 @@
 #' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#'  fit1 = varstan(model,chains = 1)
+#'  fit1 = varstan(model,iter = 500,chains = 1)
 #'
-#'  log1 <- log_lik(fit1)
+#'  log1 = log_lik(fit1)
 #'  log1
 #' }
 #'
@@ -91,9 +91,9 @@ log_lik.varstan = function(object,permuted = TRUE,...){
 #' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#'  fit1 = varstan(model,chains = 1)
+#'  fit1 = varstan(model,iter = 500,chains = 1)
 #'
-#'  log1 <- loglik(fit1)
+#'  log1 = loglik(fit1)
 #'  log1
 #' }
 #'
@@ -156,9 +156,9 @@ loglik = function(object,permuted = TRUE){
 #' \donttest{
 #' library(astsa)
 #' model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#' fit1 = varstan(model,chains = 1)
+#' fit1 = varstan(model,iter = 500,chains = 1)
 #'
-#' loo1 <- loo(fit1)
+#' loo1 = loo(fit1)
 #' loo1
 #' }
 #'
@@ -207,9 +207,9 @@ loo.varstan = function(x,...){
 #' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#'  fit1 = varstan(model,chains = 1)
+#'  fit1 = varstan(model,iter = 500,chains = 1)
 #'
-#'  waic1 <- waic(fit1)
+#'  waic1 = waic(fit1)
 #'  waic1
 #' }
 #'
@@ -238,9 +238,9 @@ waic.varstan = function(x,...){
 #' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#'  fit1 = varstan(model,chains = 1)
+#'  fit1 = varstan(model,iter = 500,chains = 1)
 #'
-#'  aic1 <- aic(fit1)
+#'  aic1 = aic(fit1)
 #'  mean(aic1)
 #' }
 #'
@@ -271,9 +271,9 @@ aic = function(x){
 #' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#'  fit1 = varstan(model,chains = 1)
+#'  fit1 = varstan(model,iter = 500,chains = 1)
 #'
-#'  bic1 <- bic(fit1)
+#'  bic1 = bic(fit1)
 #'  mean(bic1)
 #' }
 #'
@@ -305,9 +305,9 @@ bic = function(x){
 #' \donttest{
 #'  library(astsa)
 #'  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#'  fit1 = varstan(model,chains = 1)
+#'  fit1 = varstan(model,iter = 500,chains = 1)
 #'
-#'  aic1 <- aic(fit1)
+#'  aic1 = AICc(fit1)
 #'  mean(aic1)
 #' }
 #'

@@ -55,7 +55,7 @@ implemented in the \pkg{bayesplot} package.
 }
 \examples{
 \dontrun{
-sf1 = stan_ssm(ipc)
+sf1 = stan_ssm(ipc,iter = 500,chains = 1)
 
 # plot posterior intervals
 mcmc_plot(sf1)

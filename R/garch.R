@@ -168,6 +168,5 @@ get_order_garch= function(dat){
 #' @noRd
 #'
 max_order_garch= function(dat){
-
   return(max(c(dat$p,dat$q,dat$s,dat$k,dat$h)))
 }

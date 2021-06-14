@@ -25,7 +25,7 @@
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param robust A boolean for obtain the robust estimation. The default
 #' @param draws An integer indicating the number of draws to return. The default
-#'    number of draws is 1000
+#'    number of draws is 1000.
 #' @param seed An optional \code{\link[=set.seed]{seed}} to use.
 #' @param ... Further arguments passed to  \code{posterior_predict}.
 #'
@@ -64,7 +64,7 @@
 #'
 #' @examples
 #' \donttest{
-#'  fit = auto.sarima(ts = birth)
+#'  fit = auto.sarima(ts = birth,iter = 500,chains = 1)
 #'  fc = forecast(fit,h = 12)
 #' }
 #'

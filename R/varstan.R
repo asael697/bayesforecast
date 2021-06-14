@@ -102,12 +102,12 @@
 #'  library(astsa)
 #'  # Fitting a seasonal ARIMA model
 #'  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#'  fit1 = varstan(mod1,chains = 1)
+#'  fit1 = varstan(mod1,iter = 500,chains = 1)
 #'  fit1
 #'
 #'  # Fitting a GARCH(1,1) model
 #'  dat = garch(ipc,order = c(1,1,0))
-#'  fit2 = varstan(dat,chains = 1)
+#'  fit2 = varstan(dat,iter = 500,chains = 1)
 #'  fit2
 #' }
 #'
@@ -187,7 +187,7 @@ is.varstan = function(object){
 #'  library(astsa)
 #'  # Fitting a GARCH(1,1) model
 #'  dat = garch(ipc,order = c(1,1,0))
-#'  fit2 = varstan(dat,chains = 1)
+#'  fit2 = varstan(dat,iter = 500,chains = 1)
 #'
 #'  # Extracting the mean parameter
 #'  mu0 = extract_stan(fit2,pars = "mu0")
@@ -221,7 +221,7 @@ extract_stan = function(object,pars,permuted = TRUE,
 #' \donttest{
 #'  # Fitting a GARCH(1,1) model
 #'  dat = garch(ipc,order = c(1,1,0))
-#'  fit1 = varstan(dat,chains = 1)
+#'  fit1 = varstan(dat,iter = 500,chains = 1)
 #'
 #'  # Converting to a Stanfit object
 #'  stanfit1 = as.stan(fit1)

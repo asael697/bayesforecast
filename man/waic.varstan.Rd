@@ -29,9 +29,9 @@ for more details on model comparisons.
 \donttest{
  library(astsa)
  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
- fit1 = varstan(model,chains = 1)
+ fit1 = varstan(model,iter = 500,chains = 1)
 
- waic1 <- waic(fit1)
+ waic1 = waic(fit1)
  waic1
 }
 

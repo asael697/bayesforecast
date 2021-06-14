@@ -1,10 +1,12 @@
 ---
 title: "Estimating GARCH Models"
 author: "Asael Alonzo Matamoros and Andrés Dala"
-date: "2/25/2021"
-output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+output: 
+  html_vignette: 
+    toc: yes
 vignette: >
-  %\VignetteIndexEntry{garch-models}
+  %\VignetteIndexEntry{Estimating GARCH Models}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -25,18 +27,15 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r,warning=TRUE}
-library(bayesGARCH)
+```{r,message=FALSE}
 library(bayesforecast)
 library(ggplot2)
-
-options(mc.cores = parallel::detectCores())
 ```
 
 # Introduction
 
 
-Foreign exchange is the conversion of one currency into another at a specific rate known as the foreign exchange rate. The conversion rates are constantly changing as they are driven by the market forces of supply and demand. In this vignette we will model the volatility of the series of daily observations of the foreign exchange  between Germany and the United Kingdom proposed by [Ardia y Hoogerheide (2010)](https://journal.r-project.org/archive/2010/RJ-2010-014/RJ-2010-014.pdf) using the <code>stan_garch</code> function of the **bayesforecast** package. The records correspond from January 3, 1984 to December 31, 1991, however, for this work we will use the first 350 observations.
+The foreign exchange consists of converting one currency into another at a specific rate known as the foreign exchange rate. The conversion rates are constantly changing as they are driven by the market forces of supply and demand. In this vignette, we will model the volatility of the series of daily observations of the foreign exchange between Germany and the United Kingdom proposed by [Ardia y Hoogerheide (2010)](https://journal.r-project.org/archive/2010/RJ-2010-014/RJ-2010-014.pdf) using the <code>stan_garch</code> function of the **bayesforecast** package. The records correspond from January 3, 1984, to December 31, 1991. However, for this work, we will use the first 350 observations.
 
 The steps for estimating the model are:
 
@@ -56,50 +55,68 @@ Create de GARCH Model through the <code>stan_garch</code> function of the **baye
 
 <li>
 
-Graph and observe the residuals of the model, if the residuals look like white noise we proceed to make the prediction, otherwise we will choose another model.
+Plot and observe the residuals of the model. If the residuals look like white noise, we proceed to make the prediction. Otherwise, we will choose another model. Plot the data and identify any unusual observations.
 
 </li>
 
 </ol>
 
-Graphing the data:
+Plotting the data:
 
-```{r}
-data(dem2gbp)
-demgbp = ts(dem2gbp[1:350],start = c(1984,1,3),frequency = 365)
+```{r,demgbp}
 autoplot(demgbp,main ="DEM/GBP Foreign exchange",ylab ="log-returns",x = "Days" )
-
 ```
 
 The model proposed by [Ardia y Hoogerheide (2010)](https://journal.r-project.org/archive/2010/RJ-2010-014/RJ-2010-014.pdf) in their [bayesGARCH](https://cran.r-project.org/web/packages/bayesGARCH/index.html) package is a GARCH(1,1) with t-student innovations of the form:
 
 
-$$y_t = \mu + \left(\dfrac{v-2}{v}\lambda_t \sigma_t \right)^{1/2} \epsilon_t$$
-$$\sigma^2_t = \sigma_0 + \alpha_1\epsilon_{t-1}^2 + \beta_1\sigma^2_{t-1}$$
-$$\epsilon_t \sim N(0,1)$$
-$$\lambda_t \sim IG(v/2,v/2)$$
+$$
+y_t = \mu + \left(\dfrac{v-2}{v}\lambda_t \sigma_t \right)^{1/2} \epsilon_t,\\
+\sigma^2_t = \sigma_0 + \alpha_1\epsilon_{t-1}^2 + \beta_1\sigma^2_{t-1}\\
+\epsilon_t \sim N(0,1)\\
+\lambda_t \sim IG(v/2,v/2)
+$$
 
 where $\sigma_0 > 0$,$\alpha_1,\beta_1$ and $v > 2$, moreover $N(0,1)$ denotes the standard normal distribution; $IG$ denotes the inverted gamma distribution. The restriction on the degrees of freedom parameter $v$ ensures the conditional variance to be finite and the restrictions on the GARCH parameters $\sigma_0, \alpha_1$ and $\beta$ guarantee its positivity.
 
 This model can be run in **bayesforecast** like:
 
-```{r,results='hide',warning=FALSE}
-sf1 = stan_garch(ts = demgbp,order = c(1,1,0),genT = TRUE)
-sf1
+
+
+```{r,echo=FALSE}
+set.seed(6551)
+sf1 = stan_garch(ts = demgbp,order = c(1,1,0),genT = TRUE,chains = 1)
 ```
+
+```{r,eval=FALSE}
+sf1 = stan_garch(ts = demgbp,order = c(1,1,0),genT = TRUE,chains = 1)
+summary(sf1)
+```
+
+```{r,echo=FALSE}
+summary(sf1)
+```
+
 
 In the model proposed by  [Ardia y Hoogerheide (2010)](https://journal.r-project.org/archive/2010/RJ-2010-014/RJ-2010-014.pdf) they use truncated normal priors on the GARCH parameters $\beta$ and $\alpha=(\sigma_0,\alpha_1)'$
 
-$$p(\alpha)\propto\phi_{N_2}(\alpha|\mu_\alpha,\Sigma_\alpha) 1 \{\alpha\in R_+^2\}$$
-$$p(\beta)\propto\phi_{N_1}(\beta|\mu_\beta,\Sigma_\beta) 1 \{\beta\in R_+\}$$
+$$
+p(\alpha)\propto\phi_{N_2}(\alpha|\mu_\alpha,\Sigma_\alpha) 1 \{\alpha\in R_+^2\}\\
+p(\beta)\propto\phi_{N_1}(\beta|\mu_\beta,\Sigma_\beta) 1 \{\beta\in R_+\}\\
+$$
 where $\mu_\bullet$ and $\Sigma_\bullet$ are the hyperparameters, $1\{\bullet\}$ is the indicator function and $\phi_{N_d}$ is the d-dimensional normal density.
 
 The prior distribution of vector $\lambda=(\lambda_1,...\lambda_T)'$ conditional on $v$ is found by noting that the components $\lambda_t$ are independent and identically distributed from the inverted gamma, which yields
 
-$$p(\lambda|v)=\left(\frac{v}{2} \right)^{\frac{Tv}{2}}\left[ \Gamma\left(\frac{v}{2}\right)\right]^{-T}\left(\prod_{t=1}^T\lambda_t\right)^{-\frac{v}{2}-1}exp\left[-\frac{1}{2}\sum_{t=1}^T\frac{v}{\lambda_t}\right] $$
+$$
+p(\lambda|v)=\left(\frac{v}{2} \right)^{\frac{Tv}{2}}\left[ \Gamma\left(\frac{v}{2}\right)\right]^{-T}\left(\prod_{t=1}^T\lambda_t\right)^{-\frac{v}{2}-1}exp\left[-\frac{1}{2}\sum_{t=1}^T\frac{v}{\lambda_t}\right]
+$$
 furthermore the prior distribution on the degrees of freedom parameters is a translated exponencial with parameters $\lambda^*>0$ y $\delta\geq2$ 
-$$p(v)=\lambda^*exp[-\lambda^*(v-\delta)]1\{v>\delta\}$$
-The priors used by [Ardia y Hoogerheide (2010)](https://journal.r-project.org/archive/2010/RJ-2010-014/RJ-2010-014.pdf) are slightly similar to the prioris by default in **bayesforecast**, these were defined by default following the recommendations proposed by [Stan](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations).
+
+$$
+p(v)=\lambda^*exp[-\lambda^*(v-\delta)]1\{v>\delta\}
+$$
+The priors used by [Ardia y Hoogerheide (2010)](https://journal.r-project.org/archive/2010/RJ-2010-014/RJ-2010-014.pdf) are slightly similar to the prior by default in **bayesforecast**, these were defined by default following the recommendations proposed by [Stan](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations).
 
 ```{r}
 prior_summary(sf1)
@@ -108,22 +125,22 @@ prior_summary(sf1)
 Based on these previously defined parameters, the obtained posteriors are:
 
 ```{r}
-#mcmc_plot(sf1)
+mcmc_plot(sf1)
 ```
 
-It is observed that the posteriors converge, in addition, when observing the fit of the model, it does not fully fit the data because the model does not capture the dependency structure in the location parameter. Then we proceed to review the model residuals, the <code>check_residuals</code> function estimates the posterior mean of the residuals and plots them. It is noted that the graph is not sufficient to corroborate the assumptions of normality and stationarity, but they are an initial indicator of the adjustment.
+It is observed that the posteriors converge. Additionally, when following the model's fit, it does not entirely fit the data because the model does not capture the dependency structure in the location parameter. Then we proceed to review the model residuals. The <code>check_residuals</code> function estimates the posterior mean of the residuals and plots them. Note that the plot is not sufficient to corroborate the normality and stationarity assumptions, but they are an initial indicator of the adjustment.
 
-```{r}
+```{r,residuals_demgbp}
 check_residuals(sf1)
 ```
 
-The residual series *(Upper part)* seems to be stationary, however, the histogram and quantile graph *(middle part)* show that the model has heavy tails, this is due to the high volatility of the series.
+The residual series *(Upper part)* seems to be stationary. However, the histogram and quantile graph *(middle part)* show that the model has heavy tails due to the series's high volatility.
 
 # Forecast
 
 Based on the previous results, we finally predict the model for the next few days:
 
-```{r}
+```{r,forecast_demgbp}
 autoplot(object = forecast(sf1,h = 12),ylab="log-returns")
 ```
 

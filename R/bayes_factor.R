@@ -39,14 +39,14 @@
 #' library(astsa)
 #' # Fitting a seasonal ARIMA model
 #' mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#' fit1 = varstan(mod1,chains = 1)
+#' fit1 = varstan(mod1,iter = 500,chains = 1)
 #'
 #' fit1
 #' bridge_sampler(fit1)
 #'
 #' # Fitting a Dynamic harmonic regression
 #' mod2  = Sarima(birth,order = c(0,1,2),xreg = fourier(birth,K=6))
-#' fit2 = varstan(mod2,chains = 1)
+#' fit2 = varstan(mod2,iter = 500,chains = 1)
 #'
 #' fit2
 #' bridge_sampler(fit2)
@@ -94,11 +94,11 @@ bridge_sampler.varstan <- function(samples, ...) {
 #'  library(astsa)
 #'  # Fitting a seasonal arima model
 #'  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
-#'  fit1 = varstan(mod1,chains = 1)
+#'  fit1 = varstan(mod1,iter = 500,chains = 1)
 #'
 #'  # Fitting a Dynamic harmonic regression
 #'  mod2  = Sarima(birth,order = c(0,1,2),xreg = fourier(birth,K=6))
-#'  fit2 = varstan(mod2,chains = 1)
+#'  fit2 = varstan(mod2,iter = 500,chains = 1)
 #'
 #'  # compute the Bayes factor
 #'  bayes_factor(fit1, fit2)

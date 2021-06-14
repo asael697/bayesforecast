@@ -45,7 +45,7 @@ columns.
 \donttest{
  library(astsa)
  # Dynaimc Harmonic regression
- sf1 = auto.sarima(birth,xreg = fourier(birth,K= 6))
+ sf1 = auto.sarima(birth,xreg = fourier(birth,K= 6),iter = 500,chains = 1)
 }
 
 }

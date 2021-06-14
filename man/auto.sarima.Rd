@@ -95,10 +95,10 @@ For more information look at \code{auto.arima()} function of forecast package.
 \examples{
 \donttest{
  # Automatic Sarima model for the birth data
- auto.sarima(birth)
+ auto.sarima(birth,iter = 500,chains = 1)
 
  # Dynamic Harmonic regression
- auto.sarima(birth,xreg = fourier(birth,K= 6))
+ auto.sarima(birth,xreg = fourier(birth,K= 6),iter = 500,chains = 1)
 }
 
 }

@@ -16,8 +16,15 @@ stopifnot(require(knitr))
 
 options(width = 90)
 knitr::opts_chunk$set(collapse = TRUE,comment = "#>")
-knitr::opts_chunk$set(echo = TRUE,message = FALSE,warning = FALSE,
-  dev = "png",dpi = 150,fig.asp = 0.8,fig.width = 5,out.width = "60%",fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      dev = "png",
+                      dpi = 150,
+                      fig.asp = 0.8,
+                      fig.width = 5,
+                      out.width = "60%",
+                      fig.align = "center")
 
 library(bayesforecast)
 library(ggplot2)
@@ -51,7 +58,7 @@ If residuals look like white noise, we calculate the forecasts; otherwise, we ch
 
 Graphing the data:
 
-```{r}
+```{r ipc}
 autoplot(object = ipc,main = "Inflation rate in Honduras",ylab="CPI")
 ```
 
@@ -69,28 +76,31 @@ gridExtra::grid.arrange(g1,g2,g3,
 
 The autocorrelation functions (ACF) and partial autocorrelation (PACF) show a mild correlation of at most a data lag, then the order of the ARIMA Model to be considered is p = 1, d = 1, q = 1, additionally both graphs show weak periodic patterns. Hence the order of the seasonal component is P = 1, D = 0, Q = 1. We consider weakly informative prior distributions, using the priors by defect for the location, scale, autoregressive, and moving average parameters. For the seasonals components, we will use a beta(2,2) distribution with domain $D = [1,-1]$. As a result, the complete model is:
 
-$$Inflacion \sim SARIMA(1,1,1)_\times(1,0,1)$$ $$\mu_0 \sim t(0,2.5,7)$$ $$\sigma_0 \sim t(7)$$ $$ar_1, ma_1 \sim N(0,0.5)$$ $$sar_1,sma_1 \sim beta(2,2)$$
+$$
+Inflacion \sim SARIMA(1,1,1)_\times(1,0,1)\\
+\mu_0 \sim t(0,2.5,7)\\
+\sigma_0 \sim t(7)\\ 
+ar_1, ma_1 \sim N(0,0.5)\\ 
+sar_1,sma_1 \sim beta(2,2)
+$$
 
 **bayesforecast** offers a similar interface to the [rstanarm](https://mc-stan.org/rstanarm/) and [forecast](https://github.com/robjhyndman/forecast) packages, the model can be estimated using the following instructions:
 
 ```{r,echo=FALSE}
 set.seed(6551)
-
-options(mc.cores = parallel::detectCores())
 sf1 = stan_sarima(ts = ipc,order = c(1,1,1),seasonal = c(1,1,1),
-                  prior_sar = beta(2,2),prior_sma = beta(2,2))
+                  prior_sar = beta(2,2),prior_sma = beta(2,2),chains = 1)
 ```
 
 ```{r,eval=FALSE}
-
 sf1 = stan_sarima(ts = ipc,order = c(1,1,1),seasonal = c(1,1,1),
-                  prior_sar = beta(2,2),prior_sma = beta(2,2))
+                  prior_sar = beta(2,2),prior_sma = beta(2,2),chains = 1)
 
-sf1
+summary(sf1)
 ```
 
 ```{r,echo=FALSE}
-sf1
+summary(sf1)
 ```
 
 To check the adjustment of each parameter, we review the chains and density graphs of each model:
@@ -101,13 +111,13 @@ To check the adjustment of each parameter, we review the chains and density grap
 
 The chains seem to converge and not observed multimodality in the parameter distributions. Therefore, we consider accepting the estimation of the parameters; we proceed to review the fit.
 
-```{r}
+```{r,posterior_predict}
 autoplot(sf1)+labs(title = "Posterior Predict", y="CPI")
 ```
 
 The model seems to fit the series, we proceed to review the model residuals, the <code>check_residuals</code> function estimates the posterior mean of the residuals and plots them. This plot is not sufficient to corroborate the assumptions of normality and stationarity but is an initial indicator of the adjustment.
 
-```{r}
+```{r,residuals_ipc}
 check_residuals(sf1)
 ```
 
@@ -117,7 +127,7 @@ The series of residuals (*upper part*) shows that the model does not explain the
 
 Finally, we predict the model for the next year:
 
-```{r}
+```{r,forecast_ipc}
 autoplot(object = forecast(sf1,h = 12),ylab="CPI")
 ```
 

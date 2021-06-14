@@ -315,7 +315,7 @@ ggpacf = function(y,title = NULL){
 #' @examples
 #' \donttest{
 #'  library(astsa)
-#'  sf1 = auto.sarima(ts = birth)
+#'  sf1 = auto.sarima(ts = birth,iter = 500,chains = 1)
 #'  # fitted model
 #'  plot(sf1)
 #' }
@@ -353,7 +353,7 @@ plot.varstan = function(x,prob = 0.95,...){
 #' @examples
 #' \donttest{
 #'  library(astsa)
-#'  sf1 = auto.sarima(ts = birth)
+#'  sf1 = auto.sarima(ts = birth,iter = 500,chains = 1)
 #'  # fitted model
 #'  autoplot(sf1)
 #' }
@@ -407,7 +407,7 @@ autoplot.varstan = function(object,prob = 0.95,...){
 #' @examples
 #' \donttest{
 #'  library(astsa)
-#'  sf1 = auto.sarima(ts = birth)
+#'  sf1 = auto.sarima(ts = birth,iter = 500,chains = 1)
 #'  # fitted model
 #'  check_residuals(sf1)
 #' }
@@ -462,9 +462,11 @@ check_residuals = function(object,...){
 #'   that can be further customized using the \pkg{ggplot2} package.
 #'
 #' @import bayesplot
+#' @export
+#'
 #' @examples
 #' \dontrun{
-#' sf1 = stan_ssm(ipc)
+#' sf1 = stan_ssm(ipc,iter = 500,chains = 1)
 #'
 #' # plot posterior intervals
 #' mcmc_plot(sf1)

@@ -136,10 +136,10 @@ For changing the default prior use the function \code{set_prior()}.
 \examples{
 \donttest{
  # Declaring a Holt-Winters model for the ipc data.
- sf1 = stan_Hw(ipc)
+ sf1 = stan_Hw(ipc,iter = 500,chains = 1)
 
  # Declaring a Holt-Winters damped trend model for the ipc data.
- sf2 = stan_ssm(ipc,damped = TRUE)
+ sf2 = stan_ssm(ipc,damped = TRUE,iter = 500,chains = 1)
 }
 
 }

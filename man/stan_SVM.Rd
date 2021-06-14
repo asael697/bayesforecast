@@ -96,7 +96,7 @@ The function returns a \code{varstan} object with the fitted model.
 \examples{
 \donttest{
  # Declares a SVM model for the IPC data
- sf1 = stan_SVM(ipc,arma = c(1,1))
+ sf1 = stan_SVM(ipc,arma = c(1,1),iter = 500,chains = 1)
 }
 
 }

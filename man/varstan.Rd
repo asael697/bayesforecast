@@ -91,12 +91,12 @@ argument see \code{\link[rstan:stan]{stan}}.
  library(astsa)
  # Fitting a seasonal ARIMA model
  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
- fit1 = varstan(mod1,chains = 1)
+ fit1 = varstan(mod1,iter = 500,chains = 1)
  fit1
 
  # Fitting a GARCH(1,1) model
  dat = garch(ipc,order = c(1,1,0))
- fit2 = varstan(dat,chains = 1)
+ fit2 = varstan(dat,iter = 500,chains = 1)
  fit2
 }
 

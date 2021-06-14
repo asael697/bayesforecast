@@ -32,7 +32,7 @@ which must have the same number of rows as ts. It should not be a data frame.}
 \item{robust}{A boolean for obtain the robust estimation. The default}
 
 \item{draws}{An integer indicating the number of draws to return. The default
-number of draws is 1000}
+number of draws is 1000.}
 
 \item{seed}{An optional \code{\link[=set.seed]{seed}} to use.}
 
@@ -78,7 +78,7 @@ accordingly.
 }
 \examples{
 \donttest{
- fit = auto.sarima(ts = birth)
+ fit = auto.sarima(ts = birth,iter = 500,chains = 1)
  fc = forecast(fit,h = 12)
 }
 

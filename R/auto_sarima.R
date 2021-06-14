@@ -91,10 +91,10 @@
 #' @examples
 #' \donttest{
 #'  # Automatic Sarima model for the birth data
-#'  auto.sarima(birth)
+#'  auto.sarima(birth,iter = 500,chains = 1)
 #'
 #'  # Dynamic Harmonic regression
-#'  auto.sarima(birth,xreg = fourier(birth,K= 6))
+#'  auto.sarima(birth,xreg = fourier(birth,K= 6),iter = 500,chains = 1)
 #'}
 #'
 auto.sarima = function(ts,seasonal = TRUE,xreg= NULL,chains = 4,iter = 4000,warmup = floor(iter/2),
@@ -180,7 +180,7 @@ auto.sarima = function(ts,seasonal = TRUE,xreg= NULL,chains = 4,iter = 4000,warm
 #' \donttest{
 #'  library(astsa)
 #'  # Dynaimc Harmonic regression
-#'  sf1 = auto.sarima(birth,xreg = fourier(birth,K= 6))
+#'  sf1 = auto.sarima(birth,xreg = fourier(birth,K= 6),iter = 500,chains = 1)
 #' }
 #'
 #' @importFrom forecast fourier
