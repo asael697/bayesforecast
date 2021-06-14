@@ -1,6 +1,6 @@
 Package: bayesforecast
 Title: Bayesian Time Series Modeling with Stan
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(person("Asael","Alonzo Matamoros", role = c("aut", "cre"),email = "asael.alonzo@gmail.com"),
      person("Cristian","Cruz Torres", role = 'aut', email = "cristian.cruz@unah.edu.hn"),
      person("Andres", "Dala", role = "ctb",email = "andresht6@hotmail.com"),
@@ -33,7 +33,7 @@ LinkingTo: BH (>= 1.66.0), Rcpp (>= 0.12.0), RcppParallel (>= 5.0.1),
 SystemRequirements: GNU make
 Collate: 'autoplot.R' 'auto_sarima.R' 'bayes_factor.R'
         'bayesforecast-package.R' 'Birth.R' 'Fit.R' 'forecast.R'
-        'garch.R' 'get_params.R' 'ipc.R' 'log_lik.R' 'Misc.R' 'model.R'
+        'garch.R' 'get_params.R' 'log_lik.R' 'Misc.R' 'model.R'
         'naive.R' 'posterior_intervals.R' 'posterior_predict.R' 'ets.R'
         'predictive_error.R' 'print.R' 'prior.R' 'report.R' 'Sarima.R' 
         'summary.R' 'ssm.R' 'stanmodels.R' 'SVM.R' 'varstan.R' 'stan_models.R'
