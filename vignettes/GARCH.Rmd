@@ -67,7 +67,7 @@ Plotting the data:
 autoplot(demgbp,main ="DEM/GBP Foreign exchange",ylab ="log-returns",x = "Days" )
 ```
 
-The model proposed by [Ardia y Hoogerheide (2010)](https://journal.r-project.org/archive/2010/RJ-2010-014/RJ-2010-014.pdf) in their [bayesGARCH](https://cran.r-project.org/web/packages/bayesGARCH/index.html) package is a GARCH(1,1) with t-student innovations of the form:
+The model proposed by [Ardia y Hoogerheide (2010)](https://journal.r-project.org/archive/2010/RJ-2010-014/RJ-2010-014.pdf) in their [bayesGARCH](https://github.com/ArdiaD/bayesGARCH) package is a GARCH(1,1) with t-student innovations of the form:
 
 
 $$
