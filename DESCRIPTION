@@ -40,7 +40,7 @@ Collate: 'autoplot.R' 'auto_sarima.R' 'bayes_factor.R'
 NeedsCompilation: yes
 Packaged: 2020-11-29 18:06:44 UTC; asael
 Author: Asael Alonzo Matamoros [aut, cre],
-  Cristian Cruz Torres [aut], Rob Hyndman [ctb],
+  Cristian Cruz Torres [aut], Andres Dala [ctb], Rob Hyndman [ctb],
   Mitchell O'Hara-Wild [ctb]
 Maintainer: Asael Alonzo Matamoros <asael.alonzo@gmail.com>
 VignetteBuilder: knitr
