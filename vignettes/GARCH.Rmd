@@ -151,7 +151,7 @@ autoplot(object = forecast(sf1,h = 12),ylab="log-returns")
 volume 612 series Lecture Notes in Economics and Mathematical Systems. Springer-Verlag, Berlin, Germany.
 https://doi.org/10.1007/978-3-540-78657-3
 
-- Vrontos, I., Dellaportas, P., & Politis, D. (2000). *Full Bayesian Inference for GARCH and EGARCH Models*. Journal of Business & Economic Statistics, 18(2), 187-198. doi:10.2307/1392556
+- Vrontos, I., Dellaportas, P., & Politis, D. (2000). *Full Bayesian Inference for GARCH and EGARCH Models*. Journal of Business & Economic Statistics, 18(2), 187-198.
 
 - Engle, R. (1982). *Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. Econometrica*, 50(4), 987-1007. url: http://www.jstor.org/stable/1912773.
 
