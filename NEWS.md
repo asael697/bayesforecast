@@ -1,7 +1,7 @@
 **bayesforecast NEWS**
 ============
 
-**Bayesforecast 1.0.1. Date: 14/06/2021**
+**Bayesforecast 1.0.1. Date: 16/06/2021**
 ----------------------------------
 
 ### Features:
@@ -27,6 +27,9 @@
 
 - Correcting ets Stan code, for seasonality. 
 
+- correcting bug in predictive_error() function.
+
+-fix doi:10.2307/1392556 in GARCH vignette
 
 **Bayesforecast 0.1.1. Date: 29/01/2021**
 ----------------------------------
