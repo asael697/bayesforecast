@@ -109,7 +109,7 @@ ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
     m1$prior_seasonal  = c(0,0.5,1,1)
     m1$prior_level1    = c(mean(y[1:m1$period]) ,2.5,6,4)
     m1$prior_trend1    = c(0,2.5,6,4)
-    m1$prior_seasonal1 = c(0,10,1,1)
+    m1$prior_seasonal1 = c(mean(y[1:m1$period]) ,2.5,6,4)
 
 
     # Generalized t distribution
