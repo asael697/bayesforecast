@@ -52,7 +52,7 @@ predictive_error.varstan = function(object,newdata = NULL,xreg = NULL,draws = 10
   if(is.null(newdata))
     return(as.data.frame(extract_stan(object,"residuals", permuted = TRUE) ))
 
-  if (!is.numeric(newdata) | stats::is.ts(newdata))
+  if (!is.numeric(newdata) | !stats::is.ts(newdata))
     stop("The current object is not a time series object")
 
   yh = as.matrix(posterior_predict(object = object,h = length(newdata),xreg = xreg,draws = draws,seed = seed) )
@@ -70,8 +70,8 @@ predictive_error.data.frame = function(object,newdata = NULL,xreg = NULL,draws =
   if(!is.data.frame(object))
     stop("The current object is not a data.frame object")
 
-  if (!is.numeric(newdata) | stats::is.ts(newdata))
-    stop("The current object is not a time series object")
+  if (!is.numeric(newdata) | !stats::is.ts(newdata))
+    stop("The current newdata is not a time series object")
 
   obj = as.matrix(object)
 
