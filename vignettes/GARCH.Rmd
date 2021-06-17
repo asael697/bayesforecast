@@ -155,4 +155,4 @@ https://doi.org/10.1007/978-3-540-78657-3
 
 - Engle, R. (1982). *Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. Econometrica*, 50(4), 987-1007. url: http://www.jstor.org/stable/1912773.
 
-- Bollerslev, T. (1986). *Generalized autoregressive conditional heteroskedasticity*. Journal of Econometrics. 31(3), 307-327. doi: https://doi.org/10.1016/0304-4076(86)90063
+- Bollerslev, T. (1986). *Generalized autoregressive conditional heteroskedasticity*. Journal of Econometrics. 31(3), 307-327. doi:  https://doi.org/10.1016/0304-4076(86)90063-1

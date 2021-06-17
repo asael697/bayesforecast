@@ -31,6 +31,8 @@
 
 -fix doi:10.2307/1392556 in GARCH vignette
 
+-fix URl in GARCH vignette
+
 **Bayesforecast 0.1.1. Date: 29/01/2021**
 ----------------------------------
 
