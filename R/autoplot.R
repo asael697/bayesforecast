@@ -490,6 +490,7 @@ mcmc_plot.varstan = function(object, pars = NULL, combo = c("dens","trace"),
   if(is.null(pars)) pars = gp
 
   x = as.data.frame(extract_stan(object = object,pars = pars))
+  x = cbind(Chain = sort(rep(1:object$stan.parmaters$chains,object$stan.parmaters$iter)),x)
 
   g = bayesplot::mcmc_combo(x = x,combo = combo)
 
