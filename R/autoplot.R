@@ -491,7 +491,7 @@ mcmc_plot.varstan = function(object, pars = NULL, combo = c("dens","trace"),
 
   x = as.data.frame(extract_stan(object = object,pars = pars))
 
-  g = bayesplot::mcmc_combo(x = x,pars = pars,combo = combo)
+  g = bayesplot::mcmc_combo(x = x,combo = combo)
 
   return(g)
 }
