@@ -3,3 +3,4 @@ CRAN-release
 cran-comments.md
 inst/doc
 .DS_Store
+.Rhistory
