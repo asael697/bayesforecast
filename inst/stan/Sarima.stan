@@ -56,19 +56,19 @@ transformed parameters{
 
   for( i in 1:p){
     if(prior_ar[i,4]== 1) ar[i] = ar0[i];
-    else ar[i] = (2*fabs(ar0[i]) - 1);
+    else ar[i] = (2*abs(ar0[i]) - 1);
   }
   for(i in 1:q){
     if(prior_ma[i,4] == 1) ma[i] = ma0[i];
-    else ma[i] = (2*fabs(ma0[i])-1);
+    else ma[i] = (2*abs(ma0[i])-1);
   }
     for( i in 1:P){
     if(prior_sar[i,4]== 1) sar[i] = sar0[i];
-    else sar[i] = (2*fabs(sar0[i]) - 1);
+    else sar[i] = (2*abs(sar0[i]) - 1);
   }
   for(i in 1:Q){
     if(prior_sma[i,4] == 1) sma[i] = sma0[i];
-    else sma[i] = (2*fabs(sma0[i])-1);
+    else sma[i] = (2*abs(sma0[i])-1);
   }
 
   //***********************************************
@@ -144,7 +144,7 @@ model {
   if(p > 0){
     for(i in 1:p){
      if(prior_ar[i,4]==1) target += normal_lpdf(ar0[i]|prior_ar[i,1],prior_ar[i,2]);
-     else if(prior_ar[i,4]==2) target += beta_lpdf(fabs(ar0[i])|prior_ar[i,1],prior_ar[i,2]);
+     else if(prior_ar[i,4]==2) target += beta_lpdf(abs(ar0[i])|prior_ar[i,1],prior_ar[i,2]);
      else if(prior_ar[i,4]==3) target += uniform_lpdf(ar0[i]|prior_ar[i,1],prior_ar[i,2]);
     }
   }
@@ -152,7 +152,7 @@ model {
   if(q > 0){
     for(i in 1:q){
       if(prior_ma[i,4]==1) target += normal_lpdf(ma0[i]|prior_ma[i,1],prior_ma[i,2]);
-      else if(prior_ma[i,4]==2) target += beta_lpdf(fabs(ma0[i])|prior_ma[i,1],prior_ma[i,2]);
+      else if(prior_ma[i,4]==2) target += beta_lpdf(abs(ma0[i])|prior_ma[i,1],prior_ma[i,2]);
       else if(prior_ma[i,4]==3) target += uniform_lpdf(ma0[i]|prior_ma[i,1],prior_ma[i,2]);
     }
   }
@@ -160,7 +160,7 @@ model {
   if(P > 0){
     for(i in 1:P){
      if(prior_sar[i,4]==1) target += normal_lpdf(sar0[i]|prior_sar[i,1],prior_sar[i,2]);
-     else if(prior_sar[i,4]==2) target += beta_lpdf(fabs(sar0[i])|prior_sar[i,1],prior_sar[i,2]);
+     else if(prior_sar[i,4]==2) target += beta_lpdf(abs(sar0[i])|prior_sar[i,1],prior_sar[i,2]);
      else if(prior_sar[i,4]==3) target += uniform_lpdf(sar0[i]|prior_sar[i,1],prior_sar[i,2]);
     }
   }
@@ -168,7 +168,7 @@ model {
   if(Q > 0){
     for(i in 1:Q){
       if(prior_sma[i,4]==1) target += normal_lpdf(sma0[i]|prior_sma[i,1],prior_sma[i,2]);
-      else if(prior_sma[i,4]==2) target += beta_lpdf(fabs(sma0[i])|prior_sma[i,1],prior_sma[i,2]);
+      else if(prior_sma[i,4]==2) target += beta_lpdf(abs(sma0[i])|prior_sma[i,1],prior_sma[i,2]);
       else if(prior_sma[i,4]==3) target += uniform_lpdf(sma0[i]|prior_sma[i,1],prior_sma[i,2]);
     }
   }
