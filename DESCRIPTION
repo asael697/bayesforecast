@@ -23,13 +23,13 @@ RoxygenNote: 7.1.1
 Biarch: true
 Depends: R (>= 4.0.0)
 Imports: bayesplot (>= 1.5.0), methods, gridExtra, ggplot2, forecast,
-        loo (>= 2.2.0), Rcpp (>= 0.12.0), rstan (>= 2.18.1), rstantools
+        loo (>= 2.2.0), Rcpp (>= 0.12.0), rstan (>= 2.26.0), rstantools
         (>= 2.0.0), RcppParallel (>= 5.0.1), bridgesampling (>= 0.3-0),
-        MASS, StanHeaders, astsa,lubridate, prophet,zoo
+        MASS, StanHeaders (>= 2.26.0), astsa,lubridate, prophet,zoo
 Suggests: knitr, rmarkdown,ggfortify
 LinkingTo: BH (>= 1.66.0), Rcpp (>= 0.12.0), RcppParallel (>= 5.0.1),
-        RcppEigen (>= 0.3.3.3.0), rstan (>= 2.18.1), StanHeaders (>=
-        2.18.0)
+        RcppEigen (>= 0.3.3.3.0), rstan (>= 2.26.0), StanHeaders (>=
+        2.26.0)
 SystemRequirements: GNU make
 Collate: 'autoplot.R' 'auto_sarima.R' 'bayes_factor.R'
         'bayesforecast-package.R' 'Birth.R' 'Fit.R' 'forecast.R'

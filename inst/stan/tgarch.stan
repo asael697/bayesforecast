@@ -163,7 +163,7 @@ model {
   if(p > 0){
     for(i in 1:p){
      if(prior_ar[i,4]==1) target += normal_lpdf(ar0[i]|prior_ar[i,1],prior_ar[i,2]);
-     else if(prior_ar[i,4]==2) target += beta_lpdf(fabs(ar0[i])|prior_ar[i,1],prior_ar[i,2]);
+     else if(prior_ar[i,4]==2) target += beta_lpdf(abs(ar0[i])|prior_ar[i,1],prior_ar[i,2]);
      else if(prior_ar[i,4]==3) target += uniform_lpdf(ar0[i]|prior_ar[i,1],prior_ar[i,2]);
     }
   }
@@ -171,7 +171,7 @@ model {
   if(q > 0){
     for(i in 1:q){
       if(prior_ma[i,4]==1) target += normal_lpdf(ma0[i]|prior_ma[i,1],prior_ma[i,2]);
-      else if(prior_ma[i,4]==2) target += beta_lpdf(fabs(ma0[i])|prior_ma[i,1],prior_ma[i,2]);
+      else if(prior_ma[i,4]==2) target += beta_lpdf(abs(ma0[i])|prior_ma[i,1],prior_ma[i,2]);
       else if(prior_ma[i,4]==3) target += uniform_lpdf(ma0[i]|prior_ma[i,1],prior_ma[i,2]);
     }
   }
