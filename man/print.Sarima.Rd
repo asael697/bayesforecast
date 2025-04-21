@@ -2,18 +2,18 @@
 % Please edit documentation in R/print.R
 \name{print.Sarima}
 \alias{print.Sarima}
-\title{Print a Sarima model}
+\title{Print a \code{Sarima} model.}
 \usage{
 \method{print}{Sarima}(x, ...)
 }
 \arguments{
-\item{x}{a Sarima model from the varstan package}
+\item{x}{a \code{Sarima} model.}
 
-\item{...}{additional values need in print methods}
+\item{...}{additional values need in print methods.}
 }
 \value{
 None. prints the object
 }
 \description{
-Print a Sarima model
+Print a \code{Sarima} model.
 }

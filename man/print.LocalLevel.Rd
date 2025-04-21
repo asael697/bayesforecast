@@ -7,9 +7,9 @@
 \method{print}{LocalLevel}(x, ...)
 }
 \arguments{
-\item{x}{a LocalLevel model from the varstan package}
+\item{x}{a \code{Local.Level} model.}
 
-\item{...}{additional values need in print methods}
+\item{...}{additional values need in print methods.}
 }
 \value{
 None. prints the object.

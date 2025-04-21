@@ -2,16 +2,15 @@
 % Please edit documentation in R/log_lik.R
 \name{loglik}
 \alias{loglik}
-\title{Extract posterior sample of the accumulated log-likelihood from a varstan object}
+\title{Extract posterior sample of the accumulated log-likelihood from a \code{varstan} object}
 \usage{
 loglik(object, permuted = TRUE)
 }
 \arguments{
-\item{object}{A varstan object of the time series fitted model.}
+\item{object}{a \code{varstan} object of the time series fitted model.}
 
-\item{permuted}{A logical scalar indicating whether the draws after
-the warmup period in each chain should be permuted and merged.
-If FALSE, the original order is kept. For each stanfit object,
+\item{permuted}{a logical scalar indicating whether the draws after
+the \verb{warmup`` period in each chain should be permuted and merged. If }FALSE\verb{, the original order is kept. For each }stanfit` object,
 the permutation is fixed (i.e., extracting samples a second time
 will give the same sequence of iterations).}
 }
@@ -20,11 +19,10 @@ A real value with the accumulated log likelihood.
 }
 \description{
 Convenience function for extracting the posterior sample of the accumulated
-log-likelihood array from a fitted varstan object.
+log-likelihood array from a fitted \code{varstan} object.
 }
 \examples{
 \donttest{
- library(astsa)
  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
  fit1 = varstan(model,iter = 500,chains = 1)
 

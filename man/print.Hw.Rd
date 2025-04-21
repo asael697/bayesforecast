@@ -7,9 +7,9 @@
 \method{print}{Hw}(x, ...)
 }
 \arguments{
-\item{x}{a Hw from the varstan package}
+\item{x}{a \code{Hw} model.}
 
-\item{...}{additional values need in print methods}
+\item{...}{additional values need in print methods.}
 }
 \value{
 None. prints the object.

@@ -2,18 +2,18 @@
 % Please edit documentation in R/print.R
 \name{print.ssm}
 \alias{print.ssm}
-\title{Print a state-space model}
+\title{Print a state-space model.}
 \usage{
 \method{print}{ssm}(x, ...)
 }
 \arguments{
-\item{x}{a ssm model from the varstan package}
+\item{x}{a \code{ssm} model.}
 
-\item{...}{additional values need in print methods}
+\item{...}{additional values need in print methods.}
 }
 \value{
 None. prints the object.
 }
 \description{
-Print a state-space model
+Print a state-space model.
 }

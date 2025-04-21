@@ -2,17 +2,18 @@
 % Please edit documentation in R/summary.R
 \name{summary.varstan}
 \alias{summary.varstan}
-\title{Summary method for a varstan object}
+\title{Summary method for a \code{varstan} object}
 \usage{
 \method{summary}{varstan}(object, robust = FALSE, prob = 0.9, ...)
 }
 \arguments{
-\item{object}{A varstan object.}
+\item{object}{a \code{varstan} object.}
 
-\item{robust}{A boolean value, if its \code{TRUE} it returns the median of the posterior distribution,
-And if its \code{FALSE} it returns the mean, by default is the \code{FALSE} value}
+\item{robust}{a \code{bool} value, if its \code{TRUE} it returns the median of the
+posterior distribution, on the contrary returns the mean. By default, sets to
+\code{FALSE}.}
 
-\item{prob}{A number \eqn{p \in (0,1)}{p (0 < p < 1)} indicating the desired
+\item{prob}{a number \eqn{p \in (0,1)}{p (0 < p < 1)} indicating the desired
 probability mass to include in the intervals. The default is to report
 \eqn{90}\% intervals (\code{prob=0.9}) rather than the traditionally used
 \eqn{95}\%.}
@@ -20,9 +21,10 @@ probability mass to include in the intervals. The default is to report
 \item{...}{Further arguments passed to  \code{summary}.}
 }
 \value{
-A data.frame with the posterior mean, standard error, credible intervals, effective sample
-size (ess),and Rhat for all the model parameters in a varstan model, if \code{robust} is \code{TRUE}
-then the posterior mean and standard error, are replaced by the posterior mean and MAD.
+A data.frame with the posterior mean, standard error, credible intervals,
+effective sample size (\code{ess}),and \code{Rhat} for all the model parameters in a
+\code{varstan} model. If \code{robust = TRUE} displays posterior mean and standard
+error, instead of the posterior median and MAD.
 }
 \description{
 Summaries of parameter estimates and MCMC convergence diagnostics

@@ -17,7 +17,6 @@ stan_ssm(
   warmup = floor(iter/2),
   adapt.delta = 0.9,
   tree.depth = 10,
-  stepwise = TRUE,
   prior_sigma0 = NULL,
   prior_level = NULL,
   prior_level1 = NULL,
@@ -35,14 +34,14 @@ stan_ssm(
 \arguments{
 \item{ts}{a numeric or ts object with the univariate time series.}
 
-\item{trend}{a boolean value to specify a trend local level model. By default
+\item{trend}{a bool value to specify a trend local level model. By default
 is \code{FALSE}.}
 
-\item{damped}{a boolean value to specify a damped trend local level model. By default
+\item{damped}{a boolvalue to specify a damped trend local level model. By default
 is \code{FALSE}. If \code{trend} option is \code{FALSE} then \code{damped} is set to
 \code{FALSE} automatically.}
 
-\item{seasonal}{a boolean value to specify a seasonal local level model. By default
+\item{seasonal}{a bool value to specify a seasonal local level model. By default
 is \code{FALSE}.}
 
 \item{xreg}{Optionally, a numerical matrix of external regressors,
@@ -51,62 +50,57 @@ which must have the same number of rows as ts. It should not be a data frame.}
 \item{period}{an integer specifying the periodicity of the time series by
 default the value frequency(ts) is used.}
 
-\item{genT}{a boolean value to specify for a generalized t-student SSM model.}
+\item{genT}{a bool value to specify for a generalized t-student SSM model.}
 
-\item{chains}{An integer of the number of Markov Chains chains to be run,
-by default 4 chains are run.}
+\item{chains}{an integer of the number of Markov Chains chains to be run. By
+default, \code{chains = 4}.}
 
-\item{iter}{An integer of total iterations per chain including the warm-up,
-by default  the number of iterations are 2000.}
+\item{iter}{an integer of total iterations per chain including the warm-up. By
+default, \code{iter = 2000}.}
 
-\item{warmup}{A positive integer specifying number of warm-up (aka burn-in)
+\item{warmup}{a positive integer specifying number of warm-up (aka burn-in)
 iterations. This also specifies the number of iterations used for step-size
 adaptation, so warm-up samples should not be used for inference. The number
-of warmup should not be larger than \code{iter} and the default is
-\code{iter/2}.}
+of warm-up iteration should not be larger than \code{iter}.By default,
+\code{warmup = iter/2}.}
 
-\item{adapt.delta}{An optional real value between 0 and 1, the thin of the jumps
-in a HMC method. By default is 0.9.}
+\item{adapt.delta}{an optional real value between 0 and 1, the thin of the jumps
+in a HMC method. By default, is 0.9.}
 
-\item{tree.depth}{An integer of the maximum  depth of the trees  evaluated
-during each iteration. By default is 10.}
+\item{tree.depth}{an integer of the maximum depth of the trees  evaluated
+during each iteration. By default, is 10.}
 
-\item{stepwise}{If TRUE, will do stepwise selection (faster). Otherwise, it searches
-over all models. Non-stepwise selection can be very slow, especially for seasonal models.}
-
-\item{prior_sigma0}{The prior distribution for the scale parameter in an SSM model. By default
-the value is set \code{NULL}, then the default student(7,0,1) prior is used.}
+\item{prior_sigma0}{The prior distribution for the scale parameter in an
+ARIMA model. By default, declares a \code{student(7,0,1)} prior.}
 
 \item{prior_level}{The prior distribution for the level parameter in a SSM model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
+By default, sets a \code{normal(0,0.5)} prior.}
 
-\item{prior_level1}{The prior distribution for the initial level parameter in a SSM model.
-By default the value is set \code{NULL}, then the default student(6,0,2.5) priors are used.}
+\item{prior_level1}{The prior distribution for the initial level parameter in
+a SSM model. By default, sets a \code{student(6,0,2.5)} prior.}
 
 \item{prior_trend}{The prior distribution for the trend parameter in a SSM model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
+By default, sets a \code{normal(0,0.5)} prior.}
 
-\item{prior_trend1}{The prior distribution for the initial trend parameter in a SSM model.
-By default the value is set \code{NULL}, then the default student(6,0,2.5)  priors are used.}
+\item{prior_trend1}{The prior distribution for the initial trend parameter in
+a SSM model. By default, sets a \code{student(6,0,2.5)} prior.}
 
-\item{prior_damped}{The prior distribution for the damped trend parameter in a SSM model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
+\item{prior_damped}{The prior distribution for the damped trend parameter in a
+SSM model. By default, sets a \code{normal(0,0.5)} prior.}
 
-\item{prior_seasonal}{The prior distribution for the seasonal parameter in a SSM model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
+\item{prior_seasonal}{The prior distribution for the seasonal parameter in a
+SSM model. By default, sets a \code{normal(0,0.5)} prior.}
 
-\item{prior_seasonal1}{The prior distribution for the initial seasonal parameters in a SSM model.
-The prior is specified for the first m seasonal parameters, where m is the periodicity of the
-defined time series. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-are used.}
+\item{prior_seasonal1}{The prior distribution for the initial seasonal parameters
+in a SSM model. The prior is specified for the first m seasonal parameters,
+where \code{m} is the periodicity of the defined time series. By default, sets a
+\code{normal(0,0.5)} prior.}
 
-\item{prior_breg}{The prior distribution for the regression coefficient parameters in a
-ARMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
-are used.}
+\item{prior_breg}{The prior distribution for the regression coefficient parameters
+in an ARIMAX model. By default, sets \code{student(7,0,1)} priors.}
 
-\item{prior_df}{The prior distribution for the degree freedom parameters in a t-student innovations
-SSM model. By default the value is set \code{NULL}, then the default gamma(2,0.1) priors
-are used.}
+\item{prior_df}{The prior distribution for the degree freedom parameters in a
+t-student innovations SSM model. By default, sets a \code{gamma(2,0.1)} prior}
 
 \item{series.name}{an optional string vector with the series names.}
 
@@ -121,18 +115,18 @@ Fitting an Additive linear State space model in \pkg{Stan}.
 \details{
 The function returns a \code{varstan} object with the fitted model.
 
-By  default  the  \code{ssm()}  function generates a local level model (or a ets("A","N","N") or
-exponential smoothing model from the \pkg{forecast} package). If \code{trend} is set \code{TRUE},
-then  a  local  trend ssm model is defined (a equivalent ets("A","A","N") or Holt model from the
-\pkg{forecast} package). For damped trend models set \code{damped} to \code{TRUE}. If \code{seasonal}
-is  set  to  \code{TRUE} a seasonal local level model is defined (a equivalent ets("A","N","A") model
-from  the  \pkg{forecast} package). For a Holt-Winters method (ets("A","A","A")) set \code{Trend} and
-\code{seasonal} to \code{TRUE}.
+By default the \code{ssm()} function generates a local-level, \code{ets("A","N","N")},
+or exponential smoothing model from the \pkg{forecast} package. When
+\code{trend = TRUE} the SSM transforms into a local-trend, \code{ets("A","A","N")},
+or the equivalent Holt model. For damped trend models set \code{damped = TRUE}.
+If \code{seasonal = TRUE}, the model is a seasonal local level model, or
+\code{ets("A","N","A")} model. Finally, the Holt-Winters method (\code{ets("A","A","A")})
+is obtained by setting both \code{Trend = TRUE} and \code{seasonal = TRUE}.
 
-When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
-see Fonseca, et. al (2019) for more details.
+The \code{genT = TRUE} option generates a t-student innovations SSM model. For
+a detailed explanation, check Ardia (2010); or Fonseca, et. al (2019).
 
-The default priors used in a ssm( ) model are:
+The default priors used in a \code{ssm} model are:
 
 \itemize{
 \item{level ~ normal(0,0.5)}
@@ -165,7 +159,7 @@ degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 }
 \seealso{
-\code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+\code{Sarima}, \code{auto.arima}, \code{set_prior}, and \code{garch}.
 }
 \author{
 Asael Alonzo Matamoros.

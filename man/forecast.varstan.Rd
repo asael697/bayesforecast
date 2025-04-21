@@ -3,7 +3,7 @@
 \name{forecast.varstan}
 \alias{forecast.varstan}
 \alias{forecast}
-\title{Forecasting varstan objects}
+\title{Forecasting \code{varstan} objects.}
 \usage{
 \method{forecast}{varstan}(
   object,
@@ -17,21 +17,21 @@
 )
 }
 \arguments{
-\item{object}{a time series or varstan model for which forecasts are
+\item{object}{a time series or \code{varstan} model for which forecasts are
 required.}
 
-\item{h}{Number of periods for forecasting.}
+\item{h}{an integer with the number of periods for forecasting.}
 
-\item{probs}{A numerical vector \eqn{p \in (0,1)}{p (0 < p < 1)} indicating the desired
-probability mass to include in the intervals. The default is to report
+\item{probs}{a numerical vector \eqn{p \in (0,1)}{p (0 < p < 1)} indicating
+the desired probability mass to include in the intervals. The default is to report
 \code{90\%} and \code{80\%} intervals (\code{level=c(0.8,0.9)}).}
 
 \item{xreg}{Optionally, a numerical matrix of external regressors,
 which must have the same number of rows as ts. It should not be a data frame.}
 
-\item{robust}{A boolean for obtain the robust estimation. The default}
+\item{robust}{a boolean for obtain the robust estimation. The default}
 
-\item{draws}{An integer indicating the number of draws to return. The default
+\item{draws}{an integer indicating the number of draws to return. The default
 number of draws is 1000.}
 
 \item{seed}{An optional \code{\link[=set.seed]{seed}} to use.}
@@ -63,14 +63,13 @@ values.} \item{fitted}{Fitted values (one-step forecasts)}
 }
 \description{
 \code{forecast} is a generic function for forecasting from time series or
-varstan models. The function invokes particular \emph{methods} which
+\code{varstan} models. The function invokes particular \emph{methods} which
 depend on the class of the first argument.
 }
 \details{
-If \code{model=NULL},the function \code{\link{forecast.ts}} makes forecasts
-using \code{\link{ets}} models (if the data are non-seasonal or the seasonal
-period is 12 or less) or \code{\link{stlf}} (if the seasonal period is 13 or
-more).
+If \code{model = NULL},the function \code{forecast.ts} makes forecasts
+using \code{ets} models (if the data are non-seasonal or the seasonal
+period is 12 or less).
 
 If \code{model} is not \code{NULL}, \code{forecast.ts} will apply the
 \code{model} to the \code{object} time series, and then generate forecasts

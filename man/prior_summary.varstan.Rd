@@ -8,9 +8,9 @@
 \method{prior_summary}{varstan}(object, ...)
 }
 \arguments{
-\item{object}{a varstan object or one of the defined current defined reports in varstan package}
+\item{object}{a \code{varstan} object or one of the defined current defined reports.}
 
-\item{...}{additional values need in print methods}
+\item{...}{additional values need in print methods.}
 }
 \value{
 none. prints a string with the defined time series model report
@@ -20,9 +20,10 @@ The function returns a report with the users defined model for the given time se
 and all the current defined priors of the model.
 }
 \details{
-if \code{object} is a varstan object the function will print the information of the
-defined model inside of the object. If \code{object} is one of the model classes (like Sarima or garch)
-then it will print the report information as well.
+if \code{object} is a \code{varstan} object the function will print the
+information of the defined model inside of the object. If \code{object}
+is one of the model classes (like \code{Sarima} or \code{garch}) then it will print the
+report information as well.
 }
 \examples{
 library(astsa)

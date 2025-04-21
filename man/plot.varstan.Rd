@@ -20,9 +20,10 @@ probability mass to include in the intervals. The default is to report
 None. Function produces a ggplot2 graph.
 }
 \description{
-Preliminary plot methods for varstan models only valid for univariate time series models.
-The function prints the fitted values time series, the trace and density plots for the
-sampled model parameters, or the residuals' posterior mean time series.
+Preliminary plot methods for varstan models only valid for univariate time
+series models. The function prints the fitted values time series, the trace
+and density plots for the sampled model parameters, or the residuals'
+posterior mean time series.
 }
 \examples{
 \donttest{

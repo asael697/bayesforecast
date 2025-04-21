@@ -2,16 +2,23 @@
 % Please edit documentation in R/ets.R
 \name{Hw}
 \alias{Hw}
-\title{A  constructor for a Holt-Winters state-space model.}
+\title{A constructor for a Holt-Winters state-space model.}
 \usage{
-Hw(ts,damped = FALSE,xreg = NULL,period = 0,genT = FALSE,series.name = NULL)
+Hw(
+  ts,
+  damped = FALSE,
+  xreg = NULL,
+  period = 0,
+  genT = FALSE,
+  series.name = NULL
+)
 }
 \arguments{
 \item{ts}{a numeric or ts object with the univariate time series.}
 
-\item{damped}{a boolean value to specify a damped trend local level model. By default
-is \code{FALSE}. If \code{trend} option is \code{FALSE} then \code{damped} is set to
-\code{FALSE} automatically.}
+\item{damped}{a boolean value to specify a damped trend local level model. By
+default, \code{damped = FALSE}. If \code{trend} option is \code{FALSE} then
+\code{damped} is \code{FALSE} automatically.}
 
 \item{xreg}{Optionally, a numerical matrix of external regressors,
 which must have the same number of rows as ts. It should not be a data frame.}
@@ -31,11 +38,8 @@ The function returns a list with the data for running \code{stan()} function of
 Constructor of the \code{ets("A","A","A")} object for Bayesian estimation in \pkg{Stan}.
 }
 \details{
-The function returns a list with the data for running \code{stan()} function of
-\pkg{rstan} package.
-
-When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
-see Fonseca, et. al (2019) for more details.
+The \code{genT = TRUE} option generates a t-student innovations SSM model. For
+a detailed explanation, check Ardia (2010); or Fonseca, et. al (2019).
 
 The default priors used in a ssm( ) model are:
 
@@ -70,8 +74,8 @@ degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 }
 \seealso{
-\code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}}
-\code{\link{garch}}
+\code{Sarima}, \code{auto.arima}, and \code{set_prior}.
+\code{garch}
 }
 \author{
 Asael Alonzo Matamoros.

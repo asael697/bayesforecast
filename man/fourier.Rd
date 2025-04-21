@@ -18,8 +18,8 @@ Numerical matrix.
 }
 \description{
 \code{fourier} returns a matrix containing terms from a Fourier series, up
-to order \code{K}, suitable for use in \code{\link{Sarima}} or
-\code{\link{auto.sarima}}.
+to order \code{K}, suitable for use in \code{arima} or
+\code{auto.sarima}.
 }
 \details{
 The period of the Fourier terms is determined from the time series
@@ -43,14 +43,13 @@ columns.
 }
 \examples{
 \donttest{
- library(astsa)
  # Dynaimc Harmonic regression
- sf1 = auto.sarima(birth,xreg = fourier(birth,K= 6),iter = 500,chains = 1)
+ sf1 = auto.sarima(birth, xreg = fourier(birth,K= 6),iter = 500,chains = 1)
 }
 
 }
 \seealso{
-\code{\link{seasonaldummy}}
+\code{seasonaldummy}.
 }
 \author{
 Rob J Hyndman

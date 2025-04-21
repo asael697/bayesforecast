@@ -15,13 +15,13 @@ check_residuals(object, ...)
 None. Function produces a ggplot2 graph.
 }
 \description{
-Performs a visual check of residuals in time series models, this method is inspired in
-the \code{check.residuals} function provided by the \code{forecast} package.
+Performs a visual check of residuals in time series models, this method is
+inspired in the \code{check.residuals} function provided by the \code{forecast}
+package.
 }
 \examples{
 \donttest{
- library(astsa)
- sf1 = auto.sarima(ts = birth,iter = 500,chains = 1)
+ sf1 = auto.sarima(ts = birth, iter = 500, chains = 1)
  # fitted model
  check_residuals(sf1)
 }

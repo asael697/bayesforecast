@@ -7,7 +7,8 @@
 ggacf(y, title = NULL)
 }
 \arguments{
-\item{y}{a numeric vector or an object of the \code{ts} class containing a stationary time series.}
+\item{y}{a numeric vector or an object of the \code{ts} class containing a
+stationary time series.}
 
 \item{title}{a string with the plot's title.}
 }

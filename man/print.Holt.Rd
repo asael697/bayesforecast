@@ -2,18 +2,18 @@
 % Please edit documentation in R/print.R
 \name{print.Holt}
 \alias{print.Holt}
-\title{Print a Holt model}
+\title{Prints a Holt model.}
 \usage{
 \method{print}{Holt}(x, ...)
 }
 \arguments{
-\item{x}{a Holt model from the varstan package}
+\item{x}{a Holt model.}
 
-\item{...}{additional values need in print methods}
+\item{...}{additional values need in print methods.}
 }
 \value{
 None. prints the object.
 }
 \description{
-Print a Holt model
+Prints a Holt model.
 }

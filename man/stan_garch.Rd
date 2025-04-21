@@ -16,7 +16,6 @@ stan_garch(
   warmup = floor(iter/2),
   adapt.delta = 0.9,
   tree.depth = 10,
-  stepwise = TRUE,
   prior_mu0 = NULL,
   prior_sigma0 = NULL,
   prior_ar = NULL,
@@ -34,77 +33,70 @@ stan_garch(
 \arguments{
 \item{ts}{a numeric or ts object with the univariate time series.}
 
-\item{order}{A specification of the garch  model: the three components (s, k, h)
-are the arch order, the garch order, and the mgarch order.}
+\item{order}{a vector of length three specifying the GARCH model. The three
+components \code{c(s, k, h)} are the ARCH order, the GARCH order, and the MGARCH
+orders respectively.}
 
-\item{arma}{A specification of the  ARMA model,same as order parameter:  the two
-components (p, q) are the AR order,and the  MA order.}
+\item{arma}{a vector of length two with the ARMA model configuration. The two
+components \code{c(p, q)} are the AR, and the  MA orders respectively.}
 
 \item{xreg}{Optionally, a numerical matrix of external regressors,
 which must have the same number of rows as ts. It should not be a data frame.}
 
-\item{genT}{a boolean value to specify for a generalized t-student garch model.}
+\item{genT}{a bool value to specify for a generalized t-student GARCH model.}
 
-\item{asym}{a string value for the asymmetric function for an asymmetric GARCH process. By default
-the value \code{"none"} for standard GARCH process. If \code{"logit"} a logistic function
-is used for asymmetry, and if \code{"exp"} an exponential function is used.}
+\item{asym}{a string value for the asymmetric function for an asymmetric
+GARCH process. By default, the value \code{"none"} for standard GARCH process.
+\code{"logit"} option a specifies a logistic function for asymmetry, and option
+\code{"exp"} defines an exponential function.}
 
-\item{chains}{An integer of the number of Markov Chains chains to be run,
-by default 4 chains are run.}
+\item{chains}{an integer of the number of Markov Chains chains to be run. By
+default, \code{chains = 4}.}
 
-\item{iter}{An integer of total iterations per chain including the warm-up,
-by default  the number of iterations are 2000.}
+\item{iter}{an integer of total iterations per chain including the warm-up. By
+default, \code{iter = 2000}.}
 
-\item{warmup}{A positive integer specifying number of warm-up (aka burn-in)
+\item{warmup}{a positive integer specifying number of warm-up (aka burn-in)
 iterations. This also specifies the number of iterations used for step-size
 adaptation, so warm-up samples should not be used for inference. The number
-of warmup should not be larger than \code{iter} and the default is
-\code{iter/2}.}
+of warmup iteration should not be larger than \code{iter}.By default,
+\code{warmup = iter/2}.}
 
-\item{adapt.delta}{An optional real value between 0 and 1, the thin of the jumps
-in a HMC method. By default is 0.9.}
+\item{adapt.delta}{an optional real value between 0 and 1, the thin of the jumps
+in a HMC method. By default, is 0.9.}
 
-\item{tree.depth}{An integer of the maximum  depth of the trees  evaluated
-during each iteration. By default is 10.}
+\item{tree.depth}{an integer of the maximum depth of the trees  evaluated
+during each iteration. By default, is 10.}
 
-\item{stepwise}{If TRUE, will do stepwise selection (faster). Otherwise, it searches
-over all models. Non-stepwise selection can be very slow, especially for seasonal models.}
+\item{prior_mu0}{The prior distribution for the location parameter in an
+ARIMA model. By default, sets \code{student(7,0,1)} prior.}
 
-\item{prior_mu0}{The prior distribution for the location parameter in an ARMA model. By default
-the value is set \code{NULL}, then the default normal(0,1) prior is used.}
+\item{prior_sigma0}{The prior distribution for the scale parameter in an
+ARIMA model. By default, declares a \code{student(7,0,1)} prior.}
 
-\item{prior_sigma0}{The prior distribution for the scale parameter in an ARMA model. By default
-the value is set \code{NULL}, then the default student(7,0,1) prior is used.}
+\item{prior_ar}{The prior distribution for the auto-regressive parameters in an
+ARIMA model. By default, sets a \code{normal(0,0.5)} priors.}
 
-\item{prior_ar}{The prior distribution for the auto-regressive parameters in an ARMA model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
-
-\item{prior_ma}{The prior distribution for the moving average parameters in an ARMA model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
+\item{prior_ma}{The prior distribution for the moving average parameters in
+an ARIMA model. By default, sets a \code{normal(0,0.5)} priors.}
 
 \item{prior_mgarch}{The prior distribution for the mean GARCH parameters in a
-GARCH model. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-are used.}
+GARCH model. By default, sets \code{normal(0,0.5)} priors.}
 
-\item{prior_arch}{The prior distribution for the arch parameters in a GARCH model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-are used.}
+\item{prior_arch}{The prior distribution for the ARCH parameters in a GARCH
+model. By default, sets \code{normal(0,0.5)} priors.}
 
-\item{prior_garch}{The prior distribution for the GARCH parameters in a GARCH model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-are used.}
+\item{prior_garch}{The prior distribution for the GARCH parameters in a GARCH
+model. By default, sets \code{normal(0,0.5)} priors.}
 
-\item{prior_breg}{The prior distribution for the regression coefficient parameters in a
-ARIMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
-are used.}
+\item{prior_breg}{The prior distribution for the regression coefficient
+parameters in an ARIMAX model. By default, sets \code{student(7,0,1)} priors.}
 
-\item{prior_gamma}{The prior distribution for the asymmetric parameters in am Asymmetric
-GARCH model. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-are used.}
+\item{prior_gamma}{The prior distribution for the asymmetric parameters in
+MGARCH model. By default, sets \code{normal(0,0.5)} priors.}
 
-\item{prior_df}{The prior distribution for the degree freedom parameters in a t-student innovations
-GARCH model. By default the value is set \code{NULL}, then the default gamma(2,0.1) priors
-are used.}
+\item{prior_df}{The prior distribution for the degree freedom parameters in a
+t-student innovations GARCH model. By default, sets a \code{gamma(2,0.1)} prior.}
 
 \item{series.name}{an optional string vector with the series names.}
 
@@ -119,10 +111,10 @@ Fitting a \code{GARCH(s,k,h)} model in \pkg{Stan}.
 \details{
 The function returns a \code{varstan} object with the fitted model.
 
-By default the \code{garch()} function generates a GARCH(1,1) model, when
-\code{genT} option is \code{TRUE} a t-student innovations GARCH model
-(see Ardia (2010)) is generated, and for Asymmetric GARCH models use the
-option \code{asym} for specify the asymmetric function, see Fonseca,
+By default the \code{garch()} function generates a GARCH(1,1) model. The
+\code{genT = TRUE} option defines a t-student innovations GARCH model
+(see Ardia (2010)). For Asymmetric GARCH models use the
+option \code{asym} for specify the asymmetric functions, see Fonseca,
 et. al (2019) for more details.
 
 The default priors used in a GARCH(s,k,h) model are:
@@ -169,7 +161,7 @@ with Student-t Innovations. \emph{The R Journal}. 2(7), 41-47.
 \code{doi: 10.32614/RJ-2010-014}.
 }
 \seealso{
-\code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}}
+\code{Sarima}, \code{auto.arima}, and  \code{set_prior}.
 }
 \author{
 Asael Alonzo Matamoros.

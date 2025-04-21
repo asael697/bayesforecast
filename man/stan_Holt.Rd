@@ -14,7 +14,6 @@ stan_Holt(
   warmup = floor(iter/2),
   adapt.delta = 0.9,
   tree.depth = 10,
-  stepwise = TRUE,
   prior_sigma0 = NULL,
   prior_level = NULL,
   prior_level1 = NULL,
@@ -48,7 +47,7 @@ by default  the number of iterations are 2000.}
 \item{warmup}{A positive integer specifying number of warm-up (aka burn-in)
 iterations. This also specifies the number of iterations used for step-size
 adaptation, so warm-up samples should not be used for inference. The number
-of warmup should not be larger than \code{iter} and the default is
+of warm up should not be larger than \code{iter} and the default is
 \code{iter/2}.}
 
 \item{adapt.delta}{An optional real value between 0 and 1, the thin of the jumps
@@ -56,9 +55,6 @@ in a HMC method. By default is 0.9.}
 
 \item{tree.depth}{An integer of the maximum  depth of the trees  evaluated
 during each iteration. By default is 10.}
-
-\item{stepwise}{If TRUE, will do stepwise selection (faster). Otherwise, it searches
-over all models. Non-stepwise selection can be very slow, especially for seasonal models.}
 
 \item{prior_sigma0}{The prior distribution for the scale parameter in an SSM model. By default
 the value is set \code{NULL}, then the default student(7,0,1) prior is used.}
@@ -91,7 +87,7 @@ are used.}
 \item{...}{Further arguments passed to  \code{varstan} function.}
 }
 \value{
-A \code{varstan} object with the fitted SSM model.
+a \code{varstan} object with the fitted SSM model.
 }
 \description{
 Fitting an Holt state-space model in \pkg{Stan}.
@@ -133,7 +129,7 @@ degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 }
 \seealso{
-\code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+\code{ssm}.
 }
 \author{
 Asael Alonzo Matamoros.

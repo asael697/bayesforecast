@@ -17,14 +17,14 @@
 \arguments{
 \item{object}{Either a fitted model object returned by one of the \pkg{rstanarm}
 modeling functions (a stanreg object) or, for the \code{"ppd"} method, a matrix
-of draws from the posterior predictive distribution returned by \code{\link{posterior_predict}}.}
+of draws from the posterior predictive distribution returned by \code{posterior_predict}.}
 
-\item{newdata}{An array with the newdata vector.}
+\item{newdata}{An array with the new-data vector.}
 
 \item{xreg}{Optional, a numerical matrix of external regressors,
 which must have the same number of rows as ts. It should not be a data frame.}
 
-\item{draws, seed}{Optional arguments passed to \code{\link{posterior_predict}}.
+\item{draws, seed}{Optional arguments passed to \code{posterior_predict}.
 Please see the \strong{Note} section below if \code{newdata} will be specified.}
 
 \item{...}{Further arguments passed to  \code{predictive_error}.}
@@ -34,25 +34,24 @@ A \code{draws} by \code{nrow(newdata)} data.frame.
 }
 \description{
 This is a convenience function for computing \eqn{y - y_{h}}{y - yh}
-The method for stanreg objects  calls \code{\link{posterior_predict}}
+The method for \code{stanfit} objects  calls \code{posterior_predict}
 internally, where as the method accepts the data.frame returned by
 \code{posterior_predict} as input and can be used to avoid multiple calls to
 \code{posterior_predict}.
 }
 \note{
-If \code{object} is a \strong{varstan} object of a varma model then newdata has to be a matrix
-with number of \strong{cols} as the dimension of the time series and number of \strong{rows}
-as the number new elements.
+If \code{object} is a \strong{varstan} object of an ARMA model then \code{newdata}
+has to be a matrix with number of \strong{cols} as the dimension of the time
+series and number of \strong{rows} as the number new elements.
 
 If \code{object} is a \code{posterior_predict} data.frame, then the
 length of \code{newdata} has to be equal to the \code{ncol} of \code{object}.
 
-If \code{object} is a \code{posterior_predict} data.frame, for a \strong{varma} model,
-then the dimension product of \code{newdata} matrix has to be equal to
-the \code{ncol} of \code{object}.
+If \code{object} is a \code{posterior_predict} data.frame, for a
+\strong{ARMA} model, then the dimension product of \code{newdata} matrix has to
+be equal to the \code{ncol} of \code{object}.
 }
 \seealso{
-\code{posterior_predict} function from rstanarm package, to draw
-from the posterior predictive distribution without computing predictive
-errors.
+\code{posterior_predict} function from \code{rstanarm} package, to draw
+from the posterior predictive distribution without computing predictive errors.
 }

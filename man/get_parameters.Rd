@@ -2,23 +2,22 @@
 % Please edit documentation in R/get_params.R
 \name{get_parameters}
 \alias{get_parameters}
-\title{Get parameters of a varstan object}
+\title{Get parameters of a \code{varstan} object.}
 \usage{
 get_parameters(object)
 }
 \arguments{
-\item{object}{a varstan object}
+\item{object}{a \code{varstan} object.}
 }
 \value{
-a vector with the sampled parameters
+a vector with the sampled parameters.
 }
 \description{
-Get the sampled parameters of a varstan object.
+Get the sampled parameters of a \code{varstan} object.
 }
 \examples{
 \donttest{
- library(astsa)
- sf1 = auto.sarima(birth,iter = 500,chains = 1)
+ sf1 = auto.sarima(birth, iter = 500, chains = 1)
  get_parameters(sf1)
 }
 

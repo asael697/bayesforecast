@@ -2,24 +2,31 @@
 % Please edit documentation in R/varstan.R
 \name{varstan}
 \alias{varstan}
-\title{Constructor of a varstan object.}
+\title{Constructor of a \code{varstan} object.}
 \usage{
-varstan(model,chains=4,iter=2000,warmup=floor(iter/2),
-               adapt.delta = 0.90,tree.depth =10,...)
+varstan(
+  model,
+  chains = 4,
+  iter = 2000,
+  warmup = floor(iter/2),
+  adapt.delta = 0.9,
+  tree.depth = 10,
+  ...
+)
 }
 \arguments{
-\item{model}{One of the \code{varstan} model classes defined in the package.}
+\item{model}{one of the \code{varstan} model classes defined in the package.}
 
-\item{chains}{An integer of the number of Markov Chains chains to be run,
-by default 4 chains are run.}
+\item{chains}{an integer of the number of Markov Chains chains to be run. By
+default, it runs with four chains.}
 
-\item{iter}{An integer of total iterations per chain including the warm-up,
-by default  the number of iterations are 2000.}
+\item{iter}{an integer of total iterations per chain including the warm-up.
+By default, defines 2000 iterations per chain.}
 
-\item{warmup}{A positive integer specifying number of warm-up (aka burn-in)
-iterations. This also specifies the number of iterations used for stepsize
-adaptation, so warmup samples should not be used for inference. The number
-of warmup should not be larger than \code{iter} and the default is
+\item{warmup}{a positive integer specifying number of warm-up (aka burn-in)
+iterations. This also specifies the number of iterations used for step size
+adaptation, so \code{warmup} samples should not be used for inference. The number
+of warm ups should not be larger than \code{iter} and the default is
 \code{iter/2}.}
 
 \item{adapt.delta}{An optional real value between 0 and 1, the thin of the jumps
@@ -36,7 +43,7 @@ a \code{varstan} object with the estimated time series model.
 A \code{varstan} object is a list that contains the following values:
 
 \itemize{
-\item{Stanfit} a Stanfit object returned by \code{rstan} pacakge.
+\item{Stanfit} a \code{stanfit} object returned by \code{rstan} package.
 \item{stan.parmaters} The parameters used in Stan for the sample.
 \item{model} The defined model for the time series.
 \item{series.name} The time series' name.
@@ -44,15 +51,15 @@ A \code{varstan} object is a list that contains the following values:
 }
 }
 \description{
-Constructor of the varstan object for Bayesian estimation in \pkg{Stan}.
+Constructor of the \code{varstan} object for Bayesian estimation in \pkg{Stan}.
 }
 \details{
 The function estimates one of  the defined models in \pkg{Stan} using
 the \code{stan()} function for sampling.
 
-This is the principal package's function and the link with \pkg{Stan}, this function
-fits the posterior distribution of every parameter for a defined model using a
-HMC method.
+This is the principal package's function and the link with \pkg{Stan}, this
+function fits the posterior distribution of every parameter for a defined
+model using a HMC method.
 
 Every estimated model become a \code{varstan} object, with different methods
 for summary, diagnostic, forecast and plotting.
@@ -88,7 +95,6 @@ argument see \code{\link[rstan:stan]{stan}}.
 }
 \examples{
 \donttest{
- library(astsa)
  # Fitting a seasonal ARIMA model
  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
  fit1 = varstan(mod1,iter = 500,chains = 1)

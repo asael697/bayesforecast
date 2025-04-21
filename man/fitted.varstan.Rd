@@ -7,10 +7,11 @@
 \method{fitted}{varstan}(object, robust = FALSE, ...)
 }
 \arguments{
-\item{object}{A varstan object, \code{\link[=varstan]{varstan}}}
+\item{object}{a \code{varstan} object.}
 
-\item{robust}{A boolean value, if its \code{TRUE} it returns the median of the posterior distribution,
-and if its \code{FALSE} it returns the mean, by default is the \code{FALSE} value}
+\item{robust}{a bool value, if its \code{TRUE} it returns the median of the
+posterior distribution, and if its \code{FALSE} it returns the mean, by default
+is the \code{FALSE} value.}
 
 \item{...}{Further arguments passed to  \code{posterior_predict}.}
 }
@@ -26,7 +27,7 @@ packages.
 This function returns a time series of the predicted \emph{mean} response values.
 }
 \seealso{
-\code{\link{posterior_predict.varstan}}
+\code{posterior_predict.varstan}
 }
 \author{
 Asael Alonzo Matamoros

@@ -2,26 +2,26 @@
 % Please edit documentation in R/log_lik.R
 \name{AICc}
 \alias{AICc}
-\title{Computes posterior sample of the pointwise corrected AIC method from a varstan object}
+\title{Computes posterior sample of the point wise corrected AIC method from a \code{varstan} object}
 \usage{
 AICc(x)
 }
 \arguments{
-\item{x}{A varstan object of the time series fitted model.}
+\item{x}{a \code{varstan} object of the time series fitted model.}
 }
 \value{
-A numeric array  of size R, containing the posterior samples of the AICc
-for a varstan object, where R is the number of iterations. If multiple chains are
-fitted, then the array is of length M*R, where m is the number of chains
+A numeric array  of size \code{R}, containing the posterior samples of the
+AICc for a \code{varstan} object. where \code{R} is the number of iterations. If multiple
+chains are fitted, then the array is of length \code{m*R}, where \code{m} is the number of
+chains.
 }
 \description{
-Convenience function for computing the pointwise corrected  Akaike Information Criteria
-method from a varstan object.
+Convenience function for computing the point wise corrected Akaike Information
+Criterion method from a \code{varstan} object.
 }
 \examples{
 
 \donttest{
- library(astsa)
  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
  fit1 = varstan(model,iter = 500,chains = 1)
 

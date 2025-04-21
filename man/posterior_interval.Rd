@@ -7,7 +7,7 @@
 posterior_interval(mat, prob = 0.9, ...)
 }
 \arguments{
-\item{mat}{a matrix containing the posterior samples of a fitted parameter}
+\item{mat}{a matrix containing the posterior samples of a fitted parameter.}
 
 \item{prob}{A number \eqn{p \in (0,1)}{p (0 < p < 1)} indicating the desired
 probability mass to include in the intervals. The default is to report
@@ -29,7 +29,7 @@ respectively.
 \description{
 The \code{posterior_interval} function computes Bayesian posterior uncertainty
 intervals. These intervals are often referred to as \emph{credible}
-intervals, for more details see \pkg{rstanarm}
+intervals, for more details see \pkg{rstanarm}.
 }
 \author{
 Asael Alonzo Matamoros

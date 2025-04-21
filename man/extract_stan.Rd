@@ -2,28 +2,35 @@
 % Please edit documentation in R/varstan.R
 \name{extract_stan}
 \alias{extract_stan}
-\title{Extract chains of an stanfit object implemented in rstan package}
+\title{Extract chains of an \code{stanfit} object implemented in \code{rstan} package}
 \usage{
-extract_stan(object,pars,permuted = TRUE,inc_warmup = FALSE,include = TRUE, ...)
+extract_stan(
+  object,
+  pars,
+  permuted = TRUE,
+  inc_warmup = FALSE,
+  include = TRUE,
+  ...
+)
 }
 \arguments{
-\item{object}{a varstan object}
+\item{object}{a \code{varstan} object}
 
 \item{pars}{n optional character vector providing the parameter names
 (or other quantity names) of interest. If not specified, all parameters
-and other quantities are used. The log-posterior with name lp__ is also
-included by default.}
+and other quantities are used. The log-posterior with name l\code{p__} is also
+included.}
 
-\item{permuted}{A logical scalar indicating whether the draws
-after the warmup period in each chain should be permuted and merged.
-If FALSE, the original order is kept. For each stanfit object,
+\item{permuted}{a logical scalar indicating whether the draws
+after the \code{warm-up} period in each chain should be permuted and merged.
+If FALSE, the original order is kept. For each \code{stanfit} object,
 the permutation is fixed (i.e., extracting samples a second time will
 give the same sequence of iterations).}
 
-\item{inc_warmup}{A logical scalar indicating whether to include the
-warmup draws. This argument is only relevant if permuted is FALSE.}
+\item{inc_warmup}{a logical scalar indicating whether to include the
+warm-up draws. This argument is only relevant if permuted is \code{FALSE}.}
 
-\item{include}{A logical scalar indicating whether the parameters named
+\item{include}{a logical scalar indicating whether the parameters named
 in pars should be included (TRUE) or excluded (FALSE).}
 
 \item{...}{Further arguments passed to  \code{extract} function.}
@@ -32,11 +39,10 @@ in pars should be included (TRUE) or excluded (FALSE).}
 a list with the posterior samples of the provided parameters.
 }
 \description{
-Extract chains of an stanfit object implemented in rstan package
+Extract chains of an \code{stanfit} object implemented in \code{rstan} package
 }
 \examples{
 \donttest{
- library(astsa)
  # Fitting a GARCH(1,1) model
  dat = garch(ipc,order = c(1,1,0))
  fit2 = varstan(dat,iter = 500,chains = 1)

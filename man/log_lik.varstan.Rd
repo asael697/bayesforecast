@@ -3,36 +3,35 @@
 \name{log_lik.varstan}
 \alias{log_lik.varstan}
 \alias{log_lik}
-\title{Extract posterior sample of the pointwise log-likelihood from a varstan object.}
+\title{Extract posterior sample of the point wise log-likelihood from a \code{varstan} object.}
 \usage{
 \method{log_lik}{varstan}(object, permuted = TRUE, ...)
 }
 \arguments{
-\item{object}{A varstan object of the time series fitted model.}
+\item{object}{a \code{varstan} object of the time series fitted model.}
 
-\item{permuted}{A logical scalar indicating whether the draws after
+\item{permuted}{a logical scalar indicating whether the draws after
 the \code{warmup} period in each chain should be permuted and merged.
 If FALSE, the original order is kept. For each \code{stanfit} object,
 the permutation is fixed (i.e., extracting samples a second time
 will give the same sequence of iterations).}
 
-\item{...}{additional values need in log_lik methods}
+\item{...}{additional values need in \code{log_lik} methods.}
 }
 \value{
-Usually, an S x N matrix containing the pointwise log-likelihood
+Usually, an S x N matrix containing the point wise log-likelihood
 samples, where S is the number of samples and N is the number
 of observations in the data. If \code{permuted} is \code{FALSE},
 an S x N x R array is returned, where R is the number of fitted
 chains.
 }
 \description{
-Convenience function for extracting the pointwise log-likelihood
+Convenience function for extracting the point wise log-likelihood
 matrix or array from a fitted Stan model.
 }
 \examples{
 
 \donttest{
- library(astsa)
  model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
  fit1 = varstan(model,iter = 500,chains = 1)
 

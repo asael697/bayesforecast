@@ -2,18 +2,18 @@
 % Please edit documentation in R/print.R
 \name{print.garch}
 \alias{print.garch}
-\title{Print a garch model}
+\title{Print a \code{garch} model}
 \usage{
 \method{print}{garch}(x, ...)
 }
 \arguments{
-\item{x}{a garch model from the varstan package}
+\item{x}{a \code{garch} model.}
 
-\item{...}{additional values need in print methods}
+\item{...}{additional values need in print methods.}
 }
 \value{
 None. prints the object
 }
 \description{
-Print a garch model
+Print a \code{garch} model
 }

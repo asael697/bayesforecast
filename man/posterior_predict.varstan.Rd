@@ -16,20 +16,20 @@
 )
 }
 \arguments{
-\item{object}{a varstan object}
+\item{object}{a \code{varstan} object}
 
-\item{h}{An integer indicating the number of predictions. The default number
+\item{h}{an integer indicating the number of predictions. The default number
 of predictions is 12.}
 
 \item{xreg}{Optionally, a numerical matrix of external regressors,
 which must have the same number of rows as ts. It should not be a data frame.}
 
-\item{robust}{A boolean for obtain the robust estimation. The default}
+\item{robust}{a bool for obtain the robust estimation.}
 
-\item{draws}{An integer indicating the number of draws to return. The default
-number of draws is 1000}
+\item{draws}{an integer indicating the number of draws to return. The default
+number of draws is 1000.}
 
-\item{seed}{An optional \code{\link[=set.seed]{seed}} to use.}
+\item{seed}{an optional \code{seed} to use.}
 
 \item{...}{Further arguments passed to  \code{posterior_predict}.}
 }

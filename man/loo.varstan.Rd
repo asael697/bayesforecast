@@ -8,7 +8,7 @@
 \method{loo}{varstan}(x, ...)
 }
 \arguments{
-\item{x}{A varstan object}
+\item{x}{A \code{varstan} object}
 
 \item{...}{additional values need in loo methods}
 }
@@ -17,13 +17,12 @@ an object from the loo class with the results of the Pareto-Smooth
 Importance Sampling, leave one out cross validation for model selection.
 }
 \description{
-The \code{loo} method for varstan objects. Computes approximate
+The \code{loo} method for \code{varstan} objects. Computes approximate
 leave-one-out cross-validation using Pareto smoothed importance
 sampling (PSIS-LOO CV).
 }
 \examples{
 \donttest{
-library(astsa)
 model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 fit1 = varstan(model,iter = 500,chains = 1)
 
@@ -46,12 +45,9 @@ and widely applicable information criterion in singular learning theory.
 \emph{The Journal of Machine Learning Research}. 11, 3571-3594.
 }
 \seealso{
-\itemize{
-\item The \strong{loo} package \href{https://mc-stan.org/loo/articles/index.html}{vignettes}
-for demonstrations.
-\item \code{\link[=psis]{psis()}} for the underlying Pareto Smoothed Importance Sampling (PSIS)
-procedure used in the LOO-CV approximation.
-\item \link{pareto-k-diagnostic} for convenience functions for looking at diagnostics.
-\item \code{\link[=loo_compare]{loo_compare()}} for model comparison.
-}
+The \pkg{loo} package \href{https://mc-stan.org/loo/articles/index.html}{vignettes}
+for demonstrations. \code{psis()} for the underlying Pareto Smoothed Importance
+Sampling (PSIS) procedure used in the LOO-CV approximation. \code{pareto-k-diagnostic}
+for convenience functions for looking at diagnostics.\code{loo_compare()} for
+model comparison.
 }

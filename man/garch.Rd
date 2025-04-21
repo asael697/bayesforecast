@@ -2,34 +2,42 @@
 % Please edit documentation in R/garch.R
 \name{garch}
 \alias{garch}
-\title{A  constructor for a GARCH(s,k,h) model.}
+\title{A constructor for a GARCH(s,k,h) model.}
 \usage{
-garch(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,
-             genT = FALSE,asym = "none",series.name = NULL)
+garch(
+  ts,
+  order = c(1, 1, 0),
+  arma = c(0, 0),
+  xreg = NULL,
+  genT = FALSE,
+  asym = "none",
+  series.name = NULL
+)
 }
 \arguments{
 \item{ts}{a numeric or ts object with the univariate time series.}
 
-\item{order}{A specification of the garch  model: the three components (s, k, h)
-are the arch order, the garch order, and the mgarch order.}
+\item{order}{a three length vector, with the GARCH model specification: the
+three components \code{c(s, k, h)} are the ARCH, GARCH, and MGARCH orders respectively.}
 
-\item{arma}{A specification of the  ARMA model,same as order parameter:  the two
-components (p, q) are the AR order,and the  MA order.}
+\item{arma}{a two length vector with the ARMA model specification, similar to the
+\code{order} argument; the two components \code{c(p, q)} are the AR, and MA orders.}
 
 \item{xreg}{Optionally, a numerical matrix of external regressors,
-which must have the same number of rows as ts. It should not be a data frame.}
+which must have the same number of rows as \code{ts}. It should not be a data frame.}
 
-\item{genT}{a boolean value to specify for a generalized t-student garch model.}
+\item{genT}{a boolean value to specify for a generalized t-student GARCH model.}
 
-\item{asym}{a string value for the asymmetric function for an asymmetric GARCH process. By default
-the value \code{"none"} for standard GARCH process. If \code{"logit"} a logistic function
-is used for asymmetry, and if \code{"exp"} an exponential function is used.}
+\item{asym}{a string value for the asymmetric function for an asymmetric GARCH
+process. By default the value \code{"none"} for standard GARCH process.
+If \code{"logit"} a logistic function is used for asymmetry, and if \code{"exp"}
+an exponential function is used.}
 
 \item{series.name}{an optional string vector with the time series names.}
 }
 \value{
-The function returns a list with the data for running \code{stan()} function of
-\pkg{rstan} package.
+The function returns a list with the data for running \code{stan()}
+function of \pkg{rstan} package.
 }
 \description{
 Constructor of the \code{GARCH(s,k,h)} object for Bayesian estimation in \pkg{Stan}.

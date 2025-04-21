@@ -7,13 +7,15 @@
 get_prior(model,par,lag = 0)
 }
 \arguments{
-\item{model}{a time series model class specified in varstan.}
+\item{model}{a time series model class specified in \pkg{bayesforecast}.}
 
-\item{par}{a string value with the  desired parameter which a prior is defined could be:
-"mu0", "sigma0", "ar", "ma", "arch", "garch", "mgarch", "dfv", "df", "LKJ" or "breg".}
+\item{par}{a string value with the desired parameter to impose a prior.
+Possible arguments are: \code{"mu0"}, \code{"sigma0"}, \code{"ar"}, \code{"ma"}, \code{"arch"}, \code{"garch"},
+\code{"mgarch"}, \code{"dfv"}, \code{"df"} or \code{"breg"}.}
 
-\item{lag}{an optional integer value, indicates the desired lag of the parameter which the prior
-is defined if lag = 0, then the prior distribution will be applied for all lags}
+\item{lag}{an optional integer value, indicates the desired parameter's lag to
+impose a prior. If \code{lag = 0}, then the prior distribution will be applied
+for all lags}
 }
 \value{
 None. Prints the prior distribution of a desired parameter.
@@ -22,7 +24,6 @@ None. Prints the prior distribution of a desired parameter.
 The functions gets the defined distribution of a defined model parameter
 }
 \examples{
-library(astsa)
 # get all the ar parameters
 dat = Sarima(birth,order = c(2,1,2))
 get_prior(model = dat,par = "ar")

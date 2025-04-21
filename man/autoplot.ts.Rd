@@ -22,7 +22,7 @@
 \item{object}{Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.}
 
 \item{series}{Identifies the time series with a colour, which integrates well
-with the functionality of \link{geom_forecast}.}
+with the functionality of \code{geom_forecast}.}
 
 \item{xlab}{a string with the plot's x axis label. By default a NUll value.}
 
@@ -41,7 +41,7 @@ colour.}
 \item{model}{Object of class \dQuote{\code{ts}} to be converted to
 \dQuote{\code{data.frame}}.}
 
-\item{data}{Not used (required for \link{fortify} method)}
+\item{data}{Not used (required for \code{fortify} method)}
 }
 \value{
 None. Function produces a ggplot2 graph.

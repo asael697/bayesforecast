@@ -4,14 +4,14 @@
 \alias{SVM}
 \title{Constructor of an Stochastic volatility model object}
 \usage{
-SVM(ts,arma = c(0,0),xreg = NULL,series.name = NULL)
+SVM(ts, arma = c(0, 0), xreg = NULL, series.name = NULL)
 }
 \arguments{
 \item{ts}{a numeric or ts object with the univariate time series.}
 
 \item{arma}{Optionally, a specification of the  ARMA model,same
-as order parameter: the two components (p, q) are the AR order,and
-the  MA order.}
+as order parameter: the two components \code{c(p, q)} are the AR, and
+the  MA orders.}
 
 \item{xreg}{Optionally, a numerical matrix of external regressors,
 which must have the same number of rows as ts. It should not be a data frame.}
@@ -19,8 +19,8 @@ which must have the same number of rows as ts. It should not be a data frame.}
 \item{series.name}{an optional string vector with the time series names.}
 }
 \value{
-The function returns a list with the data for running \code{stan()} function of
-\pkg{rstan} package.
+The function returns a list with the data for running \code{stan()}
+function of \pkg{rstan} package.
 }
 \description{
 Constructor of the Stochastic Volatility model (SVM) for Bayesian estimation in \pkg{Stan}.
@@ -32,7 +32,7 @@ The function returns a list with the data for running \code{stan()} function of
 \examples{
 # Declares a SVM model for the IPC data
 
-model = SVM(ipc,arma = c(1,1))
+model = SVM(ipc, arma = c(1,1))
 model
 
 }
@@ -49,7 +49,7 @@ Applications: With R Examples. \emph{Springer Texts in Statistics}.
 isbn: 9781441978646. First edition.
 }
 \seealso{
-\code{\link{garch}} \code{\link{set_prior}}
+\code{garch}, and  \code{et_prior}.
 }
 \author{
 Asael Alonzo Matamoros

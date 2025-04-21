@@ -9,54 +9,46 @@ set_prior(model, par = "ar", dist = normal(), lag = 0)
 \arguments{
 \item{model}{a time series model class specified in \pkg{varstan}.}
 
-\item{par}{a string value with the  desired parameter which a prior is defined could be:
-"mu0", "sigma0", "ar", "ma", "arch", "garch", "mgarch", "dfv", "df", "LKJ" or "breg".}
+\item{par}{a string value with the  desired parameter which a prior is defined.
+Possible arguments are: \code{"mu0"}, \code{"sigma0"}, \code{"ar"}, \code{"ma"}, \code{"arch"}, \code{"garch"},
+\code{"mgarch"}, \code{"dfv"}, \code{"df"}, or \code{"breg"}.}
 
-\item{dist}{the distribution of the prior parameter. The only accepted is a prior_dist object.}
+\item{dist}{the distribution of the prior parameter. The only accepted argument
+is a \code{prior_dist} object.}
 
-\item{lag}{an optional integer value, indicates the desired lag of the parameter which the prior
-is defined if lag = 0, then the prior distribution will be applied for all lags.}
+\item{lag}{an optional integer value, indicates the desired lag of the parameter
+to impose a prior. If \code{lag = 0}, then the prior distribution will be applied
+for all lags.}
 }
 \value{
-a time series model class specified in \pkg{varstan} with the changed prior.
+a time series model class specified in \pkg{bayesforecast} with the
+changed prior.
 }
 \description{
-setting a prior distribution to an specify model parameter.
+Setting a prior distribution to an specify model parameter.
 }
 \details{
-varstan provides its own functions to manipulate the parameter prior, this functions return
-a \code{prior_dist} class, the \code{dist} argument only accepts this objects.
+\code{bayesforecast} provides its own functions to manipulate the parameter prior,
+this functions return a \code{prior_dist} class, the \code{dist} argument
+only accepts this objects.
 
-\code{lag} parameter is an optional value to change the prior distribution of one parameter in particular,
-this argument is only valid for: "ar","ma", "arch", "garch", "mgarch", or "breg" par arguments. lag has to
-be a integer lower than the total amount of lagged parameters of the model. For example, to  ONLY
-change the prior of the second "arch" parameter in a garch(3,1) model, a lag = 2 values must be specified.
-
-For varma and Bekk models the covariance matrix Sigma is factorized as follows:\preformatted{              Sigma = D' Omega D
-}
-
-Where Omega is the correlation matrix that accepts an LKJ prior distribution D is a diagonal matrix with
-the inverse std deviations
-
-For changing the degree freedom in a LKJ distribution for omega use par = "LKJ" and dist = LKJ(df),
-where df are the desired degree freedom.
-
-For changing the the priors in the diagonal D use par = "sigma0" and select one of the available prior
-distributions.
-
-For ar, ma garch, arch parameters in varma and Bekk models only normal distributions priors with different
-mu and sd are accepted. Even if \code{get_prior} accepts its change, Stan will change it to a normal(0,1) prior.
+\code{lag} parameter is an optional value to change the prior distribution of
+one parameter in particular, this argument is only valid for: \code{"ar"}, \code{"ma"},
+\code{"arch"}, \code{"garch"}, \code{"mgarch"}, or \code{"breg"} arguments. The \code{lag} option has
+to be a integer lower than the total amount of lagged parameters of the model.
+For example,
+to  ONLY change the prior of the second \code{"arch"} parameter in a \code{garch(3,1)}
+model, a \code{lag = 2} option must be specified.
 }
 \examples{
-library(astsa)
 dat = Sarima(birth,order = c(1,1,2))
-dat = set_prior(model = dat,par = "ar",dist = normal(0,2))
+dat = set_prior(model = dat, par = "ar", dist = normal(0,2))
 dat
 
-dat = set_prior(model = dat,par = "mu0",dist = student(mu=0,sd = 2.5,df = 7))
+dat = set_prior(model = dat, par = "mu0", dist = student(mu = 0,sd = 2.5,df = 7))
 dat
 
-dat = set_prior(model = dat,par = "ma",dist= beta(shape1 = 2,shape2 = 2),lag = 2)
+dat = set_prior(model = dat, par = "ma",dist= beta(shape1 = 2, shape2 = 2), lag = 2)
 dat
 
 }

@@ -2,18 +2,18 @@
 % Please edit documentation in R/print.R
 \name{print.varstan}
 \alias{print.varstan}
-\title{Print a varstan object}
+\title{Print a \code{varstan} object}
 \usage{
 \method{print}{varstan}(x, ...)
 }
 \arguments{
-\item{x}{a varstan object}
+\item{x}{a \code{varstan} object.}
 
-\item{...}{additional values need in print methods}
+\item{...}{additional values need in print methods.}
 }
 \value{
 None. prints the object.
 }
 \description{
-Print a varstan object
+Print a \code{varstan} object
 }

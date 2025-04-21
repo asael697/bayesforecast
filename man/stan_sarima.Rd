@@ -15,7 +15,6 @@ stan_sarima(
   warmup = floor(iter/2),
   adapt.delta = 0.9,
   tree.depth = 10,
-  stepwise = TRUE,
   prior_mu0 = NULL,
   prior_sigma0 = NULL,
   prior_ar = NULL,
@@ -30,64 +29,58 @@ stan_sarima(
 \arguments{
 \item{ts}{a numeric or ts object with the univariate time series.}
 
-\item{order}{A specification of the non-seasonal part of the ARIMA model: the
-three components (p, d, q) are the AR order, the number of differences, and the
-MA order.}
+\item{order}{a three length vector with the specification of the non-seasonal
+part of the ARIMA model. The three components \code{c(p, d, q)} are the AR,
+the number of differences, and the MA orders respectively.}
 
-\item{seasonal}{A specification of the seasonal part of the ARIMA model,same as
-order parameter:  the three components (p, d, q) are the seasonal AR order,
-the degree of seasonal differences, and the seasonal MA order.}
+\item{seasonal}{a three length vector with the specification of the seasonal
+part of the ARIMA model. The three components \code{c(P, D, Q)} are the seasonal AR,
+the degree of seasonal differences, and the seasonal MA orders respectively.}
 
 \item{xreg}{Optionally, a numerical matrix of external regressors,
 which must have the same number of rows as ts. It should not be a data frame.}
 
-\item{period}{an integer specifying the periodicity of the time series by
-default the value frequency(ts) is used.}
+\item{period}{an integer specifying the periodicity of the time series. By
+default, \code{period = frequency(ts)}.}
 
-\item{chains}{An integer of the number of Markov Chains chains to be run,
-by default 4 chains are run.}
+\item{chains}{an integer of the number of Markov Chains chains to be run. By
+default, \code{chains = 4}.}
 
-\item{iter}{An integer of total iterations per chain including the warm-up,
-by default  the number of iterations are 2000.}
+\item{iter}{an integer of total iterations per chain including the warm-up. By
+default, \code{iter = 2000}.}
 
-\item{warmup}{A positive integer specifying number of warm-up (aka burn-in)
+\item{warmup}{a positive integer specifying number of warm-up (aka burn-in)
 iterations. This also specifies the number of iterations used for step-size
 adaptation, so warm-up samples should not be used for inference. The number
-of warmup should not be larger than \code{iter} and the default is
-\code{iter/2}.}
+of warmup iteration should not be larger than \code{iter}.By default,
+\code{warmup = iter/2}.}
 
-\item{adapt.delta}{An optional real value between 0 and 1, the thin of the jumps
-in a HMC method. By default is 0.9.}
+\item{adapt.delta}{an optional real value between 0 and 1, the thin of the jumps
+in a HMC method. By default, is 0.9.}
 
-\item{tree.depth}{An integer of the maximum  depth of the trees  evaluated
-during each iteration. By default is 10.}
+\item{tree.depth}{an integer of the maximum depth of the trees  evaluated
+during each iteration. By default, is 10.}
 
-\item{stepwise}{If TRUE, will do stepwise selection (faster). Otherwise, it searches
-over all models. Non-stepwise selection can be very slow, especially for seasonal models.}
+\item{prior_mu0}{The prior distribution for the location parameter in an
+ARIMA model. By default, sets \code{student(7,0,1)} prior.}
 
-\item{prior_mu0}{The prior distribution for the location parameter in an ARIMA model. By default
-the value is set \code{NULL}, then the default student(7,0,1) prior is used.}
+\item{prior_sigma0}{The prior distribution for the scale parameter in an
+ARIMA model. By default, declares a \code{student(7,0,1)} prior.}
 
-\item{prior_sigma0}{The prior distribution for the scale parameter in an ARIMA model. By default
-the value is set \code{NULL}, then the default student(7,0,1) prior is used.}
+\item{prior_ar}{The prior distribution for the auto-regressive parameters in an
+ARIMA model. By default, sets a \code{normal(0,0.5)} priors.}
 
-\item{prior_ar}{The prior distribution for the auto-regressive parameters in an ARIMA model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
+\item{prior_ma}{The prior distribution for the moving average parameters in
+an ARIMA model. By default, sets a \code{normal(0,0.5)} priors.}
 
-\item{prior_ma}{The prior distribution for the moving average parameters in an ARIMA model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
+\item{prior_sar}{The prior distribution for the seasonal auto-regressive
+parameters in a SARIMA model. By default, uses \code{normal(0,0.5)} priors.}
 
-\item{prior_sar}{The prior distribution for the seasonal auto-regressive parameters in a
-SARIMA model. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-are used.}
+\item{prior_sma}{The prior distribution for the seasonal moving average
+parameters in a SARIMA model. By default, uses \code{normal(0,0.5)} priors.}
 
-\item{prior_sma}{The prior distribution for the seasonal moving average parameters in a
-SARIMA model. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-are used.}
-
-\item{prior_breg}{The prior distribution for the regression coefficient parameters in a
-ARIMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
-are used.}
+\item{prior_breg}{The prior distribution for the regression coefficient
+parameters in a ARIMAX model. By default, uses \code{student(7,0,1)} priors.}
 
 \item{series.name}{an optional string vector with the series names.}
 
@@ -97,7 +90,7 @@ are used.}
 A \code{varstan} object with the fitted SARIMA model.
 }
 \description{
-Fitting a SARIMA model  in \pkg{Stan}.
+Fitting a SARIMA model in \pkg{Stan}.
 }
 \details{
 The function returns a \code{varstan} object with the fitted model.
@@ -106,7 +99,7 @@ If \code{xreg} option is used, the model by default will cancel the
 seasonal differences adjusted (D = 0). If a value \code{d} > 0 is used, all
 the regressor variables in \code{xreg} will be difference as well.
 
-The default priors used in Sarima are:
+The default priors used in \code{Sarima} model are:
 
 \itemize{
 \item{ar ~ normal(0,0.5)}
@@ -120,7 +113,6 @@ The default priors used in Sarima are:
 }
 \examples{
 \donttest{
- library(astsa)
  # Declare a multiplicative seasonal ARIMA model for the birth data.
  sf1 = stan_sarima(birth,order = c(0,1,2),
                    seasonal = c(1,1,1),iter = 500,chains = 1)
@@ -146,7 +138,7 @@ forecast package for \code{R}. \emph{Journal of Statistical Software}. 26(3),
 1-22.\code{doi:	10.18637/jss.v027.i03}
 }
 \seealso{
-\code{\link{garch}} \code{\link{set_prior}}
+\code{garch}, and  \code{set_prior}.
 }
 \author{
 Asael Alonzo Matamoros

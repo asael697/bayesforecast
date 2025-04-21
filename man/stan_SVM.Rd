@@ -2,7 +2,7 @@
 % Please edit documentation in R/stan_models.R
 \name{stan_SVM}
 \alias{stan_SVM}
-\title{Fitting a Stochastic volatility model}
+\title{Fitting a Stochastic volatility model.}
 \usage{
 stan_SVM(
   ts,
@@ -13,7 +13,6 @@ stan_SVM(
   warmup = floor(iter/2),
   adapt.delta = 0.9,
   tree.depth = 10,
-  stepwise = TRUE,
   prior_mu0 = NULL,
   prior_sigma0 = NULL,
   prior_ar = NULL,
@@ -35,50 +34,44 @@ the  MA order.}
 \item{xreg}{Optionally, a numerical matrix of external regressors,
 which must have the same number of rows as ts. It should not be a data frame.}
 
-\item{chains}{An integer of the number of Markov Chains chains to be run,
-by default 4 chains are run.}
+\item{chains}{an integer of the number of Markov Chains chains to be run. By
+default, \code{chains = 4}.}
 
-\item{iter}{An integer of total iterations per chain including the warm-up,
-by default  the number of iterations are 2000.}
+\item{iter}{an integer of total iterations per chain including the warm-up. By
+default, \code{iter = 2000}.}
 
-\item{warmup}{A positive integer specifying number of warm-up (aka burn-in)
+\item{warmup}{a positive integer specifying number of warm-up (aka burn-in)
 iterations. This also specifies the number of iterations used for step-size
 adaptation, so warm-up samples should not be used for inference. The number
-of warmup should not be larger than \code{iter} and the default is
-\code{iter/2}.}
+of warmup iteration should not be larger than \code{iter}.By default,
+\code{warmup = iter/2}.}
 
-\item{adapt.delta}{An optional real value between 0 and 1, the thin of the jumps
-in a HMC method. By default is 0.9.}
+\item{adapt.delta}{an optional real value between 0 and 1, the thin of the jumps
+in a HMC method. By default, is 0.9.}
 
-\item{tree.depth}{An integer of the maximum  depth of the trees  evaluated
-during each iteration. By default is 10.}
+\item{tree.depth}{an integer of the maximum depth of the trees  evaluated
+during each iteration. By default, is 10.}
 
-\item{stepwise}{If TRUE, will do stepwise selection (faster). Otherwise, it searches
-over all models. Non-stepwise selection can be very slow, especially for seasonal models.}
+\item{prior_mu0}{The prior distribution for the location parameter in an
+ARIMA model. By default, sets \code{student(7,0,1)} prior.}
 
-\item{prior_mu0}{The prior distribution for the location parameter in an SVM model. By default
-the value is set \code{NULL}, then the default normal(0,1) prior is used.}
+\item{prior_sigma0}{The prior distribution for the scale parameter in an
+ARIMA model. By default, declares a \code{student(7,0,1)} prior.}
 
-\item{prior_sigma0}{The prior distribution for the scale parameter in an SVM model. By default
-the value is set \code{NULL}, then the default student(7,0,1) prior is used.}
+\item{prior_ar}{The prior distribution for the auto-regressive parameters in
+an ARMA model. By default, sets \code{normal(0,0.5)} priors.}
 
-\item{prior_ar}{The prior distribution for the auto-regressive parameters in an ARMA model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
+\item{prior_ma}{The prior distribution for the moving average parameters in
+an ARMA model. By default, sets the \code{normal(0,0.5)} priors.}
 
-\item{prior_ma}{The prior distribution for the moving average parameters in an ARMA model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.}
+\item{prior_alpha}{The prior distribution for the auto-regressive parameters in
+a SVM model. By default, set a \code{normal(0, 0.5)} prior.}
 
-\item{prior_alpha}{The prior distribution for the arch parameters in a GARCH model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-are used.}
+\item{prior_beta}{The prior distribution for the exponential intercept parameter
+in a SVM model. By default, uses a \code{normal(0,0.5)} prior.}
 
-\item{prior_beta}{The prior distribution for the GARCH parameters in a GARCH model.
-By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-are used.}
-
-\item{prior_breg}{The prior distribution for the regression coefficient parameters in a
-ARIMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
-are used.}
+\item{prior_breg}{The prior distribution for the regression coefficient parameters
+in an ARIMAX model. By default, sets \code{student(7,0,1)} priors.}
 
 \item{series.name}{an optional string vector with the series names.}
 
@@ -113,7 +106,7 @@ Applications: With R Examples. \emph{Springer Texts in Statistics}.
 isbn: 9781441978646. First edition.
 }
 \seealso{
-\code{\link{garch}} \code{\link{set_prior}}
+\code{garch}, and \code{set_prior}
 }
 \author{
 Asael Alonzo Matamoros

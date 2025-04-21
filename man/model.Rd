@@ -8,14 +8,14 @@
 \alias{model.varma}
 \alias{model.Bekk}
 \alias{model.SVM}
-\title{Print the defined model of a varstan object.}
+\title{Print the defined model of a \code{varstan} object.}
 \usage{
-model(object,...)
+model(object, ...)
 }
 \arguments{
-\item{object}{a varstan object or one of the defined current defined models in varstan package.}
+\item{object}{a \code{varstan} object or one of the defined current defined models.}
 
-\item{...}{additional values need in print methods}
+\item{...}{additional values need in print methods.}
 }
 \value{
 a  string with the defined time series model.
@@ -24,7 +24,7 @@ a  string with the defined time series model.
 The function returns a string with the users defined model for the given time series data.
 }
 \details{
-if \code{object} is a varstan object the function will print the information of the
+if \code{object} is a \code{varstan} object the function will print the information of the
 defined model inside of the object. If \code{object} is one of the model classes (like
 \code{Sarima}, \code{garch}, \code{SVM} or \code{varma}), then it will print the model
 information as well.
@@ -33,7 +33,6 @@ For full information of the model with the used priors use the function report o
 print the object.
 }
 \examples{
-library(astsa)
 model1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 model(model1)
 

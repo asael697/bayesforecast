@@ -4,7 +4,7 @@
 \alias{naive}
 \title{Naive and Random Walk models.}
 \usage{
-naive(ts,seasonal = FALSE,m = 0)
+naive(ts, seasonal = FALSE, m = 0)
 }
 \arguments{
 \item{ts}{a numeric or ts object with the univariate time series.}
@@ -14,27 +14,26 @@ naive(ts,seasonal = FALSE,m = 0)
 \item{m}{an optional integer value for the seasonal period.}
 }
 \value{
-The function returns a list with the data for running \code{stan()} function of
-\pkg{rstan} package.
+The function returns a list with the data for running \code{stan()}
+function of \pkg{rstan} package.
 }
 \description{
-naive is the model constructor for a random walk  model applied to \code{y}.
+Naive is the model constructor for a random walk  model applied to \code{y}.
 This is equivalent to an ARIMA(0,1,0) model. \code{naive()} is simply a wrapper
-to  maintain forecast package similitude. \code{seasonal} returns the model constructor
-for a seasonal random walk equivalent to an ARIMA(0,0,0)(0,1,0)m model where m is the
-seasonal period.
+to  maintain forecast package similitude. \code{seasonal} returns the model
+constructor for a seasonal random walk equivalent to an ARIMA(0,0,0)(0,1,0)m
+model where \code{m }is the seasonal period.
 }
 \details{
 The random walk with drift model is
 \deqn{Y_t = mu_0 + Y_{t-1} + epsilon_t}{Y[t]= mu_0 +Y[t-1] + epsilon[t]}
-where  \eqn{epsilon_t}{epsilon[t]} is a normal iid error.
+where  \eqn{epsilon_t}{epsilon[t]} is a normal i.i.d. error.
 
 The seasonal naive model is
 \deqn{Y_t = mu_0 + Y_{t-m} + epsilon_t}{Y[t]= mu_0 +Y[t-m] + epsilon[t]}
-where  \eqn{epsilon_t}{epsilon[t]} is a normal iid error.
+where  \eqn{epsilon_t}{epsilon[t]} is a normal i.i.d. error.
 }
 \examples{
-library(astsa)
 # A seasonal Random-walk model.
 model = naive(birth,seasonal = TRUE)
 model
@@ -57,5 +56,5 @@ Kennedy, P. (1992). Forecasting with dynamic regression models: Alan Pankratz, 1
 \code{\link{Sarima}}
 }
 \author{
-Asael Alonzo Matamoros
+Asael Alonzo Matamoros.
 }

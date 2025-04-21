@@ -2,57 +2,62 @@
 % Please edit documentation in R/ssm.R
 \name{ssm}
 \alias{ssm}
-\title{A  constructor for a Additive linear State space model.}
+\title{A constructor for a Additive linear State space model.}
 \usage{
-ssm(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
-           period = 0,genT = FALSE,series.name = NULL)
+ssm(
+  ts,
+  trend = FALSE,
+  damped = FALSE,
+  seasonal = FALSE,
+  xreg = NULL,
+  period = 0,
+  genT = FALSE,
+  series.name = NULL
+)
 }
 \arguments{
 \item{ts}{a numeric or ts object with the univariate time series.}
 
-\item{trend}{a boolean value to specify a trend local level model. By default
-is \code{FALSE}.}
+\item{trend}{a bool value to specify a trend local level model. By default,
+\code{trend = FALSE}.}
 
-\item{damped}{a boolean value to specify a damped trend local level model. By default
-is \code{FALSE}. If \code{trend} option is \code{FALSE} then \code{damped} is set to
-\code{FALSE} automatically.}
+\item{damped}{a bool value to specify a damped trend local level model. By default,
+\code{damped = FALSE}. If \code{trend = FALSE} then \code{damped = FALSE}
+automatically.}
 
-\item{seasonal}{a boolean value to specify a seasonal local level model. By default
-is \code{FALSE}.}
+\item{seasonal}{a bool value to specify a seasonal local level model. By default
+\code{seasonal = FALSE}.}
 
 \item{xreg}{Optionally, a numerical matrix of external regressors,
 which must have the same number of rows as ts. It should not be a data frame.}
 
 \item{period}{an integer specifying the periodicity of the time series by
-default the value frequency(ts) is used.}
+default the value \code{frequency(ts)} is used.}
 
-\item{genT}{a boolean value to specify for a generalized t-student SSM model.}
+\item{genT}{a bool value to specify for a generalized t-student SSM model.}
 
 \item{series.name}{an optional string vector with the time series names.}
 }
 \value{
-The function returns a list with the data for running \code{stan()} function of
-\pkg{rstan} package.
+The function returns a list with the data for running \code{stan()}
+function of \pkg{rstan} package.
 }
 \description{
 Constructor of the \code{ets("Z","Z","Z")} object for Bayesian estimation in \pkg{Stan}.
 }
 \details{
-The function returns a list with the data for running \code{stan()} function of
-\pkg{rstan} package.
+By  default  the  \code{ssm()}  function generates a local level
+\code{ets("A","N","N")}, or exponential smoothing model. If \code{trend = TRUE},
+then  the model transforms into a  local  trend, \code{ets("A","A","N")} or Holt model
+from the n\pkg{forecast} package. For damped trend models set \code{damped = TRUE}.
+When \code{seasonal = TRUE}, the model becomes a seasonal local level or
+\verb{ets("A","N","A")`` model from  the  \pkg{forecast} package. Finally, a Holt-Winters method or }ets("A","A","A")`,is whenever both \code{Trend} and
+\code{seasonal} options are  \code{TRUE}.
 
-By  default  the  \code{ssm()}  function generates a local level model (or a ets("A","N","N") or
-exponential smoothing model from the \pkg{forecast} package). If \code{trend} is set \code{TRUE},
-then  a  local  trend ssm model is defined (a equivalent ets("A","A","N") or Holt model from the
-\pkg{forecast} package). For damped trend models set \code{damped} to \code{TRUE}. If \code{seasonal}
-is  set  to  \code{TRUE} a seasonal local level model is defined (a equivalent ets("A","N","A") model
-from  the  \pkg{forecast} package). For a Holt-Winters method (ets("A","A","A")) set \code{Trend} and
-\code{seasonal} to \code{TRUE}.
+The \code{genT = TRUE} defines a t-student innovations SSM model. Check, Ardia (2010))
+and Fonseca, et. al (2019) for more details.
 
-When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
-see Fonseca, et. al (2019) for more details.
-
-The default priors used in a ssm( ) model are:
+The default priors used in a \code{ssm( )} model are:
 
 \itemize{
 \item{level ~ normal(0,0.5)}
@@ -85,7 +90,7 @@ degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 }
 \seealso{
-\code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+\code{Sarima}, \code{auto.arima}, \code{set_prior}, and \code{garch}.
 }
 \author{
 Asael Alonzo Matamoros.

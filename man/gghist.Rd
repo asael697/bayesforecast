@@ -7,7 +7,8 @@
 gghist(y, title = NULL, xlab = NULL, ylab = "counts", bins, add.normal = TRUE)
 }
 \arguments{
-\item{y}{a numeric vector or an object of the \code{ts} class containing a stationary time series.}
+\item{y}{a numeric vector or an object of the \code{ts} class containing a
+stationary time series.}
 
 \item{title}{a string with the plot's title.}
 
