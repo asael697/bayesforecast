@@ -318,7 +318,6 @@ ggpacf = function(y,title = NULL){
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
 #'  sf1 = auto.sarima(ts = birth,iter = 500,chains = 1)
 #'  # fitted model
 #'  plot(sf1)
@@ -356,7 +355,6 @@ plot.varstan = function(x, prob = 0.95, ...){
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
 #'  sf1 = auto.sarima(ts = birth,iter = 500,chains = 1)
 #'  # fitted model
 #'  autoplot(sf1)

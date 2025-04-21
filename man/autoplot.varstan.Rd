@@ -26,7 +26,6 @@ sampled model parameters, or the residuals' posterior mean time series.
 }
 \examples{
 \donttest{
- library(astsa)
  sf1 = auto.sarima(ts = birth,iter = 500,chains = 1)
  # fitted model
  autoplot(sf1)

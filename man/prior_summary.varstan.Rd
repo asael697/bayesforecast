@@ -26,7 +26,6 @@ is one of the model classes (like \code{Sarima} or \code{garch}) then it will pr
 report information as well.
 }
 \examples{
-library(astsa)
 dat2 = garch(birth,order = c(1,1,0))
 prior_summary(dat2)
 

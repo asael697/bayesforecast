@@ -288,7 +288,6 @@ report.Hw = function(object,...){
 #' @export prior_summary
 #'
 #' @examples
-#' library(astsa)
 #' dat2 = garch(birth,order = c(1,1,0))
 #' prior_summary(dat2)
 #'
