@@ -1,6 +1,27 @@
 **bayesforecast NEWS**
 ============
 
+**Bayesforecast 1.0.5. Date: 21/04/2025**
+----------------------------------
+
+### Features:
+
+- no features
+
+### Improvements:
+
+-  update rstan into 2.36 version
+
+### Changes:
+
+-   No current changes
+
+### Fixes:
+
+- Update Stan code @andrjohns 
+
+- Correct documentation 
+
 **Bayesforecast 1.0.1. Date: 16/06/2021**
 ----------------------------------
 
