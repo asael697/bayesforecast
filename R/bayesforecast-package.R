@@ -11,15 +11,15 @@
 #' information criteria such as loglik, AIC, BIC WAIC, Bayes factor and
 #' leave-one-out cross-validation methods.
 #'
-#' @docType package
 #' @name bayesforecast-package
 #' @aliases bayesforecast
 #'
 #' @useDynLib bayesforecast, .registration = TRUE
 #' @import methods
 #' @import Rcpp
-#'
 #' @importFrom rstan sampling
+#' @importFrom rstantools rstan_config
+#' @importFrom RcppParallel RcppParallelLibs
 #' @importFrom rstan loo
 #'
 #' @references
