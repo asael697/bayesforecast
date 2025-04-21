@@ -13,18 +13,15 @@ On the beta version 1.0.0, the available models are:
 
 -   ARIMA [Box and
     Jenkins (1970)](https://www.wiley.com/en-us/Time+Series+Analysis%3A+Forecasting+and+Control%2C+5th+Edition-p-9781118675021).
--   Multiplicative Seasonal ARIMA [Brockwell and
-    Davis (2016)](https://www.amazon.com/dp/3319298526/ref=cm_sw_su_dp?tag=otexts-20)
+-   Multiplicative Seasonal ARIMA, Brockwell and Davis (2016)
 -   GARCH
     [Bollerslev (1986)](https://doi.org/10.1016/0304-4076(86)90063-1)
 -   Asymmetric GARCH [Fonseca et.
     al (2019)](https://arxiv.org/abs/1910.01398)
--   ARMAX
-    [Pankratz (1991)](https://www.amazon.com/dp/0471615285/ref=cm_sw_su_dp?tag=otexts-20)
--   Dynamic Harmonic regression
-    [Pankratz (1991)](https://www.amazon.com/dp/0471615285/ref=cm_sw_su_dp?tag=otexts-20)
+-   ARMAX, Pankratz (1991).
+-   Dynamic Harmonic regression, Pankratz (1991).
 -   Stochastic Volatility models [Sangjoon et.
-    al. (1998)](https://www.jstor.org/stable/2566931)
+    al. (1998)](https://www.jstor.org/stable/2566931)
 -   Local global trend [Ng et.
     al. (2020)](https://arxiv.org/abs/2004.08492)
 -   Additive ETS models from the [forecast
