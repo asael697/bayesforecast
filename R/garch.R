@@ -1,24 +1,22 @@
-#' A  constructor for a GARCH(s,k,h) model.
+#' A constructor for a GARCH(s,k,h) model.
 #'
 #' Constructor of the \code{GARCH(s,k,h)} object for Bayesian estimation in \pkg{Stan}.
 #'
 #' The function returns a list with the data for running \code{stan()} function of
 #'  \pkg{rstan} package.
 #'
-#' @usage garch(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,
-#'              genT = FALSE,asym = "none",series.name = NULL)
-#'
 #' @param ts a numeric or ts object with the univariate time series.
-#' @param order A specification of the garch  model: the three components (s, k, h)
-#' are the arch order, the garch order, and the mgarch order.
-#' @param arma A specification of the  ARMA model,same as order parameter:  the two
-#' components (p, q) are the AR order,and the  MA order.
+#' @param order a three length vector, with the GARCH model specification: the
+#' three components `c(s, k, h)` are the ARCH, GARCH, and MGARCH orders respectively.
+#' @param arma a two length vector with the ARMA model specification, similar to the
+#' `order` argument; the two components `c(p, q)` are the AR, and MA orders.
 #' @param xreg	Optionally, a numerical matrix of external regressors,
-#' which must have the same number of rows as ts. It should not be a data frame.
-#' @param genT a boolean value to specify for a generalized t-student garch model.
-#' @param asym a string value for the asymmetric function for an asymmetric GARCH process. By default
-#' the value \code{"none"} for standard GARCH process. If \code{"logit"} a logistic function
-#' is used for asymmetry, and if \code{"exp"} an exponential function is used.
+#' which must have the same number of rows as `ts`. It should not be a data frame.
+#' @param genT a boolean value to specify for a generalized t-student GARCH model.
+#' @param asym a string value for the asymmetric function for an asymmetric GARCH
+#' process. By default the value \code{"none"} for standard GARCH process.
+#' If \code{"logit"} a logistic function is used for asymmetry, and if \code{"exp"}
+#' an exponential function is used.
 #' @param series.name an optional string vector with the time series names.
 #'
 #' @details
@@ -44,8 +42,8 @@
 #'
 #' For changing the default prior use the function \code{set_prior()}.
 #'
-#' @return The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
+#' @return The function returns a list with the data for running \code{stan()}
+#' function of \pkg{rstan} package.
 #'
 #' @author Asael Alonzo Matamoros.
 #'
@@ -84,8 +82,8 @@
 #' dat = garch(ipc,order = c(1,1,0),asym = "logit")
 #' dat
 #'
-garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,
-                 genT = FALSE,asym = "none",series.name = NULL){
+garch = function(ts, order = c(1,1,0), arma = c(0,0), xreg = NULL,
+                 genT = FALSE, asym = "none", series.name = NULL){
 
   n = length(as.numeric(ts))
   y = as.numeric(ts)
@@ -132,21 +130,21 @@ garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,
   }
   else{
     m1$d1 = 0
-    m1$xreg = matrix(rep(0,m1$d1*n),ncol = m1$d1,nrow = n)
+    m1$xreg = matrix(rep(0,m1$d1*n), ncol = m1$d1, nrow = n)
   }
-  m1$prior_breg  = matrix(rep(c(0,2.5,6,4),m1$d1),ncol = 4,byrow = TRUE)
+  m1$prior_breg  = matrix(rep(c(0,2.5,6,4), m1$d1), ncol = 4, byrow = TRUE)
 
   # asymmetric GARCH
   m1$asym = check_asym(asym)
   m1$asym1 = ifelse(m1$asym > 0,1,0)
-  m1$prior_gamma = matrix(rep(c(0,0.5,1,1),2*m1$asym1),ncol = 4,byrow = TRUE)
+  m1$prior_gamma = matrix(rep(c(0,0.5,1,1),2*m1$asym1), ncol = 4, byrow = TRUE)
 
   attr(m1,"class") = "garch"
   return(m1)
 }
-#' Checks if is a garch object
+#' Checks if is a GARCH object,
 #'
-#' @param object a  garch object
+#' @param object a GARCH object.
 #' @noRd
 #'
 is.garch = function(object){
@@ -156,17 +154,17 @@ is.garch = function(object){
 }
 #' Extracts all the order coefficients in a list
 #'
-#' @param dat A garch model
+#' @param dat a GARCH model.
 #' @noRd
 #'
-get_order_garch= function(dat){
-    return(list(p = dat$p,q=dat$q,d1 = dat$d1,s=dat$s,k=dat$k,h=dat$h))
+get_order_garch = function(dat){
+    return(list(p = dat$p, q = dat$q, d1 = dat$d1, s = dat$s, k = dat$k, h = dat$h))
 }
-#' Max order  coefficients in a garch model
+#' Max order  coefficients in a GARCH model.
 #'
-#' @param dat A garch model
+#' @param dat A GARCH model.
 #' @noRd
 #'
-max_order_garch= function(dat){
-  return(max(c(dat$p,dat$q,dat$s,dat$k,dat$h)))
+max_order_garch = function(dat){
+  return(max(c(dat$p, dat$q, dat$s, dat$k, dat$h)))
 }

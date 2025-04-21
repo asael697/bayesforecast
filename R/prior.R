@@ -1,53 +1,44 @@
 #' Set a prior distribution to a model parameter.
 #'
-#' setting a prior distribution to an specify model parameter.
+#' Setting a prior distribution to an specify model parameter.
 #'
 #' @param model a time series model class specified in \pkg{varstan}.
-#' @param par a string value with the  desired parameter which a prior is defined could be:
-#' "mu0", "sigma0", "ar", "ma", "arch", "garch", "mgarch", "dfv", "df", "LKJ" or "breg".
-#' @param dist the distribution of the prior parameter. The only accepted is a prior_dist object.
-#' @param lag an optional integer value, indicates the desired lag of the parameter which the prior
-#' is defined if lag = 0, then the prior distribution will be applied for all lags.
+#' @param par a string value with the  desired parameter which a prior is defined.
+#' Possible arguments are: `"mu0"`, `"sigma0"`, `"ar"`, `"ma"`, `"arch"`, `"garch"`,
+#' `"mgarch"`, `"dfv"`, `"df"`, or `"breg"`.
+#' @param dist the distribution of the prior parameter. The only accepted argument
+#' is a `prior_dist` object.
+#' @param lag an optional integer value, indicates the desired lag of the parameter
+#' to impose a prior. If `lag = 0`, then the prior distribution will be applied
+#' for all lags.
 #'
-#' @return a time series model class specified in \pkg{varstan} with the changed prior.
+#' @return a time series model class specified in \pkg{bayesforecast} with the
+#' changed prior.
 #'
 #' @details
-#' varstan provides its own functions to manipulate the parameter prior, this functions return
-#' a \code{prior_dist} class, the \code{dist} argument only accepts this objects.
+#' `bayesforecast` provides its own functions to manipulate the parameter prior,
+#' this functions return a \code{prior_dist} class, the \code{dist} argument
+#' only accepts this objects.
 #'
-#' \code{lag} parameter is an optional value to change the prior distribution of one parameter in particular,
-#' this argument is only valid for: "ar","ma", "arch", "garch", "mgarch", or "breg" par arguments. lag has to
-#' be a integer lower than the total amount of lagged parameters of the model. For example, to  ONLY
-#' change the prior of the second "arch" parameter in a garch(3,1) model, a lag = 2 values must be specified.
-#'
-#' For varma and Bekk models the covariance matrix Sigma is factorized as follows:
-#'
-#'                   Sigma = D' Omega D
-#'
-#' Where Omega is the correlation matrix that accepts an LKJ prior distribution D is a diagonal matrix with
-#' the inverse std deviations
-#'
-#' For changing the degree freedom in a LKJ distribution for omega use par = "LKJ" and dist = LKJ(df),
-#' where df are the desired degree freedom.
-#'
-#' For changing the the priors in the diagonal D use par = "sigma0" and select one of the available prior
-#' distributions.
-#'
-#' For ar, ma garch, arch parameters in varma and Bekk models only normal distributions priors with different
-#' mu and sd are accepted. Even if \code{get_prior} accepts its change, Stan will change it to a normal(0,1) prior.
+#' \code{lag} parameter is an optional value to change the prior distribution of
+#' one parameter in particular, this argument is only valid for: `"ar"`, `"ma"`,
+#' `"arch"`, `"garch"`, `"mgarch"`, or `"breg"` arguments. The `lag` option has
+#' to be a integer lower than the total amount of lagged parameters of the model.
+#' For example,
+#' to  ONLY change the prior of the second `"arch"` parameter in a `garch(3,1)`
+#' model, a `lag = 2` option must be specified.
 #'
 #' @author Asael Alonzo Matamoros
 #' @export
 #' @examples
-#' library(astsa)
 #' dat = Sarima(birth,order = c(1,1,2))
-#' dat = set_prior(model = dat,par = "ar",dist = normal(0,2))
+#' dat = set_prior(model = dat, par = "ar", dist = normal(0,2))
 #' dat
 #'
-#' dat = set_prior(model = dat,par = "mu0",dist = student(mu=0,sd = 2.5,df = 7))
+#' dat = set_prior(model = dat, par = "mu0", dist = student(mu = 0,sd = 2.5,df = 7))
 #' dat
 #'
-#' dat = set_prior(model = dat,par = "ma",dist= beta(shape1 = 2,shape2 = 2),lag = 2)
+#' dat = set_prior(model = dat, par = "ma",dist= beta(shape1 = 2, shape2 = 2), lag = 2)
 #' dat
 #'
 set_prior = function(model,par = "ar",dist = normal(),lag = 0){
@@ -129,11 +120,13 @@ set_prior = function(model,par = "ar",dist = normal(),lag = 0){
 #'
 #' @usage get_prior(model,par,lag = 0)
 #'
-#' @param model a time series model class specified in varstan.
-#' @param par a string value with the  desired parameter which a prior is defined could be:
-#' "mu0", "sigma0", "ar", "ma", "arch", "garch", "mgarch", "dfv", "df", "LKJ" or "breg".
-#' @param lag an optional integer value, indicates the desired lag of the parameter which the prior
-#' is defined if lag = 0, then the prior distribution will be applied for all lags
+#' @param model a time series model class specified in \pkg{bayesforecast}.
+#' @param par a string value with the desired parameter to impose a prior.
+#' Possible arguments are: `"mu0"`, `"sigma0"`, `"ar"`, `"ma"`, `"arch"`, `"garch"`,
+#' `"mgarch"`, `"dfv"`, `"df"` or `"breg"`.
+#' @param lag an optional integer value, indicates the desired parameter's lag to
+#' impose a prior. If `lag = 0`, then the prior distribution will be applied
+#' for all lags
 #'
 #' @return None. Prints the prior distribution of a desired parameter.
 #' @author Asael Alonzo Matamoros
@@ -141,7 +134,6 @@ set_prior = function(model,par = "ar",dist = normal(),lag = 0){
 #' @export
 #'
 #' @examples
-#' library(astsa)
 #' # get all the ar parameters
 #' dat = Sarima(birth,order = c(2,1,2))
 #' get_prior(model = dat,par = "ar")
@@ -154,7 +146,7 @@ set_prior = function(model,par = "ar",dist = normal(),lag = 0){
 #' dat = set_prior(model = dat,par = "ma",dist = beta(2,2),lag = 2)
 #' get_prior(dat,par = "ma")
 #'
-get_prior = function(model,par,lag = 0){
+get_prior = function(model, par, lag = 0){
   if(!is.model(model))
     stop("The defined model does not belong to varstan")
 
@@ -166,7 +158,7 @@ get_prior = function(model,par,lag = 0){
       stop("The model is not an asymmetric GARCH")
   }
 
-  if(lag < 0 )
+  if(lag < 0)
     stop("lag values lower than zero are not accepted")
 
   y = NULL
@@ -306,7 +298,7 @@ print.beta = function(x,...){
 #'
 #' @export
 #'
-uniform= function(min = 0,max = 1){
+uniform = function(min = 0, max = 1){
   #unif == 3
   if(min > max) x = c(check_form(max),check_form(min),1,3)
   else if(min==max) x = c(0,1,1,3)

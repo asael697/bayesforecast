@@ -1,19 +1,17 @@
 #' Constructor a Multiplicative Seasonal ARIMA model.
 #'
-#' Constructor of the SARIMA model  for Bayesian estimation in \pkg{Stan}.
+#' Constructor of the SARIMA model for Bayesian estimation in \pkg{Stan}.
 #'
 #' The function returns a list with the data for running \code{stan()} function of
 #'  \pkg{rstan} package
 #'
-#' @usage Sarima(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,period = 0,series.name = NULL)
-#'
 #' @param ts a numeric or ts object with the univariate time series.
-#' @param order A specification of the non-seasonal part of the ARIMA model: the
-#' three components (p, d, q) are the AR order, the number of differences, and the
-#' MA order.
-#' @param seasonal A specification of the seasonal part of the ARIMA model,same as
-#' order parameter:  the three components (p, d, q) are the seasonal AR order,
-#' the degree of seasonal differences, and the seasonal MA order.
+#' @param order a three length vector with the specification of the non-seasonal
+#' part of the ARIMA model: the three components `c(p, d, q)` are the AR,number of
+#' differences, and the MA orders respectively.
+#' @param seasonal a vector of length three with the  specification of the seasonal
+#'  part of the SARIMA model. The three components `c(P, D, Q)` are the seasonal AR,
+#' the degree of seasonal differences, and the seasonal MA orders respectively.
 #' @param xreg	Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param period an integer specifying the periodicity of the time series by
@@ -37,12 +35,12 @@
 #'  \item{breg ~ t-student(0,2.5,6)}
 #' }
 #'
-#' For changing the default prior use the function \code{set_prior}
+#' For changing the default prior use the function \code{set_prior}.
 #'
-#' @return The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
+#' @return The function returns a list with the data for running \code{stan()}
+#' function of \pkg{rstan} package.
 #'
-#' @author  Asael Alonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
 #' @importFrom stats as.ts time frequency
 #' @importFrom utils tail
@@ -61,12 +59,11 @@
 #' forecast package for \code{R}. \emph{Journal of Statistical Software}. 26(3),
 #' 1-22.\code{doi:	10.18637/jss.v027.i03}
 #'
-#' @seealso \code{\link{garch}} \code{\link{set_prior}}
+#' @seealso \code{garch}, and \code{set_prior} functions.
 #'
 #' @examples
 #' # Declare a multiplicative seasonal ARIMA model for the birth data.
 #'
-#' library(astsa)
 #' model = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #' model
 #'
@@ -74,8 +71,8 @@
 #' model = Sarima(birth,order = c(1,0,1),xreg = fourier(birth,K = 2))
 #' model
 #'
-Sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
-                  period = 0,series.name = NULL){
+Sarima = function(ts, order = c(1,0,0), seasonal = c(0,0,0), xreg = NULL,
+                  period = 0, series.name = NULL){
 
   n = length(as.numeric(ts))
 
@@ -158,9 +155,9 @@ Sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 
   return(m1)
 }
-#' Checks if is a Sarima object
+#' Checks if is a `Sarima` object
 #'
-#' @param object an arima object
+#' @param object an `Sarima` object.
 #' @noRd
 #'
 is.Sarima = function(object){
@@ -170,21 +167,21 @@ is.Sarima = function(object){
 }
 #' Extracts all the order coefficients in a list
 #'
-#' @param dat a Sarima model
+#' @param dat a `Sarima` model
 #' @noRd
 #'
-get_order_arima= function(dat){
+get_order_arima = function(dat){
   return(list(p = dat$p,d =dat$d,q=dat$q,
               P=dat$P,D = dat$D,Q=dat$Q,
               d1 = dat$d1,
               period = dat$period))
 
 }
-#' Max order  coefficients in an Sarima model
+#' Max order coefficients in an `Sarima` model.
 #'
-#' @param dat a Sarima model
+#' @param dat a `Sarima` model.
 #' @noRd
 #'
-max_order_arima= function(dat){
+max_order_arima = function(dat){
   return(max(c(dat$p,dat$q,dat$period*dat$P,dat$period*dat$Q)))
 }

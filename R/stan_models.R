@@ -1,52 +1,47 @@
 #' Fitting a Multiplicative Seasonal ARIMA model.
 #'
-#' Fitting a SARIMA model  in \pkg{Stan}.
+#' Fitting a SARIMA model in \pkg{Stan}.
 #'
 #' The function returns a \code{varstan} object with the fitted model.
 #'
 #' @param ts a numeric or ts object with the univariate time series.
-#' @param order A specification of the non-seasonal part of the ARIMA model: the
-#' three components (p, d, q) are the AR order, the number of differences, and the
-#' MA order.
-#' @param seasonal A specification of the seasonal part of the ARIMA model,same as
-#' order parameter:  the three components (p, d, q) are the seasonal AR order,
-#' the degree of seasonal differences, and the seasonal MA order.
+#' @param order a three length vector with the specification of the non-seasonal
+#' part of the ARIMA model. The three components `c(p, d, q)` are the AR,
+#' the number of differences, and the MA orders respectively.
+#' @param seasonal a three length vector with the specification of the seasonal
+#' part of the ARIMA model. The three components `c(P, D, Q)` are the seasonal AR,
+#' the degree of seasonal differences, and the seasonal MA orders respectively.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
-#' @param period an integer specifying the periodicity of the time series by
-#' default the value frequency(ts) is used.
-#' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 4 chains are run.
-#' @param iter An integer of total iterations per chain including the warm-up,
-#' by default  the number of iterations are 2000.
-#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
-#'   iterations. This also specifies the number of iterations used for step-size
-#'   adaptation, so warm-up samples should not be used for inference. The number
-#'   of warmup should not be larger than \code{iter} and the default is
-#'   \code{iter/2}.
-#' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
-#' in a HMC method. By default is 0.9.
-#' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
-#' during each iteration. By default is 10.
-#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
-#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
-#' @param prior_mu0 The prior distribution for the location parameter in an ARIMA model. By default
-#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
-#' @param prior_sigma0 The prior distribution for the scale parameter in an ARIMA model. By default
-#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
-#' @param prior_ar The prior distribution for the auto-regressive parameters in an ARIMA model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
-#' @param prior_ma The prior distribution for the moving average parameters in an ARIMA model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
-#' @param prior_sar The prior distribution for the seasonal auto-regressive parameters in a
-#' SARIMA model. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-#' are used.
-#' @param prior_sma The prior distribution for the seasonal moving average parameters in a
-#' SARIMA model. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-#' are used.
-#' @param prior_breg The prior distribution for the regression coefficient parameters in a
-#' ARIMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
-#' are used.
+#' @param period an integer specifying the periodicity of the time series. By
+#' default, \code{period = frequency(ts)}.
+#' @param chains an integer of the number of Markov Chains chains to be run. By
+#' default, \code{chains = 4}.
+#' @param iter an integer of total iterations per chain including the warm-up. By
+#' default, \code{iter = 2000}.
+#' @param warmup a positive integer specifying number of warm-up (aka burn-in)
+#' iterations. This also specifies the number of iterations used for step-size
+#' adaptation, so warm-up samples should not be used for inference. The number
+#' of warmup iteration should not be larger than \code{iter}.By default,
+#' \code{warmup = iter/2}.
+#' @param adapt.delta an optional real value between 0 and 1, the thin of the jumps
+#' in a HMC method. By default, is 0.9.
+#' @param  tree.depth an integer of the maximum depth of the trees  evaluated
+#' during each iteration. By default, is 10.
+#' @param prior_mu0 The prior distribution for the location parameter in an
+#' ARIMA model. By default, sets `student(7,0,1)` prior.
+#' @param prior_sigma0 The prior distribution for the scale parameter in an
+#' ARIMA model. By default, declares a `student(7,0,1)` prior.
+#' @param prior_ar The prior distribution for the auto-regressive parameters in an
+#' ARIMA model. By default, sets a `normal(0,0.5)` priors.
+#' @param prior_ma The prior distribution for the moving average parameters in
+#' an ARIMA model. By default, sets a `normal(0,0.5)` priors.
+#' @param prior_sar The prior distribution for the seasonal auto-regressive
+#' parameters in a SARIMA model. By default, uses `normal(0,0.5)` priors.
+#' @param prior_sma The prior distribution for the seasonal moving average
+#' parameters in a SARIMA model. By default, uses `normal(0,0.5)` priors.
+#' @param prior_breg The prior distribution for the regression coefficient
+#' parameters in a ARIMAX model. By default, uses `student(7,0,1)` priors.
 #' @param series.name an optional string vector with the series names.
 #' @param ... Further arguments passed to  \code{varstan} function.
 #'
@@ -55,7 +50,7 @@
 #' seasonal differences adjusted (D = 0). If a value \code{d} > 0 is used, all
 #' the regressor variables in \code{xreg} will be difference as well.
 #'
-#' The default priors used in Sarima are:
+#' The default priors used in `Sarima` model are:
 #'
 #' \itemize{
 #'  \item{ar ~ normal(0,0.5)}
@@ -88,11 +83,10 @@
 #' forecast package for \code{R}. \emph{Journal of Statistical Software}. 26(3),
 #' 1-22.\code{doi:	10.18637/jss.v027.i03}
 #'
-#' @seealso \code{\link{garch}} \code{\link{set_prior}}
+#' @seealso \code{garch}, and  \code{set_prior}.
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
 #'  # Declare a multiplicative seasonal ARIMA model for the birth data.
 #'  sf1 = stan_sarima(birth,order = c(0,1,2),
 #'                    seasonal = c(1,1,1),iter = 500,chains = 1)
@@ -103,19 +97,20 @@
 #'                    xreg = fourier(birth,K = 2),iter = 500,chains = 1)
 #' }
 #'
-stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
-                       period = 0,chains = 4,iter = 2000,warmup = floor(iter/2),
-                       adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
-                       prior_mu0 = NULL,prior_sigma0 = NULL,prior_ar = NULL,
-                       prior_ma = NULL, prior_sar = NULL,prior_sma = NULL,
-                       prior_breg = NULL,series.name = NULL,...){
+stan_sarima = function(ts, order = c(1,0,0), seasonal = c(0,0,0), xreg = NULL,
+                       period = 0, chains = 4, iter = 2000, warmup = floor(iter/2),
+                       adapt.delta = 0.9, tree.depth = 10, prior_mu0 = NULL,
+                       prior_sigma0 = NULL, prior_ar = NULL,
+                       prior_ma = NULL, prior_sar = NULL, prior_sma = NULL,
+                       prior_breg = NULL, series.name = NULL, ...){
 
   if(is.null(series.name))
     sn = deparse(substitute(ts))
   else
     sn = as.character(series.name)
 
-  dat = Sarima(ts = ts,order = order,seasonal = seasonal,xreg = xreg,period = period,series.name = sn)
+  dat = Sarima(ts = ts, order = order, seasonal = seasonal,
+               xreg = xreg, period = period, series.name = sn)
 
   # Priors selection
   if(!is.null(prior_mu0)) dat = set_prior(model = dat,par = "mu0",dist = prior_mu0)
@@ -132,7 +127,7 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
                 iter = iter,
                 warmup = warmup,
                 adapt.delta = adapt.delta,
-                tree.depth = tree.depth,...)
+                tree.depth = tree.depth, ...)
   return(sf1)
 }
 #' Fitting for a GARCH(s,k,h) model.
@@ -142,65 +137,59 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #' The function returns a \code{varstan} object with the fitted model.
 #'
 #' @param ts a numeric or ts object with the univariate time series.
-#' @param order A specification of the garch  model: the three components (s, k, h)
-#' are the arch order, the garch order, and the mgarch order.
-#' @param arma A specification of the  ARMA model,same as order parameter:  the two
-#' components (p, q) are the AR order,and the  MA order.
+#' @param order a vector of length three specifying the GARCH model. The three
+#' components `c(s, k, h)` are the ARCH order, the GARCH order, and the MGARCH
+#' orders respectively.
+#' @param arma a vector of length two with the ARMA model configuration. The two
+#' components `c(p, q)` are the AR, and the  MA orders respectively.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
-#' @param genT a boolean value to specify for a generalized t-student garch model.
-#' @param asym a string value for the asymmetric function for an asymmetric GARCH process. By default
-#' the value \code{"none"} for standard GARCH process. If \code{"logit"} a logistic function
-#' is used for asymmetry, and if \code{"exp"} an exponential function is used.
-#' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 4 chains are run.
-#' @param iter An integer of total iterations per chain including the warm-up,
-#' by default  the number of iterations are 2000.
-#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
-#'   iterations. This also specifies the number of iterations used for step-size
-#'   adaptation, so warm-up samples should not be used for inference. The number
-#'   of warmup should not be larger than \code{iter} and the default is
-#'   \code{iter/2}.
-#' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
-#' in a HMC method. By default is 0.9.
-#' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
-#' during each iteration. By default is 10.
-#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
-#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
-#' @param prior_mu0 The prior distribution for the location parameter in an ARMA model. By default
-#' the value is set \code{NULL}, then the default normal(0,1) prior is used.
-#' @param prior_sigma0 The prior distribution for the scale parameter in an ARMA model. By default
-#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
-#' @param prior_ar The prior distribution for the auto-regressive parameters in an ARMA model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
-#' @param prior_ma The prior distribution for the moving average parameters in an ARMA model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
-#' @param prior_arch The prior distribution for the arch parameters in a GARCH model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-#' are used.
-#' @param prior_garch The prior distribution for the GARCH parameters in a GARCH model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-#' are used.
+#' @param genT a bool value to specify for a generalized t-student GARCH model.
+#' @param asym a string value for the asymmetric function for an asymmetric
+#' GARCH process. By default, the value \code{"none"} for standard GARCH process.
+#' \code{"logit"} option a specifies a logistic function for asymmetry, and option
+#' \code{"exp"} defines an exponential function.
+#' @param chains an integer of the number of Markov Chains chains to be run. By
+#' default, \code{chains = 4}.
+#' @param iter an integer of total iterations per chain including the warm-up. By
+#' default, \code{iter = 2000}.
+#' @param warmup a positive integer specifying number of warm-up (aka burn-in)
+#' iterations. This also specifies the number of iterations used for step-size
+#' adaptation, so warm-up samples should not be used for inference. The number
+#' of warmup iteration should not be larger than \code{iter}.By default,
+#' \code{warmup = iter/2}.
+#' @param adapt.delta an optional real value between 0 and 1, the thin of the jumps
+#' in a HMC method. By default, is 0.9.
+#' @param  tree.depth an integer of the maximum depth of the trees  evaluated
+#' during each iteration. By default, is 10.
+#' @param prior_mu0 The prior distribution for the location parameter in an
+#' ARIMA model. By default, sets `student(7,0,1)` prior.
+#' @param prior_sigma0 The prior distribution for the scale parameter in an
+#' ARIMA model. By default, declares a `student(7,0,1)` prior.
+#' @param prior_ar The prior distribution for the auto-regressive parameters in an
+#' ARIMA model. By default, sets a `normal(0,0.5)` priors.
+#' @param prior_ma The prior distribution for the moving average parameters in
+#' an ARIMA model. By default, sets a `normal(0,0.5)` priors.
+#' @param prior_arch The prior distribution for the ARCH parameters in a GARCH
+#' model. By default, sets `normal(0,0.5)` priors.
+#' @param prior_garch The prior distribution for the GARCH parameters in a GARCH
+#' model. By default, sets `normal(0,0.5)` priors.
 #' @param prior_mgarch The prior distribution for the mean GARCH parameters in a
-#' GARCH model. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-#' are used.
-#' @param prior_breg The prior distribution for the regression coefficient parameters in a
-#' ARIMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
-#' are used.
-#' @param prior_df The prior distribution for the degree freedom parameters in a t-student innovations
-#' GARCH model. By default the value is set \code{NULL}, then the default gamma(2,0.1) priors
-#' are used.
-#' @param prior_gamma The prior distribution for the asymmetric parameters in am Asymmetric
-#' GARCH model. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-#' are used.
+#' GARCH model. By default, sets `normal(0,0.5)` priors.
+#' @param prior_breg The prior distribution for the regression coefficient
+#' parameters in an ARIMAX model. By default, sets `student(7,0,1)` priors.
+#' @param prior_df The prior distribution for the degree freedom parameters in a
+#' t-student innovations GARCH model. By default, sets a `gamma(2,0.1)` prior.
+#' @param prior_gamma The prior distribution for the asymmetric parameters in
+#' MGARCH model. By default, sets `normal(0,0.5)` priors.
 #' @param series.name an optional string vector with the series names.
 #' @param ... Further arguments passed to  \code{varstan} function.
 #'
 #' @details
-#' By default the \code{garch()} function generates a GARCH(1,1) model, when
-#' \code{genT} option is \code{TRUE} a t-student innovations GARCH model
-#' (see Ardia (2010)) is generated, and for Asymmetric GARCH models use the
-#' option \code{asym} for specify the asymmetric function, see Fonseca,
+#' By default the \code{garch()} function generates a GARCH(1,1) model. The
+#' \code{genT = TRUE} option defines a t-student innovations GARCH model
+#' (see Ardia (2010)). For Asymmetric GARCH models use the
+#' option \code{asym} for specify the asymmetric functions, see Fonseca,
 #' et. al (2019) for more details.
 #'
 #' The default priors used in a GARCH(s,k,h) model are:
@@ -243,7 +232,7 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #' with Student-t Innovations. \emph{The R Journal}. 2(7), 41-47.
 #' \code{doi: 10.32614/RJ-2010-014}.
 #'
-#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}}
+#' @seealso \code{Sarima}, \code{auto.arima}, and  \code{set_prior}.
 #'
 #' @examples
 #' \donttest{
@@ -254,31 +243,33 @@ stan_sarima = function(ts,order = c(1,0,0),seasonal = c(0,0,0),xreg = NULL,
 #'  sf2 = stan_garch(ipc,order = c(2,3,1),arma = c(1,1),genT = TRUE,iter = 500,chains = 1)
 #' }
 #'
-stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE,
-                      asym = "none",chains = 4,iter = 2000,warmup = floor(iter/2),
-                      adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,prior_mu0 = NULL,
-                      prior_sigma0 = NULL,prior_ar = NULL, prior_ma = NULL,prior_mgarch = NULL,
-                      prior_arch = NULL,prior_garch = NULL, prior_breg = NULL,prior_gamma = NULL,
-                      prior_df = NULL,series.name = NULL,...){
+stan_garch = function(ts,order = c(1,1,0), arma = c(0,0), xreg = NULL, genT = FALSE,
+                      asym = "none", chains = 4, iter = 2000, warmup = floor(iter/2),
+                      adapt.delta = 0.9, tree.depth = 10, prior_mu0 = NULL,
+                      prior_sigma0 = NULL, prior_ar = NULL,  prior_ma = NULL,
+                      prior_mgarch = NULL, prior_arch = NULL, prior_garch = NULL,
+                      prior_breg = NULL, prior_gamma = NULL, prior_df = NULL,
+                      series.name = NULL, ...){
 
   if(is.null(series.name))
     sn = deparse(substitute(ts))
   else
     sn = as.character(series.name)
 
-  dat = garch(ts = ts,order = order,arma = arma,xreg = xreg,genT = genT,asym = asym,series.name = sn)
+  dat = garch(ts = ts, order = order, arma = arma, xreg = xreg, genT = genT,
+              asym = asym, series.name = sn)
 
   # Priors selection
-  if(!is.null(prior_mu0)) dat = set_prior(model = dat,par = "mu0",dist = prior_mu0)
-  if(!is.null(prior_sigma0)) dat = set_prior(model = dat,par = "sigma0",dist = prior_sigma0)
-  if(!is.null(prior_ar)) dat = set_prior(model = dat,par = "ar",dist = prior_ar)
-  if(!is.null(prior_ma)) dat = set_prior(model = dat,par = "ma",dist = prior_ma)
-  if(!is.null(prior_breg)) dat = set_prior(model = dat,par = "breg",dist = prior_breg)
-  if(!is.null(prior_arch)) dat = set_prior(model = dat,par = "arch",dist = prior_arch)
-  if(!is.null(prior_garch)) dat = set_prior(model = dat,par = "garch",dist = prior_garch)
-  if(!is.null(prior_mgarch)) dat = set_prior(model = dat,par = "mgarch",dist = prior_mgarch)
-  if(!is.null(prior_df)) dat = set_prior(model = dat,par = "df",dist = prior_df)
-  if(!is.null(prior_gamma)) dat = set_prior(model = dat,par = "gamma",dist = prior_gamma)
+  if(!is.null(prior_mu0)) dat = set_prior(model = dat, par = "mu0", dist = prior_mu0)
+  if(!is.null(prior_sigma0)) dat = set_prior(model = dat, par = "sigma0", dist = prior_sigma0)
+  if(!is.null(prior_ar)) dat = set_prior(model = dat, par = "ar", dist = prior_ar)
+  if(!is.null(prior_ma)) dat = set_prior(model = dat, par = "ma", dist = prior_ma)
+  if(!is.null(prior_breg)) dat = set_prior(model = dat, par = "breg", dist = prior_breg)
+  if(!is.null(prior_arch)) dat = set_prior(model = dat, par = "arch", dist = prior_arch)
+  if(!is.null(prior_garch)) dat = set_prior(model = dat, par = "garch", dist = prior_garch)
+  if(!is.null(prior_mgarch)) dat = set_prior(model = dat ,par = "mgarch", dist = prior_mgarch)
+  if(!is.null(prior_df)) dat = set_prior(model = dat, par = "df", dist = prior_df)
+  if(!is.null(prior_gamma)) dat = set_prior(model = dat, par = "gamma", dist = prior_gamma)
 
   # Fitting the garch model.
   sf1 = varstan(model = dat,
@@ -286,16 +277,16 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
                 iter = iter,
                 warmup = warmup,
                 adapt.delta = adapt.delta,
-                tree.depth = tree.depth,...)
+                tree.depth = tree.depth, ...)
   return(sf1)
 }
 #' Naive and Random Walk models.
 #'
-#' naive is the model constructor for a random walk  model applied to \code{y}.
+#' Naive is the model constructor for a random walk  model applied to \code{y}.
 #' This is equivalent to an ARIMA(0,1,0) model. \code{naive()} is simply a wrapper
-#' to  maintain forecast package similitude. \code{seasonal} returns the model constructor
-#' for a seasonal random walk equivalent to an ARIMA(0,0,0)(0,1,0)m model where m is the
-#' seasonal period.
+#' to  maintain forecast package similitude. \code{seasonal} returns the model
+#' constructor for a seasonal random walk equivalent to an ARIMA(0,0,0)(0,1,0)m
+#' model where m is the seasonal period.
 #'
 #' The random walk with drift model is
 #' \deqn{Y_t = mu_0 + Y_{t-1} + epsilon_t}{Y[t]= mu_0 +Y[t-1] + epsilon[t]}
@@ -308,25 +299,23 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #' @param ts  a numeric or ts object with the univariate time series.
 #' @param seasonal a Boolean value for select a seasonal random walk instead.
 #' @param m  an optional integer value for the seasonal period.
-#' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 4 chains are run.
-#' @param iter An integer of total iterations per chain including the warm-up,
-#' by default  the number of iterations are 2000.
-#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
-#'   iterations. This also specifies the number of iterations used for step-size
-#'   adaptation, so warm-up samples should not be used for inference. The number
-#'   of warmup should not be larger than \code{iter} and the default is
-#'   \code{iter/2}.
-#' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
-#' in a HMC method. By default is 0.9.
-#' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
-#' during each iteration. By default is 10.
-#' @param stepwise	If TRUE, will do stepwise selection (faster). Otherwise, it searches
-#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
-#' @param prior_mu0 The prior distribution for the location parameter in an ARIMA model. By default
-#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
-#' @param prior_sigma0 The prior distribution for the scale parameter in an ARIMA model. By default
-#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
+#' @param chains an integer of the number of Markov Chains chains to be run. By
+#' default, \code{chains = 4}.
+#' @param iter an integer of total iterations per chain including the warm-up. By
+#' default, \code{iter = 2000}.
+#' @param warmup a positive integer specifying number of warm-up (aka burn-in)
+#' iterations. This also specifies the number of iterations used for step-size
+#' adaptation, so warm-up samples should not be used for inference. The number
+#' of warm-up iteration should not be larger than \code{iter}.By default,
+#' \code{warmup = iter/2}.
+#' @param adapt.delta an optional real value between 0 and 1, the thin of the jumps
+#' in a HMC method. By default, is 0.9.
+#' @param tree.depth an integer of the maximum depth of the trees  evaluated
+#' during each iteration. By default, is 10.
+#' @param prior_mu0 The prior distribution for the location parameter in an
+#' ARIMA model. By default, sets `student(7,0,1)` prior.
+#' @param prior_sigma0 The prior distribution for the scale parameter in an
+#' ARIMA model. By default, declares a `student(7,0,1)` prior.
 #' @param series.name an optional string vector with the series names.
 #' @param ... Further arguments passed to  \code{varstan} function.
 #'
@@ -334,7 +323,7 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #'
 #' @author Asael Alonzo Matamoros
 #'
-#' @seealso \code{\link{Sarima}}
+#' @seealso \code{Sarima}.
 #' @export
 #'
 #' @references
@@ -353,14 +342,13 @@ stan_garch = function(ts,order = c(1,1,0),arma = c(0,0),xreg = NULL,genT = FALSE
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
 #'  # A seasonal Random-walk model.
 #'  sf1 = stan_naive(birth,seasonal = TRUE,iter = 500,chains = 1)
 #' }
 #'
-stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 2000,warmup = floor(iter/2),
-                      adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
-                      prior_mu0 = NULL,prior_sigma0 = NULL,series.name = NULL,...){
+stan_naive = function(ts, seasonal = FALSE, m = 0, chains = 4, iter = 2000,
+                      warmup = floor(iter/2), adapt.delta = 0.9, tree.depth = 10,
+                      prior_mu0 = NULL, prior_sigma0 = NULL, series.name = NULL, ...){
 
   if(is.null(series.name))
     sn = deparse(substitute(ts))
@@ -370,8 +358,8 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 2000,warmup = 
   dat = naive(ts = ts,seasonal = seasonal,m = m)
 
   # Priors selection
-  if(!is.null(prior_mu0)) dat = set_prior(model = dat,par = "mu0",dist = prior_mu0)
-  if(!is.null(prior_sigma0)) dat = set_prior(model = dat,par = "sigma0",dist = prior_sigma0)
+  if(!is.null(prior_mu0)) dat = set_prior(model = dat, par = "mu0", dist = prior_mu0)
+  if(!is.null(prior_sigma0)) dat = set_prior(model = dat, par = "sigma0", dist = prior_sigma0)
 
   # Fitting the naive model.
   sf1 = varstan(model = dat,
@@ -379,10 +367,10 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 2000,warmup = 
                 iter = iter,
                 warmup = warmup,
                 adapt.delta = adapt.delta,
-                tree.depth = tree.depth,...)
+                tree.depth = tree.depth, ...)
   return(sf1)
 }
-#' Fitting a Stochastic volatility model
+#' Fitting a Stochastic volatility model.
 #'
 #' Fitting a Stochastic Volatility model (SVM) in \pkg{Stan}.
 #'
@@ -394,38 +382,33 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 2000,warmup = 
 #' the  MA order.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
-#' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 4 chains are run.
-#' @param iter An integer of total iterations per chain including the warm-up,
-#' by default  the number of iterations are 2000.
-#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
-#'   iterations. This also specifies the number of iterations used for step-size
-#'   adaptation, so warm-up samples should not be used for inference. The number
-#'   of warmup should not be larger than \code{iter} and the default is
-#'   \code{iter/2}.
-#' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
-#' in a HMC method. By default is 0.9.
-#' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
-#' during each iteration. By default is 10.
-#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
-#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
-#' @param prior_mu0 The prior distribution for the location parameter in an SVM model. By default
-#' the value is set \code{NULL}, then the default normal(0,1) prior is used.
-#' @param prior_sigma0 The prior distribution for the scale parameter in an SVM model. By default
-#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
-#' @param prior_ar The prior distribution for the auto-regressive parameters in an ARMA model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
-#' @param prior_ma The prior distribution for the moving average parameters in an ARMA model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
-#' @param prior_alpha The prior distribution for the arch parameters in a GARCH model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-#' are used.
-#' @param prior_beta The prior distribution for the GARCH parameters in a GARCH model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-#' are used.
-#' @param prior_breg The prior distribution for the regression coefficient parameters in a
-#' ARIMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
-#' are used.
+#' @param chains an integer of the number of Markov Chains chains to be run. By
+#' default, \code{chains = 4}.
+#' @param iter an integer of total iterations per chain including the warm-up. By
+#' default, \code{iter = 2000}.
+#' @param warmup a positive integer specifying number of warm-up (aka burn-in)
+#' iterations. This also specifies the number of iterations used for step-size
+#' adaptation, so warm-up samples should not be used for inference. The number
+#' of warmup iteration should not be larger than \code{iter}.By default,
+#' \code{warmup = iter/2}.
+#' @param adapt.delta an optional real value between 0 and 1, the thin of the jumps
+#' in a HMC method. By default, is 0.9.
+#' @param  tree.depth an integer of the maximum depth of the trees  evaluated
+#' during each iteration. By default, is 10.
+#' @param prior_mu0 The prior distribution for the location parameter in an
+#' ARIMA model. By default, sets `student(7,0,1)` prior.
+#' @param prior_sigma0 The prior distribution for the scale parameter in an
+#' ARIMA model. By default, declares a `student(7,0,1)` prior.
+#' @param prior_ar The prior distribution for the auto-regressive parameters in
+#' an ARMA model. By default, sets `normal(0,0.5)` priors.
+#' @param prior_ma The prior distribution for the moving average parameters in
+#' an ARMA model. By default, sets the `normal(0,0.5)` priors.
+#' @param prior_alpha The prior distribution for the auto-regressive parameters in
+#' a SVM model. By default, set a `normal(0, 0.5)` prior.
+#' @param prior_beta The prior distribution for the exponential intercept parameter
+#' in a SVM model. By default, uses a `normal(0,0.5)` prior.
+#' @param prior_breg The prior distribution for the regression coefficient parameters
+#' in an ARIMAX model. By default, sets `student(7,0,1)` priors.
 #' @param series.name an optional string vector with the series names.
 #' @param ... Further arguments passed to  \code{varstan} function.
 #'
@@ -447,7 +430,7 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 2000,warmup = 
 #' Applications: With R Examples. \emph{Springer Texts in Statistics}.
 #' isbn: 9781441978646. First edition.
 #'
-#' @seealso \code{\link{garch}} \code{\link{set_prior}}
+#' @seealso \code{garch}, and \code{set_prior}
 #'
 #' @examples
 #' \donttest{
@@ -455,11 +438,11 @@ stan_naive = function(ts,seasonal = FALSE,m = 0,chains = 4,iter = 2000,warmup = 
 #'  sf1 = stan_SVM(ipc,arma = c(1,1),iter = 500,chains = 1)
 #' }
 #'
-stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 2000,
-                    warmup = floor(iter/2),adapt.delta = 0.9,tree.depth = 10,
-                    stepwise = TRUE,prior_mu0 = NULL,prior_sigma0 = NULL,prior_ar = NULL,
-                       prior_ma = NULL, prior_alpha = NULL,prior_beta = NULL,
-                       prior_breg = NULL,series.name = NULL,...){
+stan_SVM = function(ts, arma = c(0,0), xreg = NULL, chains = 4, iter = 2000,
+                    warmup = floor(iter/2), adapt.delta = 0.9, tree.depth = 10,
+                    prior_mu0 = NULL, prior_sigma0 = NULL, prior_ar = NULL,
+                    prior_ma = NULL, prior_alpha = NULL, prior_beta = NULL,
+                     prior_breg = NULL, series.name = NULL, ...){
 
   if(is.null(series.name))
     sn = deparse(substitute(ts))
@@ -493,73 +476,69 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 2000,
 #' The function returns a \code{varstan} object with the fitted model.
 #'
 #' @param ts a numeric or ts object with the univariate time series.
-#' @param trend a boolean value to specify a trend local level model. By default
+#' @param trend a bool value to specify a trend local level model. By default
 #' is \code{FALSE}.
-#' @param damped a boolean value to specify a damped trend local level model. By default
+#' @param damped a boolvalue to specify a damped trend local level model. By default
 #' is \code{FALSE}. If \code{trend} option is \code{FALSE} then \code{damped} is set to
 #' \code{FALSE} automatically.
-#' @param seasonal a boolean value to specify a seasonal local level model. By default
+#' @param seasonal a bool value to specify a seasonal local level model. By default
 #' is \code{FALSE}.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param period an integer specifying the periodicity of the time series by
 #' default the value frequency(ts) is used.
-#' @param genT a boolean value to specify for a generalized t-student SSM model.
-#' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 4 chains are run.
-#' @param iter An integer of total iterations per chain including the warm-up,
-#' by default  the number of iterations are 2000.
-#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
-#'   iterations. This also specifies the number of iterations used for step-size
-#'   adaptation, so warm-up samples should not be used for inference. The number
-#'   of warmup should not be larger than \code{iter} and the default is
-#'   \code{iter/2}.
-#' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
-#' in a HMC method. By default is 0.9.
-#' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
-#' during each iteration. By default is 10.
-#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
-#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
-#' @param prior_sigma0 The prior distribution for the scale parameter in an SSM model. By default
-#' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
+#' @param genT a bool value to specify for a generalized t-student SSM model.
+#' @param chains an integer of the number of Markov Chains chains to be run. By
+#' default, \code{chains = 4}.
+#' @param iter an integer of total iterations per chain including the warm-up. By
+#' default, \code{iter = 2000}.
+#' @param warmup a positive integer specifying number of warm-up (aka burn-in)
+#' iterations. This also specifies the number of iterations used for step-size
+#' adaptation, so warm-up samples should not be used for inference. The number
+#' of warm-up iteration should not be larger than \code{iter}.By default,
+#' \code{warmup = iter/2}.
+#' @param adapt.delta an optional real value between 0 and 1, the thin of the jumps
+#' in a HMC method. By default, is 0.9.
+#' @param tree.depth an integer of the maximum depth of the trees  evaluated
+#' during each iteration. By default, is 10.
+#' @param prior_sigma0 The prior distribution for the scale parameter in an
+#' ARIMA model. By default, declares a `student(7,0,1)` prior.
 #' @param prior_level The prior distribution for the level parameter in a SSM model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
+#' By default, sets a `normal(0,0.5)` prior.
 #' @param prior_trend The prior distribution for the trend parameter in a SSM model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
-#' @param prior_damped The prior distribution for the damped trend parameter in a SSM model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
-#' @param prior_seasonal The prior distribution for the seasonal parameter in a SSM model.
-#' By default the value is set \code{NULL}, then the default normal(0,0.5) priors are used.
-#' @param prior_level1 The prior distribution for the initial level parameter in a SSM model.
-#' By default the value is set \code{NULL}, then the default student(6,0,2.5) priors are used.
-#' @param prior_trend1 The prior distribution for the initial trend parameter in a SSM model.
-#' By default the value is set \code{NULL}, then the default student(6,0,2.5)  priors are used.
-#' @param prior_seasonal1 The prior distribution for the initial seasonal parameters in a SSM model.
-#' The prior is specified for the first m seasonal parameters, where m is the periodicity of the
-#' defined time series. By default the value is set \code{NULL}, then the default normal(0,0.5) priors
-#' are used.
-#' @param prior_breg The prior distribution for the regression coefficient parameters in a
-#' ARMAX model. By default the value is set \code{NULL}, then the default student(7,0,1) priors
-#' are used.
-#' @param prior_df The prior distribution for the degree freedom parameters in a t-student innovations
-#' SSM model. By default the value is set \code{NULL}, then the default gamma(2,0.1) priors
-#' are used.
+#' By default, sets a `normal(0,0.5)` prior.
+#' @param prior_damped The prior distribution for the damped trend parameter in a
+#' SSM model. By default, sets a `normal(0,0.5)` prior.
+#' @param prior_seasonal The prior distribution for the seasonal parameter in a
+#' SSM model. By default, sets a `normal(0,0.5)` prior.
+#' @param prior_level1 The prior distribution for the initial level parameter in
+#' a SSM model. By default, sets a `student(6,0,2.5)` prior.
+#' @param prior_trend1 The prior distribution for the initial trend parameter in
+#' a SSM model. By default, sets a `student(6,0,2.5)` prior.
+#' @param prior_seasonal1 The prior distribution for the initial seasonal parameters
+#'  in a SSM model. The prior is specified for the first m seasonal parameters,
+#'  where `m` is the periodicity of the defined time series. By default, sets a
+#'  `normal(0,0.5)` prior.
+#' @param prior_breg The prior distribution for the regression coefficient parameters
+#' in an ARIMAX model. By default, sets `student(7,0,1)` priors.
+#' @param prior_df The prior distribution for the degree freedom parameters in a
+#' t-student innovations SSM model. By default, sets a `gamma(2,0.1)` prior
 #' @param series.name an optional string vector with the series names.
 #' @param ... Further arguments passed to  \code{varstan} function.
 #'
 #' @details
-#' By  default  the  \code{ssm()}  function generates a local level model (or a ets("A","N","N") or
-#' exponential smoothing model from the \pkg{forecast} package). If \code{trend} is set \code{TRUE},
-#' then  a  local  trend ssm model is defined (a equivalent ets("A","A","N") or Holt model from the
-#' \pkg{forecast} package). For damped trend models set \code{damped} to \code{TRUE}. If \code{seasonal}
-#' is  set  to  \code{TRUE} a seasonal local level model is defined (a equivalent ets("A","N","A") model
-#' from  the  \pkg{forecast} package). For a Holt-Winters method (ets("A","A","A")) set \code{Trend} and
-#' \code{seasonal} to \code{TRUE}.
+#' By default the \code{ssm()} function generates a local-level, `ets("A","N","N")`,
+#' or exponential smoothing model from the \pkg{forecast} package. When
+#' \code{trend = TRUE} the SSM transforms into a local-trend, `ets("A","A","N")`,
+#' or the equivalent Holt model. For damped trend models set \code{damped = TRUE}.
+#' If \code{seasonal = TRUE}, the model is a seasonal local level model, or
+#' `ets("A","N","A")` model. Finally, the Holt-Winters method (`ets("A","A","A")`)
+#' is obtained by setting both \code{Trend = TRUE} and \code{seasonal = TRUE}.
 #'
-#' When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
-#' see Fonseca, et. al (2019) for more details.
+#' The \code{genT = TRUE} option generates a t-student innovations SSM model. For
+#' a detailed explanation, check Ardia (2010); or Fonseca, et. al (2019).
 #'
-#' The default priors used in a ssm( ) model are:
+#' The default priors used in a `ssm` model are:
 #'
 #' \itemize{
 #'  \item{level ~ normal(0,0.5)}
@@ -587,7 +566,7 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 2000,
 #' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 #' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 #'
-#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#' @seealso \code{Sarima}, \code{auto.arima}, \code{set_prior}, and \code{garch}.
 #'
 #' @examples
 #' \donttest{
@@ -598,20 +577,21 @@ stan_SVM = function(ts,arma = c(0,0),xreg = NULL,chains = 4,iter = 2000,
 #'  sf2 = stan_ssm(ipc,trend = TRUE,damped = TRUE,iter = 500,chains = 1)
 #' }
 #'
-stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
-                    period = 0,genT = FALSE,chains = 4,iter = 2000,warmup = floor(iter/2),
-                    adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,prior_sigma0 = NULL,
-                    prior_level = NULL,prior_level1 = NULL, prior_trend = NULL,prior_trend1 = NULL,
-                    prior_damped = NULL,prior_seasonal = NULL, prior_seasonal1 = NULL,prior_breg = NULL,
-                    prior_df = NULL,series.name = NULL,...){
+stan_ssm = function(ts, trend = FALSE, damped = FALSE, seasonal = FALSE, xreg = NULL,
+                    period = 0, genT = FALSE, chains = 4, iter = 2000,
+                    warmup = floor(iter/2), adapt.delta = 0.9, tree.depth = 10,
+                    prior_sigma0 = NULL, prior_level = NULL, prior_level1 = NULL,
+                    prior_trend = NULL, prior_trend1 = NULL, prior_damped = NULL,
+                    prior_seasonal = NULL, prior_seasonal1 = NULL, prior_breg = NULL,
+                    prior_df = NULL, series.name = NULL, ...){
 
   if(is.null(series.name))
     sn = deparse(substitute(ts))
   else
     sn = as.character(series.name)
 
-  dat = ssm(ts = ts,trend = trend,damped = damped,seasonal = seasonal,xreg = xreg,period = period,
-            genT = genT,series.name = sn)
+  dat = ssm(ts = ts, trend = trend, damped = damped, seasonal = seasonal, xreg = xreg,
+            period = period, genT = genT, series.name = sn)
 
   # Priors selection
   if(!is.null(prior_sigma0)) dat = set_prior(model = dat,par = "sigma0",dist = prior_sigma0)
@@ -648,7 +628,7 @@ stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL
 #' by default 4 chains are run.
 #' @param iter An integer of total iterations per chain including the warm-up,
 #' by default  the number of iterations are 2000.
-#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
+#' @param warmup a positive integer specifying number of warm-up (aka burn-in)
 #'   iterations. This also specifies the number of iterations used for step-size
 #'   adaptation, so warm-up samples should not be used for inference. The number
 #'   of warmup should not be larger than \code{iter} and the default is
@@ -657,8 +637,6 @@ stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL
 #' in a HMC method. By default is 0.9.
 #' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
 #' during each iteration. By default is 10.
-#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
-#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
 #' @param prior_sigma0 The prior distribution for the scale parameter in an SSM model. By default
 #' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
 #' @param prior_level The prior distribution for the level parameter in a SSM model.
@@ -701,7 +679,7 @@ stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL
 #' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 #' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 #'
-#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#' @seealso \code{ssm}.
 #'
 #' @examples
 #' \donttest{
@@ -709,9 +687,10 @@ stan_ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL
 #'  sf1 = stan_LocalLevel(ipc,iter = 500,chains = 1)
 #' }
 #'
-stan_LocalLevel = function(ts,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,warmup = floor(iter/2),
-                            adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,prior_sigma0 = NULL,
-                            prior_level = NULL,prior_level1 = NULL,prior_breg = NULL,prior_df = NULL,series.name = NULL,...){
+stan_LocalLevel = function(ts, xreg = NULL, genT = FALSE, chains = 4, iter = 2000,
+                           warmup = floor(iter/2), adapt.delta = 0.9, tree.depth = 10,
+                           prior_sigma0 = NULL, prior_level = NULL, prior_level1 = NULL,
+                           prior_breg = NULL, prior_df = NULL, series.name = NULL,...){
 
   if(is.null(series.name))
     sn = deparse(substitute(ts))
@@ -756,14 +735,12 @@ stan_LocalLevel = function(ts,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,wa
 #' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
 #'   iterations. This also specifies the number of iterations used for step-size
 #'   adaptation, so warm-up samples should not be used for inference. The number
-#'   of warmup should not be larger than \code{iter} and the default is
+#'   of warm up should not be larger than \code{iter} and the default is
 #'   \code{iter/2}.
 #' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
 #' in a HMC method. By default is 0.9.
 #' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
 #' during each iteration. By default is 10.
-#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
-#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
 #' @param prior_sigma0 The prior distribution for the scale parameter in an SSM model. By default
 #' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
 #' @param prior_level The prior distribution for the level parameter in a SSM model.
@@ -806,7 +783,7 @@ stan_LocalLevel = function(ts,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,wa
 #'
 #' @author Asael Alonzo Matamoros.
 #'
-#' @return A \code{varstan} object with the fitted SSM model.
+#' @return a \code{varstan} object with the fitted SSM model.
 #' @export
 #' @importFrom stats as.ts time frequency
 #'
@@ -815,7 +792,7 @@ stan_LocalLevel = function(ts,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,wa
 #' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 #' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 #'
-#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#' @seealso \code{ssm}.
 #'
 #' @examples
 #' \donttest{
@@ -826,11 +803,11 @@ stan_LocalLevel = function(ts,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,wa
 #'  sf2 = stan_Holt(ipc,damped = TRUE,iter = 500,chains = 1)
 #' }
 #'
-stan_Holt = function(ts,damped = FALSE,xreg = NULL,genT = FALSE,chains = 4,iter = 2000,
-                     warmup = floor(iter/2),adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
-                     prior_sigma0 = NULL,prior_level = NULL,prior_level1 = NULL, prior_trend = NULL,
-                     prior_trend1 = NULL,prior_damped = NULL,prior_breg = NULL,
-                     prior_df = NULL,series.name = NULL,...){
+stan_Holt = function(ts, damped = FALSE, xreg = NULL, genT = FALSE, chains = 4,
+                     iter = 2000, warmup = floor(iter/2), adapt.delta = 0.9, tree.depth = 10,
+                     prior_sigma0 = NULL, prior_level = NULL, prior_level1 = NULL,
+                     prior_trend = NULL, prior_trend1 = NULL, prior_damped = NULL,
+                     prior_breg = NULL, prior_df = NULL, series.name = NULL,...){
 
   if(is.null(series.name))
     sn = deparse(substitute(ts))
@@ -887,8 +864,6 @@ stan_Holt = function(ts,damped = FALSE,xreg = NULL,genT = FALSE,chains = 4,iter 
 #' in a HMC method. By default is 0.9.
 #' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
 #' during each iteration. By default is 10.
-#' @param stepwise If TRUE, will do stepwise selection (faster). Otherwise, it searches
-#' over all models. Non-stepwise selection can be very slow, especially for seasonal models.
 #' @param prior_sigma0 The prior distribution for the scale parameter in an SSM model. By default
 #' the value is set \code{NULL}, then the default student(7,0,1) prior is used.
 #' @param prior_level The prior distribution for the level parameter in a SSM model.
@@ -948,7 +923,7 @@ stan_Holt = function(ts,damped = FALSE,xreg = NULL,genT = FALSE,chains = 4,iter 
 #' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 #' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 #'
-#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#' @seealso \code{ssm}
 #'
 #' @examples
 #' \donttest{
@@ -959,11 +934,12 @@ stan_Holt = function(ts,damped = FALSE,xreg = NULL,genT = FALSE,chains = 4,iter 
 #'  sf2 = stan_ssm(ipc,damped = TRUE,iter = 500,chains = 1)
 #' }
 #'
-stan_Hw = function(ts,damped = FALSE,xreg = NULL,period = 0,genT = FALSE,chains = 4,iter = 2000,
-                    warmup = floor(iter/2),adapt.delta = 0.9,tree.depth = 10,stepwise = TRUE,
-                    prior_sigma0 = NULL,prior_level = NULL,prior_level1 = NULL, prior_trend = NULL,
-                    prior_trend1 = NULL,prior_damped = NULL,prior_seasonal = NULL,
-                    prior_seasonal1 = NULL,prior_breg = NULL,prior_df = NULL,series.name = NULL,...){
+stan_Hw = function(ts,damped = FALSE, xreg = NULL, period = 0, genT = FALSE,
+                   chains = 4, iter = 2000, warmup = floor(iter/2), adapt.delta = 0.9,
+                   tree.depth = 10, prior_sigma0 = NULL, prior_level = NULL,
+                   prior_level1 = NULL, prior_trend = NULL, prior_trend1 = NULL,
+                   prior_damped = NULL,prior_seasonal = NULL, prior_seasonal1 = NULL,
+                   prior_breg = NULL, prior_df = NULL, series.name = NULL,...){
 
   if(is.null(series.name))
     sn = deparse(substitute(ts))

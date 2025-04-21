@@ -1,36 +1,36 @@
-#' Print a Sarima model
+#' Print a `Sarima` model.
 #'
-#' @param  x a Sarima model from the varstan package
-#' @param ... additional values need in print methods
+#' @param  x a `Sarima` model.
+#' @param ... additional values need in print methods.
 #'
 #' @return None. prints the object
 #' @method print Sarima
 #' @export
 #'
-print.Sarima = function(x,...){
+print.Sarima = function(x, ...){
   if(!is.Sarima(x))
     stop("The current object is not an arima model")
   report(x)
 }
-#' Print a naive model
+#' Print a `naive` model
 #'
-#' @param  x a naive model from the varstan package
+#' @param  x a `naive` model.
+#' @param ... additional values need in print methods.
 #'
 #' @return None. prints the object
 #'
 #' @method print naive
-#' @param ... additional values need in print methods
 #' @export
 #'
-print.naive = function(x,...){
+print.naive = function(x, ...){
   if(!is.naive(x))
     stop("The current object is not a naive model")
   report(x)
 }
-#' Print a garch model
+#' Print a `garch` model
 #'
-#' @param x a garch model from the varstan package
-#' @param ... additional values need in print methods
+#' @param x a `garch` model.
+#' @param ... additional values need in print methods.
 #'
 #' @return None. prints the object
 #'
@@ -57,77 +57,77 @@ print.SVM = function(x,...){
     stop("The current object is not a SVM model")
   report(x)
 }
-#' Print a state-space model
+#' Print a state-space model.
 #'
-#' @param x a ssm model from the varstan package
-#' @param ... additional values need in print methods
+#' @param x a `ssm` model.
+#' @param ... additional values need in print methods.
 #'
 #' @return None. prints the object.
 #'
 #' @method print ssm
 #' @export
 #'
-print.ssm = function(x,...){
+print.ssm = function(x, ...){
   if(!is.ssm(x))
     stop("The current object is not a ssm model")
   report(x)
 }
 #' Print a Local Level model
 #'
-#' @param x a LocalLevel model from the varstan package
-#' @param ... additional values need in print methods
+#' @param x a `Local.Level` model.
+#' @param ... additional values need in print methods.
 #'
 #' @return None. prints the object.
 #'
 #' @method print LocalLevel
 #' @export
 #'
-print.LocalLevel = function(x,...){
+print.LocalLevel = function(x, ...){
   if(!is.LocalLevel(x))
     stop("The current object is not a ssm model")
   report(x)
 }
-#' Print a Holt model
+#' Prints a Holt model.
 #'
-#' @param x a Holt model from the varstan package
-#' @param ... additional values need in print methods
+#' @param x a Holt model.
+#' @param ... additional values need in print methods.
 #'
 #' @return None. prints the object.
 #'
 #' @method print Holt
 #' @export
 #'
-print.Holt = function(x,...){
+print.Holt = function(x, ...){
   if(!is.Holt(x))
     stop("The current object is not a ssm model")
   report(x)
 }
 #' Print a Holt-Winter model
 #'
-#' @param x a Hw from the varstan package
-#' @param ... additional values need in print methods
+#' @param x a `Hw` model.
+#' @param ... additional values need in print methods.
 #'
 #' @return None. prints the object.
 #'
 #' @method print Hw
 #' @export
 #'
-print.Hw = function(x,...){
+print.Hw = function(x, ...){
   if(!is.Hw(x))
     stop("The current object is not a ssm model")
   report(x)
 }
-#' Print a varstan object
+#' Print a `varstan` object
 #'
-#' @param x a varstan object
-#' @param ... additional values need in print methods
+#' @param x a `varstan` object.
+#' @param ... additional values need in print methods.
 #'
 #' @return None. prints the object.
 #'
 #' @method print varstan
 #' @export
 #'
-print.varstan = function(x,...){
+print.varstan = function(x, ...){
   if(!is.varstan(x))
     stop("The current object is not a varstan model")
 

@@ -5,20 +5,18 @@
 #' The function returns a list with the data for running \code{stan()} function of
 #' \pkg{rstan} package.
 #'
-#' @usage SVM(ts,arma = c(0,0),xreg = NULL,series.name = NULL)
-#'
 #' @param ts a numeric or ts object with the univariate time series.
 #' @param arma Optionally, a specification of the  ARMA model,same
-#' as order parameter: the two components (p, q) are the AR order,and
-#' the  MA order.
+#' as order parameter: the two components `c(p, q)` are the AR, and
+#' the  MA orders.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param series.name an optional string vector with the time series names.
 #'
 #' @author Asael Alonzo Matamoros
 #'
-#' @return The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
+#' @return The function returns a list with the data for running \code{stan()}
+#' function of \pkg{rstan} package.
 #'
 #' @export
 #'
@@ -34,15 +32,15 @@
 #' Applications: With R Examples. \emph{Springer Texts in Statistics}.
 #' isbn: 9781441978646. First edition.
 #'
-#' @seealso \code{\link{garch}} \code{\link{set_prior}}
+#' @seealso \code{garch}, and  \code{et_prior}.
 #'
 #' @examples
 #' # Declares a SVM model for the IPC data
 #'
-#' model = SVM(ipc,arma = c(1,1))
+#' model = SVM(ipc, arma = c(1,1))
 #' model
 #'
-SVM = function(ts,arma = c(0,0),xreg = NULL,series.name = NULL){
+SVM = function(ts, arma = c(0,0), xreg = NULL, series.name = NULL){
 
   m1 = garch(ts = ts,order = c(1,1,1),arma = arma,xreg = xreg,
              genT = FALSE,series.name = series.name)

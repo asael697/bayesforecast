@@ -1,13 +1,12 @@
-#' Forecasting varstan objects
+#' Forecasting `varstan` objects.
 #'
 #' \code{forecast} is a generic function for forecasting from time series or
-#' varstan models. The function invokes particular \emph{methods} which
+#' `varstan` models. The function invokes particular \emph{methods} which
 #' depend on the class of the first argument.
 #'
-#' If \code{model=NULL},the function \code{\link{forecast.ts}} makes forecasts
-#' using \code{\link{ets}} models (if the data are non-seasonal or the seasonal
-#' period is 12 or less) or \code{\link{stlf}} (if the seasonal period is 13 or
-#' more).
+#' If \code{model = NULL},the function \code{forecast.ts} makes forecasts
+#' using \code{ets} models (if the data are non-seasonal or the seasonal
+#' period is 12 or less).
 #'
 #' If \code{model} is not \code{NULL}, \code{forecast.ts} will apply the
 #' \code{model} to the \code{object} time series, and then generate forecasts
@@ -15,16 +14,16 @@
 #'
 #' @aliases forecast
 #'
-#' @param object a time series or varstan model for which forecasts are
+#' @param object a time series or `varstan` model for which forecasts are
 #' required.
-#' @param h Number of periods for forecasting.
-#' @param probs A numerical vector \eqn{p \in (0,1)}{p (0 < p < 1)} indicating the desired
-#'   probability mass to include in the intervals. The default is to report
-#'   \code{90\%} and \code{80\%} intervals (\code{level=c(0.8,0.9)}).
+#' @param h an integer with the number of periods for forecasting.
+#' @param probs a numerical vector \eqn{p \in (0,1)}{p (0 < p < 1)} indicating
+#' the desired probability mass to include in the intervals. The default is to report
+#' \code{90\%} and \code{80\%} intervals (\code{level=c(0.8,0.9)}).
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
-#' @param robust A boolean for obtain the robust estimation. The default
-#' @param draws An integer indicating the number of draws to return. The default
+#' @param robust a boolean for obtain the robust estimation. The default
+#' @param draws an integer indicating the number of draws to return. The default
 #'    number of draws is 1000.
 #' @param seed An optional \code{\link[=set.seed]{seed}} to use.
 #' @param ... Further arguments passed to  \code{posterior_predict}.
@@ -68,14 +67,14 @@
 #'  fc = forecast(fit,h = 12)
 #' }
 #'
-forecast.varstan = function(object, h = 10,probs = c(0.80, 0.90),xreg = NULL,robust = FALSE,
-                            draws = 1000,seed = NULL,...){
+forecast.varstan = function(object, h = 10, probs = c(0.80, 0.90), xreg = NULL,
+                            robust = FALSE, draws = 1000, seed = NULL, ...){
 
   if (! is.varstan(object))
-    stop("The current object is not a varstan class",call. = FALSE)
+    stop("The current object is not a varstan class", call. = FALSE)
 
   # Preparing the data
-  level = sort(probs);tsp.x =  stats::tsp(object$ts)
+  level = sort(probs); tsp.x =  stats::tsp(object$ts)
 
   if (!is.null(tsp.x))
     start.f = stats::tsp(object$ts)[2] + 1 / stats::frequency(object$ts)
@@ -83,15 +82,15 @@ forecast.varstan = function(object, h = 10,probs = c(0.80, 0.90),xreg = NULL,rob
     start.f =length(object$x) + 1
 
   # Posterior predict
-  pp = posterior_predict(object = object,h = h,xreg = xreg,robust = robust,
-                         draws = draws,seed = seed,...)
+  pp = posterior_predict(object = object, h = h, xreg = xreg, robust = robust,
+                         draws = draws, seed = seed,...)
   pp = as.matrix(pp);
 
   # Forecast credible intervals
   ppi = lower = upper = NULL
   ppm = apply(pp, 2, mean)
 
-  for (i in level) ppi = cbind(ppi,posterior_interval(mat = pp,prob = i))
+  for (i in level) ppi = cbind(ppi, posterior_interval(mat = pp, prob = i))
 
   # Reorganice
   for (i in 1:(2*length(level))){
@@ -105,14 +104,17 @@ forecast.varstan = function(object, h = 10,probs = c(0.80, 0.90),xreg = NULL,rob
   row.names(lower) = row.names(upper) = NULL
   names(ppm) = NULL
 
-  out = list(model = object, mean = stats::ts(ppm, frequency = stats::frequency(object$ts), start = start.f),
-             level = level, x = object$ts)
+  out = list(model = object,
+             mean = stats::ts(ppm, frequency = stats::frequency(object$ts),
+                              start = start.f),
+             level = level,
+             x = object$ts)
 
   out$lower = stats::ts(lower)
   out$upper = stats::ts(upper)
   stats::tsp(out$lower) = stats::tsp(out$upper) = stats::tsp(out$mean)
 
-  out$fitted  =  fitted.varstan(object)
+  out$fitted = fitted.varstan(object)
 
   if (!is.null(object$series.name))
     out$series = object$series.name
@@ -130,7 +132,7 @@ forecast.varstan = function(object, h = 10,probs = c(0.80, 0.90),xreg = NULL,rob
 #' @importFrom stats is.ts time tsp
 #' @export
 #'
-forecast.ts = function(object, h = 10,probs = c(0.8,0.95),...){
+forecast.ts = function(object, h = 10, probs = c(0.8,0.95), ...){
 
   if (! stats::is.ts(object))
     stop("The current object is not a time series class",call. = FALSE)
@@ -145,7 +147,7 @@ forecast.ts = function(object, h = 10,probs = c(0.8,0.95),...){
 
   # transform to a data frame object
   mts = as.numeric(stats::time(object))
-  b = data.frame(ds =lubridate::date_decimal(mts),y = as.numeric(object) )
+  b = data.frame(ds =lubridate::date_decimal(mts), y = as.numeric(object) )
 
   ppm = lower = upper = NULL
 
@@ -155,7 +157,8 @@ forecast.ts = function(object, h = 10,probs = c(0.8,0.95),...){
 
     # Forecast
     future = prophet::make_future_dataframe(mod, periods = h,
-                                            freq = findfreq(object),include_history = FALSE)
+                                            freq = findfreq(object),
+                                            include_history = FALSE)
     fct = predict(mod,future)
 
     # Forecast credible intervals
@@ -168,7 +171,10 @@ forecast.ts = function(object, h = 10,probs = c(0.8,0.95),...){
   row.names(lower) = row.names(upper) = NULL
   names(ppm) = NULL
 
-  out = list(model = mod, mean = stats::ts(ppm, frequency = stats::frequency(object), start = start.f),
+  out = list(model = mod,
+             mean = stats::ts(ppm,
+                              frequency = stats::frequency(object),
+                              start = start.f),
              level = level, x = object)
 
   out$lower = stats::ts(lower)

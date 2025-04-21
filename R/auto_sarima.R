@@ -5,11 +5,6 @@
 #' to select the seasonal ARIMA model and estimates the model using a
 #' HMC sampler.
 #'
-#' @usage auto.sarima(ts,seasonal = TRUE,xreg = NULL,chains=4,iter=4000,warmup=floor(iter/2),
-#'                 adapt.delta = 0.9,tree.depth =10,stepwise = TRUE, series.name = NULL,
-#'                 prior_mu0 = NULL,prior_sigma0 = NULL,prior_ar = NULL, prior_ma = NULL,
-#'                 prior_sar = NULL,prior_sma = NULL, prior_breg = NULL,...)
-#'
 #' @param ts a numeric or ts object with the univariate time series.
 #' @param seasonal optionally, a logical value for seasonal ARIMA models.
 #' By default \code{seasonal = TRUE}.
@@ -142,8 +137,8 @@ auto.sarima = function(ts,seasonal = TRUE,xreg= NULL,chains = 4,iter = 4000,warm
 #' Fourier terms for modeling seasonality.
 #'
 #' \code{fourier} returns a matrix containing terms from a Fourier series, up
-#' to order \code{K}, suitable for use in \code{\link{Sarima}} or
-#' \code{\link{auto.sarima}}.
+#' to order \code{K}, suitable for use in \code{arima} or
+#' \code{auto.sarima}.
 #'
 #' The period of the Fourier terms is determined from the time series
 #' characteristics of \code{x}. When \code{h} is missing, the length of
@@ -172,15 +167,14 @@ auto.sarima = function(ts,seasonal = TRUE,xreg= NULL,chains = 4,iter = 4000,warm
 #'
 #' @author Rob J Hyndman
 #'
-#' @seealso \code{\link{seasonaldummy}}
+#' @seealso \code{seasonaldummy}.
 #'
 #' @keywords forecast
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
 #'  # Dynaimc Harmonic regression
-#'  sf1 = auto.sarima(birth,xreg = fourier(birth,K= 6),iter = 500,chains = 1)
+#'  sf1 = auto.sarima(birth, xreg = fourier(birth,K= 6),iter = 500,chains = 1)
 #' }
 #'
 #' @importFrom forecast fourier

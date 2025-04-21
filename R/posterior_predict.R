@@ -12,15 +12,15 @@
 #'
 #' @aliases posterior_predict
 #'
-#' @param object a varstan object
-#' @param h An integer indicating the number of predictions. The default number
-#'    of predictions is 12.
+#' @param object a `varstan` object
+#' @param h an integer indicating the number of predictions. The default number
+#' of predictions is 12.
 #' @param xreg	Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
-#' @param robust A boolean for obtain the robust estimation. The default
-#' @param draws An integer indicating the number of draws to return. The default
-#'    number of draws is 1000
-#' @param seed An optional \code{\link[=set.seed]{seed}} to use.
+#' @param robust a bool for obtain the robust estimation.
+#' @param draws an integer indicating the number of draws to return. The default
+#' number of draws is 1000.
+#' @param seed an optional \code{seed} to use.
 #' @param ... Further arguments passed to  \code{posterior_predict}.
 #'
 #' @author Asael Alonzo Matamoros
@@ -39,39 +39,47 @@
 #' @export
 #' @export posterior_predict
 #'
-posterior_predict.varstan = function(object,h = 0,xreg = NULL,robust = FALSE,
-                                     draws = 1000,seed = NULL,...){
+posterior_predict.varstan = function(object, h = 0, xreg = NULL, robust = FALSE,
+                                     draws = 1000, seed = NULL, ...){
 
   if (! is.varstan(object))
-    stop("The current object is not a varstan class",call. = FALSE)
+    stop("The current object is not a varstan class", call. = FALSE)
 
   if( h == 0){
     fc = as.data.frame(extract_stan(object,"fit", permuted = TRUE) )
   }
   else{
     if(is.garch(object$model))
-      fc = posterior_predict_garch(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+      fc = posterior_predict_garch(object = object, h = h, xreg = xreg,
+                                   robust = robust, draws = draws, seed = seed)
 
     if(is.SVM(object$model) )
-      fc = posterior_predict_SVM(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+      fc = posterior_predict_SVM(object = object, h = h, xreg = xreg,
+                                 robust = robust, draws = draws, seed = seed)
 
     if(is.Sarima(object$model))
-      fc = posterior_predict_Sarima(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+      fc = posterior_predict_Sarima(object = object, h = h, xreg = xreg,
+                                    robust = robust, draws = draws, seed = seed)
 
     if(is.naive(object$model))
-      fc = posterior_predict_Sarima(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+      fc = posterior_predict_Sarima(object = object, h = h, xreg = xreg,
+                                    robust = robust, draws = draws, seed = seed)
 
     if(is.ssm(object$model))
-      fc = posterior_predict_ets(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+      fc = posterior_predict_ets(object = object, h = h, xreg = xreg,
+                                 robust = robust, draws = draws, seed = seed)
 
     if(is.LocalLevel(object$model))
-      fc = posterior_predict_ets(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+      fc = posterior_predict_ets(object = object, h = h, xreg = xreg,
+                                 robust = robust, draws = draws, seed = seed)
 
     if(is.Holt(object$model))
-      fc = posterior_predict_ets(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+      fc = posterior_predict_ets(object = object, h = h, xreg = xreg,
+                                 robust = robust, draws = draws, seed = seed)
 
     if(is.Hw(object$model))
-      fc = posterior_predict_ets(object = object,h = h,xreg = xreg,robust = robust,draws = draws,seed = seed)
+      fc = posterior_predict_ets(object = object, h = h, xreg = xreg,
+                                 robust = robust, draws = draws, seed = seed)
   }
   return(fc)
 }
@@ -81,9 +89,10 @@ posterior_predict.varstan = function(object,h = 0,xreg = NULL,robust = FALSE,
 #' of a \code{varstan} model, similar to the fit_values functions of other
 #' packages.
 #'
-#' @param object A varstan object, \code{\link[=varstan]{varstan}}
-#' @param robust A boolean value, if its \code{TRUE} it returns the median of the posterior distribution,
-#' and if its \code{FALSE} it returns the mean, by default is the \code{FALSE} value
+#' @param object a `varstan` object.
+#' @param robust a bool value, if its \code{TRUE} it returns the median of the
+#' posterior distribution, and if its \code{FALSE} it returns the mean, by default
+#' is the \code{FALSE} value.
 #' @param ... Further arguments passed to  \code{posterior_predict}.
 #'
 #' @details
@@ -96,21 +105,22 @@ posterior_predict.varstan = function(object,h = 0,xreg = NULL,robust = FALSE,
 #'
 #' @importFrom stats median ts
 #'
-#' @seealso \code{\link{posterior_predict.varstan}}
+#' @seealso \code{posterior_predict.varstan}
 #'
 #' @export
 #'
-fitted.varstan = function(object,robust = FALSE,...){
+fitted.varstan = function(object, robust = FALSE, ...){
   if( !is.varstan(object) )
     stop("The current object is not a varstan class")
 
   post = as.data.frame(extract_stan(object,"fit", permuted = TRUE) )
   if(robust)
-    sum1 = t(matrix(apply(post,2,stats::median),nrow = 1,byrow = TRUE))
+    sum1 = t(matrix(apply(post,2,stats::median), nrow = 1,byrow = TRUE))
   else
-    sum1 = t(matrix(apply(post,2,mean),nrow = 1,byrow = TRUE))
+    sum1 = t(matrix(apply(post,2,mean),nrow = 1, byrow = TRUE))
 
-  fit = stats::ts(sum1,start = stats::start(object$ts) ,frequency = stats::frequency(object$ts))
+  fit = stats::ts(sum1,start = stats::start(object$ts),
+                  frequency = stats::frequency(object$ts))
 
   return(fit)
 }
@@ -128,15 +138,15 @@ fitted.varstan = function(object,robust = FALSE,...){
 #'
 #' @aliases posterior_epred
 #'
-#' @param object a varstan object
+#' @param object a `varstan` object.
 #' @param h An integer indicating the number of predictions. The default number
-#'    of predictions is 12.
+#' of predictions is 12.
 #' @param xreg	Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
-#' @param robust A boolean for obtain the robust estimation. The default
-#' @param draws An integer indicating the number of draws to return. The default
-#'    number of draws is 1000
-#' @param seed An optional \code{\link[=set.seed]{seed}} to use.
+#' @param robust a bool for obtain the robust estimation.
+#' @param draws a integer indicating the number of draws to return. The default
+#' number of draws is 1000.
+#' @param seed An optional \code{seed} to use.
 #' @param ... Further arguments passed to  \code{posterior_predict}.
 #'
 #' @return
@@ -152,8 +162,8 @@ fitted.varstan = function(object,robust = FALSE,...){
 #' @export posterior_epred
 #' @export
 #'
-posterior_epred.varstan = function(object,h = 0,xreg = NULL,robust = FALSE,
-                                     draws = 1000,seed = NULL,...){
+posterior_epred.varstan = function(object, h = 0, xreg = NULL, robust = FALSE,
+                                   draws = 1000, seed = NULL, ...){
 
   if (! is.varstan(object))
     stop("The current object is not a varstan class",call. = FALSE)
@@ -172,21 +182,19 @@ posterior_epred.varstan = function(object,h = 0,xreg = NULL,robust = FALSE,
 # Internal
 #############################################################################
 
-#' Draw from posterior predictive distribution of an Seasonal arima model
+#' Draw from posterior predictive distribution of an Seasonal ARIMA model.
 #'
-#' @usage  posterior_predict_Sarima(object,h = 1,robust = TRUE,draws = 1000,seed = NULL)
-#'
-#' @param object a varstan object
+#' @param object a `varstan` object
 #' @param h An integer indicating the number of predictions. The default number
-#'    of predictions is 1.
+#' of predictions is 1.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as h. It should not be a data frame.
-#' @param robust A boolean for obtain the robust estimation. The default
-#' @param draws An integer indicating the number of draws to return. The default
-#'    number of draws is 1000
-#' @param seed An optional \code{\link[=set.seed]{seed}} to use.
+#' @param robust a bool for obtain the robust estimation.
+#' @param draws an integer indicating the number of draws to return. The default
+#'    number of draws is 1000.
+#' @param seed An optional \code{seed} to use.
 #'
-#' @author  Asael Alonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
 #' @return
 #' A \code{draws} by \code{h} data.frame of simulations from the
@@ -197,13 +205,13 @@ posterior_epred.varstan = function(object,h = 0,xreg = NULL,robust = FALSE,
 #' @importFrom stats arima predict rnorm
 #' @noRd
 #'
-posterior_predict_Sarima = function(object,h = 1,xreg = NULL,robust = TRUE,
-                                    draws = 1000,seed = NULL){
+posterior_predict_Sarima = function(object, h = 1, xreg = NULL, robust = TRUE,
+                                    draws = 1000, seed = NULL){
 
   if (!is.null(seed))
     set.seed(seed)
 
-  nm = object$stan.parmaters$chains*(object$stan.parmaters$iter-object$stan.parmaters$warmup)
+  nm = object$stan.parmaters$chains * (object$stan.parmaters$iter - object$stan.parmaters$warmup)
   draw = draws
   if( nm < draws) draw = nm
 
@@ -220,11 +228,11 @@ posterior_predict_Sarima = function(object,h = 1,xreg = NULL,robust = TRUE,
   y = object$ts;
 
   # point estimate of the model parameters
-  par0 = data.frame(extract_stan(object,pars = c("mu0","sigma0")))
+  par0 = data.frame(extract_stan(object, pars = c("mu0","sigma0")))
   par0 = as.matrix(par0[sp,])
 
   if(!is.null(fix)){
-    fix = data.frame(extract_stan(object,pars = fix))
+    fix = data.frame(extract_stan(object, pars = fix))
     fix = data.frame(fix[sp,])
   }
   else{
@@ -244,43 +252,44 @@ posterior_predict_Sarima = function(object,h = 1,xreg = NULL,robust = TRUE,
     # Check xreg
     if(is.null(xreg)){
       warning("No xreg specified, the forecast wont be accurate \n")
-      xh  = matrix(0,nrow = h,ncol = order$d1)
+      xh  = matrix(0, nrow = h, ncol = order$d1)
     }
     else if( dim(xreg)[1] != h ||  dim(xreg)[2] != order$d1){
       # Check xreg dimensions
       warning("The dimension of xreg are not correct, the forecast wont be accurate \n")
-      xh = matrix(0,nrow = h,ncol = order$d1)
+      xh = matrix(0, nrow = h ,ncol = order$d1)
     }
     else xh = xreg
   }
   for(i in 1:draw){
-    modi = suppressWarnings(stats::arima(x = y,order = c(order$p,order$d,order$q),
-                                         seasonal =list(order = c(order$P,order$D,order$Q),period = stats::frequency(y)),
+    modi = suppressWarnings(stats::arima(x = y,order = c(order$p, order$d, order$q),
+                                         seasonal =list(order = c(order$P,
+                                                                  order$D,
+                                                                  order$Q),
+                                                        period = stats::frequency(y)),
                                          xreg = reg,include.mean = FALSE,
                                          fixed = fix[i,]))
-    yh[i,] = suppressWarnings(as.numeric(stats::predict(modi,n.ahead = h,newxreg = xh)$pred))
-    for (j in 1:h) yh[i,j] = stats::rnorm(n = 1,mean = yh[i,j] +par0[i,1],sd = par0[i,2])
+    yh[i,] = suppressWarnings(as.numeric(stats::predict(modi, n.ahead = h, newxreg = xh)$pred))
+    for (j in 1:h) yh[i,j] = stats::rnorm(n = 1,mean = yh[i,j] + par0[i,1], sd = par0[i,2])
   }
   colnames(yh) = paste0("yh.",1:h)
   yh = as.data.frame(yh)
 
   return(yh);
 }
-#' Draw from posterior predictive distribution of an arma-garch model
+#' Draw from posterior predictive distribution of an ARMA-GARCH model
 #'
-#' @usage  posterior_predict_garch(object,h = 1,robust = TRUE,draws = 1000,seed = NULL)
-#'
-#' @param object a varstan object
+#' @param object a `varstan` object
 #' @param h An integer indicating the number of predictions. The default number
-#'    of predictions is 1
+#' of predictions is 1.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as h. It should not be a data frame.
-#' @param robust A boolean for obtain the robust estimation. The default
-#' @param draws An integer indicating the number of draws to return. The default
+#' @param robust a bool for obtain the robust estimation.
+#' @param draws an integer indicating the number of draws to return. The default
 #'    number of draws is 1000
-#' @param seed An optional \code{\link[=set.seed]{seed}} to use.
+#' @param seed An optional \code{seed} to use.
 #'
-#' @author  Asael Alonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
 #'
 #' @return
@@ -292,23 +301,24 @@ posterior_predict_Sarima = function(object,h = 1,xreg = NULL,robust = TRUE,
 #' @importFrom stats arima predict rnorm
 #' @noRd
 #'
-posterior_predict_garch = function(object,h = 1,xreg = NULL,robust = TRUE,
-                                   draws = 1000,seed = NULL){
+posterior_predict_garch = function(object, h = 1, xreg = NULL, robust = TRUE,
+                                   draws = 1000, seed = NULL){
 
   if (!is.null(seed))
     set.seed(seed)
 
-  nm = object$stan.parmaters$chains*(object$stan.parmaters$iter-object$stan.parmaters$warmup)
+  nm = object$stan.parmaters$chains * (object$stan.parmaters$iter - object$stan.parmaters$warmup)
   draw = draws
   if( nm < draws) draw = nm
 
   sp = sample(1:nm,size = draw)
 
   # Extract the necessary lags for predict
-  order = get_order(object);n = object$model$n
+  order = get_order(object);
+  n = object$model$n
 
   # Extract the posterior values
-  sigma =   extract_ts(object,"sigma",lag = object$model$n,robust = robust)
+  sigma = extract_ts(object,"sigma", lag = object$model$n, robust = robust)
   sigma = as.numeric(sigma^2)
   y = object$ts;
   reg = NULL
@@ -331,12 +341,12 @@ posterior_predict_garch = function(object,h = 1,xreg = NULL,robust = TRUE,
   par0 = data.frame(par0[sp,])
 
   if(!is.null(fixsig)){
-    fixsig = data.frame(extract_stan(object,pars = fixsig))
+    fixsig = data.frame(extract_stan(object, pars = fixsig))
     fixsig = data.frame(fixsig[sp,])
   }
 
   if(!is.null(fixmean)){
-    fixmean = data.frame(extract_stan(object,pars = fixmean))
+    fixmean = data.frame(extract_stan(object, pars = fixmean))
     fixmean = data.frame(fixmean[sp,])
   }
 
@@ -400,22 +410,19 @@ posterior_predict_garch = function(object,h = 1,xreg = NULL,robust = TRUE,
   yh = as.data.frame(yh)
   return(yh)
 }
-#' Draw from posterior predictive distribution of an arma-SVM model
+#' Draw from posterior predictive distribution of an ARMA-SVM model
 #'
-#' @usage  posterior_predict_SVM(object,h = 1,robust = TRUE,draws = 1000,seed = NULL)
-#'
-#' @param object a varstan object
-#' @param h An integer indicating the number of predictions. The default number
-#'    of predictions is 1
+#' @param object a `varstan` object
+#' @param h an integer indicating the number of predictions. The default number
+#' of predictions is 1.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as h. It should not be a data frame.
-#' @param robust A boolean for obtain the robust estimation. The default
-#' @param draws An integer indicating the number of draws to return. The default
-#'    number of draws is 1000
-#' @param seed An optional \code{\link[=set.seed]{seed}} to use.
+#' @param robust a bool for obtain the robust estimation.
+#' @param draws an integer indicating the number of draws to return. The default
+#' number of draws is 1000.
+#' @param seed An optional \code{seed} to use.
 #'
 #' @author Asael Alonzo Matamoros
-#'
 #'
 #' @return
 #' A \code{draws} by \code{h} data.frame of simulations from the
@@ -426,13 +433,13 @@ posterior_predict_garch = function(object,h = 1,xreg = NULL,robust = TRUE,
 #' @importFrom stats arima predict rnorm
 #' @noRd
 #'
-posterior_predict_SVM = function(object,h = 1,xreg = NULL,robust = TRUE,
-                                 draws = 1000,seed = NULL){
+posterior_predict_SVM = function(object, h = 1, xreg = NULL, robust = TRUE,
+                                 draws = 1000, seed = NULL){
 
   if (!is.null(seed))
     set.seed(seed)
 
-  nm = object$stan.parmaters$chains*(object$stan.parmaters$iter-object$stan.parmaters$warmup)
+  nm = object$stan.parmaters$chains * (object$stan.parmaters$iter - object$stan.parmaters$warmup)
   draw = draws
   if( nm < draws) draw = nm
 
@@ -442,7 +449,7 @@ posterior_predict_SVM = function(object,h = 1,xreg = NULL,robust = TRUE,
   order = get_order(object);n = object$model$n
 
   # Extract the posterior values
-  ht =   extract_ts(object,"h",lag = object$model$n,robust = robust)
+  ht = extract_ts(object,"h",lag = object$model$n,robust = robust)
 
   y = object$ts;
   reg = NULL
@@ -518,16 +525,14 @@ posterior_predict_SVM = function(object,h = 1,xreg = NULL,robust = TRUE,
 }
 #' Draw from posterior predictive distribution of a SSM model
 #'
-#' @usage  posterior_predict_ets(object,h = 1,robust = TRUE,draws = 1000,seed = NULL)
-#'
-#' @param object a varstan object
-#' @param h An integer indicating the number of predictions. The default number
-#'    of predictions is 1
+#' @param object a `varstan` object.
+#' @param h an integer indicating the number of predictions. The default number
+#' of predictions is 1.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as h. It should not be a data frame.
-#' @param robust A boolean for obtain the robust estimation. The default
-#' @param draws An integer indicating the number of draws to return. The default
-#'    number of draws is 1000
+#' @param robust a bool for obtain the robust estimation. The default
+#' @param draws an integer indicating the number of draws to return. The default
+#' number of draws is 1000.
 #' @param seed An optional \code{\link[=set.seed]{seed}} to use.
 #'
 #' @author Asael Alonzo Matamoros
@@ -541,16 +546,15 @@ posterior_predict_SVM = function(object,h = 1,xreg = NULL,robust = TRUE,
 #' @importFrom stats rnorm
 #' @noRd
 #'
-posterior_predict_ets = function(object,h = 1,xreg = NULL,robust = TRUE,
-                                 draws = 1000,seed = NULL){
+posterior_predict_ets = function(object, h = 1, xreg = NULL, robust = TRUE,
+                                 draws = 1000, seed = NULL){
   if (!is.null(seed))
     set.seed(seed)
 
   # correct number of draws
-  nm = object$stan.parmaters$chains*(object$stan.parmaters$iter-object$stan.parmaters$warmup)
+  nm = object$stan.parmaters$chains * (object$stan.parmaters$iter - object$stan.parmaters$warmup)
   draw = draws
-  if( nm < draws) draw = nm
-
+  if(nm < draws) draw = nm
   #preliminary checks
   n = length(object$ts);d1 = object$model$d1;states = pars = NULL
   m = object$model$period; n1 = n-m+1;
@@ -643,7 +647,7 @@ posterior_predict_ets = function(object,h = 1,xreg = NULL,robust = TRUE,
 #' @author Rob Hyndman.
 #' @noRd
 #'
-class1 = function(h,last.state, trendtype, seasontype,damped,m,par){
+class1 = function(h, last.state, trendtype, seasontype, damped, m, par){
   p = length(last.state);H = matrix(c(1, rep(0, p - 1)), nrow = 1)
   sigma2 = as.numeric(par["sigma"])^2
 

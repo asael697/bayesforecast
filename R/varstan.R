@@ -1,33 +1,30 @@
-#' Constructor of a varstan object.
+#' Constructor of a `varstan` object.
 #'
-#' Constructor of the varstan object for Bayesian estimation in \pkg{Stan}.
+#' Constructor of the `varstan` object for Bayesian estimation in \pkg{Stan}.
 #'
 #' The function estimates one of  the defined models in \pkg{Stan} using
 #' the \code{stan()} function for sampling.
 #'
-#' @usage varstan(model,chains=4,iter=2000,warmup=floor(iter/2),
-#'                adapt.delta = 0.90,tree.depth =10,...)
-#'
-#' @param model One of the \code{varstan} model classes defined in the package.
-#' @param chains An integer of the number of Markov Chains chains to be run,
-#' by default 4 chains are run.
-#' @param iter An integer of total iterations per chain including the warm-up,
-#' by default  the number of iterations are 2000.
-#' @param warmup  A positive integer specifying number of warm-up (aka burn-in)
-#'   iterations. This also specifies the number of iterations used for stepsize
-#'   adaptation, so warmup samples should not be used for inference. The number
-#'   of warmup should not be larger than \code{iter} and the default is
-#'   \code{iter/2}.
+#' @param model one of the \code{varstan} model classes defined in the package.
+#' @param chains an integer of the number of Markov Chains chains to be run. By
+#' default, it runs with four chains.
+#' @param iter an integer of total iterations per chain including the warm-up.
+#' By default, defines 2000 iterations per chain.
+#' @param warmup a positive integer specifying number of warm-up (aka burn-in)
+#' iterations. This also specifies the number of iterations used for step size
+#' adaptation, so `warmup` samples should not be used for inference. The number
+#' of warm ups should not be larger than \code{iter} and the default is
+#' \code{iter/2}.
 #' @param adapt.delta An optional real value between 0 and 1, the thin of the jumps
 #' in a HMC method. By default is 0.9.
-#' @param  tree.depth An integer of the maximum  depth of the trees  evaluated
+#' @param tree.depth An integer of the maximum  depth of the trees  evaluated
 #' during each iteration. By default is 10.
 #' @param ... Further arguments passed to  \code{rstan()} function.
 #'
 #' @details
-#' This is the principal package's function and the link with \pkg{Stan}, this function
-#' fits the posterior distribution of every parameter for a defined model using a
-#' HMC method.
+#' This is the principal package's function and the link with \pkg{Stan}, this
+#' function fits the posterior distribution of every parameter for a defined
+#' model using a HMC method.
 #'
 #' Every estimated model become a \code{varstan} object, with different methods
 #' for summary, diagnostic, forecast and plotting.
@@ -66,12 +63,12 @@
 #' @export
 #' @importFrom stats frequency
 #'
-#' @return  a \code{varstan} object with the estimated time series model.
+#' @return a \code{varstan} object with the estimated time series model.
 #'
 #' A \code{varstan} object is a list that contains the following values:
 #'
 #' \itemize{
-#'  \item{Stanfit} a Stanfit object returned by \code{rstan} pacakge.
+#'  \item{Stanfit} a `stanfit` object returned by \code{rstan} package.
 #'  \item{stan.parmaters} The parameters used in Stan for the sample.
 #'  \item{model} The defined model for the time series.
 #'  \item{series.name} The time series' name.
@@ -99,7 +96,6 @@
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
 #'  # Fitting a seasonal ARIMA model
 #'  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #'  fit1 = varstan(mod1,iter = 500,chains = 1)
@@ -111,8 +107,8 @@
 #'  fit2
 #' }
 #'
-varstan = function(model,chains = 4,iter = 2000,warmup = floor(iter/2),
-                   adapt.delta = 0.90,tree.depth = 10,...){
+varstan = function(model ,chains = 4, iter = 2000, warmup = floor(iter/2),
+                   adapt.delta = 0.90, tree.depth = 10, ...){
 
   if(!is.model(model))
     stop(class(model),"is not an available current model in varstan")
@@ -142,11 +138,11 @@ varstan = function(model,chains = 4,iter = 2000,warmup = floor(iter/2),
 
   return(m)
 }
-#' Checks if is a varstan object
+#' Checks if is a `varstan` object
 #'
 #' @method is varstan
 #'
-#' @param object a varstan object
+#' @param object a `varstan` object
 #'
 #' @noRd
 #'
@@ -155,23 +151,21 @@ is.varstan = function(object){
   if(is(object,"varstan") ) y = TRUE
   return (y)
 }
-#' Extract chains of an stanfit object implemented in rstan package
+#' Extract chains of an `stanfit` object implemented in `rstan` package
 #'
-#' @usage extract_stan(object,pars,permuted = TRUE,inc_warmup = FALSE,include = TRUE, ...)
-#'
-#' @param object a varstan object
+#' @param object a `varstan` object
 #' @param pars n optional character vector providing the parameter names
 #' (or other quantity names) of interest. If not specified, all parameters
-#' and other quantities are used. The log-posterior with name lp__ is also
-#' included by default.
-#' @param permuted A logical scalar indicating whether the draws
-#' after the warmup period in each chain should be permuted and merged.
-#' If FALSE, the original order is kept. For each stanfit object,
+#' and other quantities are used. The log-posterior with name l`p__` is also
+#' included.
+#' @param permuted a logical scalar indicating whether the draws
+#' after the `warm-up` period in each chain should be permuted and merged.
+#' If FALSE, the original order is kept. For each `stanfit` object,
 #' the permutation is fixed (i.e., extracting samples a second time will
 #' give the same sequence of iterations).
-#' @param inc_warmup A logical scalar indicating whether to include the
-#' warmup draws. This argument is only relevant if permuted is FALSE.
-#' @param include A logical scalar indicating whether the parameters named
+#' @param inc_warmup a logical scalar indicating whether to include the
+#' warm-up draws. This argument is only relevant if permuted is `FALSE`.
+#' @param include a logical scalar indicating whether the parameters named
 #' in pars should be included (TRUE) or excluded (FALSE).
 #' @param ... Further arguments passed to  \code{extract} function.
 #'
@@ -184,7 +178,6 @@ is.varstan = function(object){
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
 #'  # Fitting a GARCH(1,1) model
 #'  dat = garch(ipc,order = c(1,1,0))
 #'  fit2 = varstan(dat,iter = 500,chains = 1)
@@ -193,8 +186,8 @@ is.varstan = function(object){
 #'  mu0 = extract_stan(fit2,pars = "mu0")
 #' }
 #'
-extract_stan = function(object,pars,permuted = TRUE,
-                        inc_warmup = FALSE,include = TRUE,...){
+extract_stan = function(object, pars, permuted = TRUE,
+                        inc_warmup = FALSE, include = TRUE,...){
 
   if(!is.varstan(object) )
     stop("The current object is not a varstan class")
@@ -208,7 +201,7 @@ extract_stan = function(object,pars,permuted = TRUE,
 #' Convert a \code{varstan} object to a \code{stanfit} object of the
 #' \pkg{rstan} package.
 #'
-#' @usage  as.stan(object)
+#' @usage as.stan(object)
 #'
 #' @param object a varstan object.
 #' @return  a stanfit object.

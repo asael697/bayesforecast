@@ -7,32 +7,30 @@
 #'
 #' The function returns a vector with the fitted parameters
 #'
-#' @usage  extract_estimate(model,fit)
-#'
-#' @param fit  a stanfit object
-#' @param model a varma, Sarima or garch model
-#' @param par the desired parameter
-#' @param robust a boolean for obtain the robust estimation
+#' @param fit  a `stanfit` object.
+#' @param model a `ssm`, `Sarima` or `garch` model.
+#' @param par the included parameter.
+#' @param robust a boolean for obtain the robust estimation.
 #'
 #' @noRd
 #' @importFrom stats median
 #'
-#' @author  Asael Alonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
-#' @return  a vector with all the elected parameters
+#' @return a vector with all the elected parameters.
 #'
-extract_estimate = function(model,fit,par,robust = FALSE,...){
+extract_estimate = function(model, fit, par, robust = FALSE, ...){
   post = data.frame(rstan::extract(fit,par, permuted = TRUE))
   if(robust) pe = apply(post,2,stats::median)
   else pe = apply(post,2,mean)
   return( as.numeric(pe) )
 }
-#' Extract estimate time series parameters from a stanfit object
+#' Extract estimate time series parameters from a `stanfit` object.
 #'
-#' @param object varstan object
-#' @param par a string with the desired parameter
-#' @param robust a boolean value for robust estimate
-#' @param lag the max lags desired
+#' @param object `varstan` object
+#' @param par a string with the desired parameter.
+#' @param robust a boolean value for robust estimate.
+#' @param lag the max lags desired.
 #'
 #' @author Asael Alonzo Matamoros
 #'
@@ -41,7 +39,7 @@ extract_estimate = function(model,fit,par,robust = FALSE,...){
 #'
 #' @return An univariate time series as a numeric vector
 #'
-extract_ts = function(object,par,lag = 1,robust=FALSE){
+extract_ts = function(object, par , lag = 1, robust = FALSE){
   if (!is.varstan(object))
     stop("The current object is not a varstan object")
 
@@ -70,9 +68,9 @@ extract_ts = function(object,par,lag = 1,robust=FALSE){
 #'
 #' @noRd
 #'
-dif = function(ts,d = 0,D = 0,period = 1){
+dif = function(ts, d = 0, D = 0 ,period = 1){
 
-  y_diff = ts;init  = NULL;inits = NULL
+  y_diff = ts; init  = NULL; inits = NULL
 
   if(d > 0){
     for(i in 1:d){
@@ -132,21 +130,19 @@ inv_dif = function(ts,init,inits){
 #'
 #' Replicate Elements of Vector
 #'
-#' replicate a value d times if the value is different than x0
+#' replicate a value d times if the value is different than x0.
 #'
-#' @usage  repeat_value(x,d,x0)
+#' @param x is a vector with the hyper-parameter coefficients.
+#' @param d an integer with the vector dimension.
+#' @param x0 a real value to replace in a non positive value.
 #'
-#' @param x is a vector with the hyper-parameter coefficients
-#' @param d an integer with the vector dimension
-#' @param x0 a real value to replace in a non positive value
+#' @author Asael Alonzo Matamoros.
 #'
-#' @author  Asael Alonzo Matamoros
-#'
-#' @return  a vector with repeated values
+#' @return a vector with repeated values.
 #'
 #' @noRd
 #'
-repeat_value = function(x,d,x0){
+repeat_value = function(x, d, x0){
   if(length(x) == 1 && x != x0){
     y = rep(x,d)
   }
@@ -245,11 +241,11 @@ my_sum = function(x,robust = FALSE,conf){
   }
   return( round(sum,4) )
 }
-#' Alternative function with all the desired indicators in summary function
+#' Alternative function with all the desired indicators in summary function.
 #'
-#' @param x a numeric vector
-#' @param robust a boolean value for robust indicators
-#' @param conf the confidence level
+#' @param x a numeric vector.
+#' @param robust a boolean value for robust indicators.
+#' @param conf the confidence level.
 #'
 #' @importFrom stats quantile mad qnorm sd
 #' @noRd
@@ -282,14 +278,13 @@ my_sum1 = function(x,robust = FALSE,conf){
 #' checks for positive values in a vector (x_i > 0) useful for
 #' checking scale parameters
 #'
-#' @usage  positive_check(x,x0)
 #'
-#' @param x is a vector with the hyper-parameter coefficients
-#' @param x0 a real value to replace in a non positive value
+#' @param x is a vector with the hyper-parameter coefficients.
+#' @param x0 a real value to replace in a non positive value.
 #'
-#' @author  Asael Alonzo Matamoros
+#' @author Asael Alonzo Matamoros
 #'
-#' @return  a vector with the checked values
+#' @return a vector with the checked values
 #'
 #' @noRd
 #'
@@ -309,10 +304,8 @@ positive_check = function(x,x0 = 1){
 }
 #' No negative values in vector
 #'
-#' checks for no negative values in a vector (x_i >= 0 ) useful for checking
+#' checks for no negative values in a vector (`x_i >= 0``) useful for checking
 #' lags in models
-#'
-#' @usage  no_negative_check(x,x0)
 #'
 #' @param x is a vector with the hyper-parameter coefficients
 #' @param x0 a real value to replace in a non positive value
@@ -323,7 +316,7 @@ positive_check = function(x,x0 = 1){
 #'
 #' @noRd
 #'
-no_negative_check = function(x,x0 = 0){
+no_negative_check = function(x, x0 = 0){
   y = x
   d = length(x)
   for(i in 1:d){
@@ -338,17 +331,15 @@ no_negative_check = function(x,x0 = 0){
   return(y)
 }
 #'
-#' Check the arma coefficients
+#' Check the ARMA coefficients
 #'
 #' checks for values in between -1 and 1 in a real vector
 #'
-#' @usage  arma_check(x)
+#' @param x is a vector with the hyper-parameter coefficients.
 #'
-#' @param x is a vector with the hyper-parameter coefficients
+#' @author Asael Alonzo Matamoros
 #'
-#' @author  Asael Alonzo Matamoros
-#'
-#' @return  a vector with the checked values
+#' @return a vector with the checked values.
 #'
 #' @noRd
 #'

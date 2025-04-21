@@ -1,30 +1,32 @@
-#' Summary method for a varstan object
+#' Summary method for a `varstan` object
 #'
 #' Summaries of parameter estimates and MCMC convergence diagnostics
 #' (Monte Carlo error, effective sample size, Rhat).
 #'
-#' @param object A varstan object.
-#' @param robust A boolean value, if its \code{TRUE} it returns the median of the posterior distribution,
-#' And if its \code{FALSE} it returns the mean, by default is the \code{FALSE} value
-#' @param prob A number \eqn{p \in (0,1)}{p (0 < p < 1)} indicating the desired
-#'   probability mass to include in the intervals. The default is to report
-#'   \eqn{90}% intervals (\code{prob=0.9}) rather than the traditionally used
-#'   \eqn{95}%.
+#' @param object a `varstan` object.
+#' @param robust a `bool` value, if its \code{TRUE} it returns the median of the
+#' posterior distribution, on the contrary returns the mean. By default, sets to
+#'  \code{FALSE}.
+#' @param prob a number \eqn{p \in (0,1)}{p (0 < p < 1)} indicating the desired
+#' probability mass to include in the intervals. The default is to report
+#' \eqn{90}% intervals (\code{prob=0.9}) rather than the traditionally used
+#' \eqn{95}%.
 #' @param ... Further arguments passed to  \code{summary}.
 #'
 #' @author Asael Alonzo Matamoros.
 #'
 #' @return
-#' A data.frame with the posterior mean, standard error, credible intervals, effective sample
-#' size (ess),and Rhat for all the model parameters in a varstan model, if \code{robust} is \code{TRUE}
-#' then the posterior mean and standard error, are replaced by the posterior mean and MAD.
+#' A data.frame with the posterior mean, standard error, credible intervals,
+#' effective sample size (`ess`),and `Rhat` for all the model parameters in a
+#' `varstan` model. If \code{robust = TRUE} displays posterior mean and standard
+#' error, instead of the posterior median and MAD.
 #'
 #' @import rstan
 #'
 #' @method summary varstan
 #' @export
 #'
-summary.varstan = function(object,robust = FALSE,prob = 0.90,...){
+summary.varstan = function(object, robust = FALSE, prob = 0.90, ...){
 
   if(!is.varstan(object))
     stop("The current object is not a varstan class")

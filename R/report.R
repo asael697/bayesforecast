@@ -1,18 +1,17 @@
-#' Print a full report of the time series model in a  varstan object.
+#' Print a full report of the time series model in a `varstan` object.
 #'
-#' The function returns a report with the users defined model for the given time series data
-#' and all the current defined priors of the model.
-#'
-#' @usage  report(object,...)
+#' The function returns a report with the users defined model for the given
+#' time-series and all the current defined priors of the model.
 #'
 #' @aliases report report.varstan report.Sarima report.garch report.varma report.Bekk report.naive
 #'
-#' @param object an object varstan object or one of the defined current defined reports in varstan package
+#' @param object a `varstan` object or one of the defined current defined reports.
 #' @param ... additional values need in print methods
 #'
-#' @details if \code{object} is a varstan object the function will print the information of the
-#' defined model inside of the object. If \code{object} is one of the model classes (like Sarima or garch)
-#' then it will print the report information as well.
+#' @details if \code{object} is a `varstan` object the function will print the
+#' information of the defined model inside of the object. If \code{object} is one
+#' of the model classes (like `Sarima` or `garch`) then it will print the report
+#' information as well.
 #'
 #' @author Asael Alonzo Matamoros
 #'
@@ -21,18 +20,17 @@
 #' @return none. prints a string with the defined time series model report
 #'
 #' @examples
-#' library(astsa)
 #' dat2 = garch(birth,order = c(1,1,0))
 #' report(dat2)
 #'
-report <- function(object,...) {
+report <- function(object, ...) {
   UseMethod("report")
 }
 #' @aliases report
 #' @method report varstan
 #' @export
 #'
-report.varstan = function(object,...){
+report.varstan = function(object, ...){
   if(!is.varstan(object))
     stop("The current object is not a varstan class")
 
@@ -272,12 +270,13 @@ report.Hw = function(object,...){
 #'
 #' @aliases prior_summary
 #'
-#' @param object a varstan object or one of the defined current defined reports in varstan package
-#' @param ... additional values need in print methods
+#' @param object a `varstan` object or one of the defined current defined reports.
+#' @param ... additional values need in print methods.
 #'
-#' @details if \code{object} is a varstan object the function will print the information of the
-#' defined model inside of the object. If \code{object} is one of the model classes (like Sarima or garch)
-#' then it will print the report information as well.
+#' @details if \code{object} is a `varstan` object the function will print the
+#' information of the defined model inside of the object. If \code{object}
+#' is one of the model classes (like `Sarima` or `garch`) then it will print the
+#' report information as well.
 #'
 #' @return none. prints a string with the defined time series model report
 #'

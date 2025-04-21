@@ -1,18 +1,17 @@
-#' Get parameters of a varstan object
+#' Get parameters of a `varstan` object.
 #'
-#' Get the sampled parameters of a varstan object.
+#' Get the sampled parameters of a `varstan` object.
 #'
-#' @param object a varstan object
+#' @param object a `varstan` object.
 #'
-#' @return a vector with the sampled parameters
+#' @return a vector with the sampled parameters.
 #'
 #' @author Asael Alonzo Matamoros
 #' @export
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
-#'  sf1 = auto.sarima(birth,iter = 500,chains = 1)
+#'  sf1 = auto.sarima(birth, iter = 500, chains = 1)
 #'  get_parameters(sf1)
 #' }
 #'
@@ -32,9 +31,9 @@ get_parameters = function(object){
   return(gp$include)
 }
 #'
-#' Excluded parameters in a Sarima model
+#' Excluded parameters in a SARIMA model.
 #'
-#' @param dat a Sarima model
+#' @param dat a SARIMA model.
 #' @noRd
 #'
 get_params_arima = function(dat){
@@ -44,13 +43,16 @@ get_params_arima = function(dat){
   if(dat$P > 0) include = c(include,"sar")
   if(dat$Q > 0) include = c(include,"sma")
   if(dat$d1 >0) include = c(include,"breg")
+
   exclude = c("ar0","ma0","sar0","sma0")
-  pars = list(include = c(include,"loglik"),exclude = exclude)
+
+  pars = list(include = c(include,"loglik"), exclude = exclude)
+
   return(pars)
 }
-#' Excluded parameters in a  garch model
+#' Excluded parameters in a  GARCH model.
 #'
-#' @param dat a garch model
+#' @param dat a GARCH model.
 #' @noRd
 #'
 get_params_garch = function(dat){
@@ -65,16 +67,20 @@ get_params_garch = function(dat){
   if(dat$asym1) include = c(include,"gamma")
 
   exclude = c("ar0","ma0")
-  pars = list(include = c(include,"loglik"),exclude = exclude)
+
+  pars = list(include = c(include,"loglik"), exclude = exclude)
+
   return(pars)
 }
-#' Excluded parameters in a SVM model
+#' Excluded parameters in a SVM model.
 #'
-#' @param dat a SVM model
+#' @param dat a SVM model.
 #' @noRd
 #'
 get_params_svm = function(dat){
+
   include = c("mu0","sigma0")
+
   if(dat$s > 0) include = c(include,"alpha")
   if(dat$k > 0) include = c(include,"beta")
   if(dat$h > 0) include = c(include,"mgarch")
@@ -85,26 +91,34 @@ get_params_svm = function(dat){
   if(dat$asym1) include = c(include,"gamma")
 
   exclude = c("ar0","ma0")
-  pars = list(include = c(include,"loglik"),exclude = exclude)
+
+  pars = list(include = c(include, "loglik"), exclude = exclude)
+
   return(pars)
 }
-#' Excluded parameters in a SSM model
+#' Excluded parameters in a SSM model.
 #'
-#' @param dat a SSM model
+#' @param dat a SSM model.
 #' @noRd
 #'
 get_params_ssm = function(dat){
+
   include = c("sigma0","level")
+
   if(dat$is_td) include = c(include,"trend")
   if(dat$is_dp) include = c(include,"damped")
   if(dat$is_ss) include = c(include,"seasonal")
+
   include = c(include,"level1")
+
   if(dat$is_td) include = c(include,"trend1")
   if(dat$is_ss) include = c(include,"seasonal1")
   if(dat$d1 >0) include = c(include,"breg")
   if(dat$genT)  include = c(include,"v")
 
   exclude = c("ar0","ma0")
-  pars = list(include = c(include,"loglik"),exclude = exclude)
+
+  pars = list(include = c(include,"loglik"), exclude = exclude)
+
   return(pars)
 }

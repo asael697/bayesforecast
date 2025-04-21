@@ -36,7 +36,6 @@
 #'
 #' @examples
 #' \donttest{
-#' library(astsa)
 #' # Fitting a seasonal ARIMA model
 #' mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #' fit1 = varstan(mod1,iter = 500,chains = 1)
@@ -91,7 +90,6 @@ bridge_sampler.varstan <- function(samples, ...) {
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
 #'  # Fitting a seasonal arima model
 #'  mod1 = Sarima(birth,order = c(0,1,2),seasonal = c(1,1,1))
 #'  fit1 = varstan(mod1,iter = 500,chains = 1)

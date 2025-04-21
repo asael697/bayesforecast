@@ -1,11 +1,7 @@
 #' A  constructor for local level state-space model.
 #'
-#' Constructor of the \code{ets("A","N","N")} object for Bayesian estimation in \pkg{Stan}.
-#'
-#' The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
-#'
-#' @usage LocalLevel(ts,xreg = NULL,genT = FALSE,series.name = NULL)
+#' Constructor of the \code{ets("A","N","N")} object for Bayesian estimation in
+#' \pkg{Stan}.
 #'
 #' @param ts a numeric or ts object with the univariate time series.
 
@@ -15,18 +11,18 @@
 #' @param series.name an optional string vector with the time series names.
 #'
 #' @details
-#' By  default  the  \code{ssm()}  function generates a local level model (or a ets("A","N","N") or
-#' exponential smoothing model from the \pkg{forecast} package). If \code{trend} is set \code{TRUE},
-#' then  a  local  trend ssm model is defined (a equivalent ets("A","A","N") or Holt model from the
-#' \pkg{forecast} package). For damped trend models set \code{damped} to \code{TRUE}. If \code{seasonal}
-#' is  set  to  \code{TRUE} a seasonal local level model is defined (a equivalent ets("A","N","A") model
-#' from  the  \pkg{forecast} package). For a Holt-Winters method (ets("A","A","A")) set \code{Trend} and
-#' \code{seasonal} to \code{TRUE}.
+#' By  default  the  \code{ssm()} function generates a local-level, `ets("A","N","N")`,
+#' or exponential smoothing model from the \pkg{forecast} package. When
+#' \code{trend = TRUE} the SSM transforms into a local-trend, `ets("A","A","N")`,
+#' or the equivalent Holt model. For damped trend models set \code{damped = TRUE}.
+#' If \code{seasonal = TRUE}, the model is a seasonal local level model, or
+#' `ets("A","N","A")` model. Finally, the Holt-Winters method (`ets("A","A","A")`)
+#' is obtained by setting both \code{Trend = TRUE} and \code{seasonal = TRUE}.
 #'
-#' When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
-#' see Fonseca, et. al (2019) for more details.
+#' The \code{genT = TRUE} option generates a t-student innovations SSM model. For
+#' a detailed explanation, check Ardia (2010); or Fonseca, et. al (2019).
 #'
-#' The default priors used in a ssm( ) model are:
+#' The default priors used in a `ssm( )` model are:
 #'
 #' \itemize{
 #'  \item{level ~ normal(0,0.5)}
@@ -38,8 +34,8 @@
 #'
 #' For changing the default prior use the function \code{set_prior()}.
 #'
-#' @return The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
+#' @return The function returns a list with the data for running \code{stan()}
+#' function of \pkg{rstan} package.
 #'
 #' @author Asael Alonzo Matamoros.
 #'
@@ -51,13 +47,13 @@
 #' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 #' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 #'
-#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#' @seealso \code{Sarima}, \code{auto.arima}, \code{set_prior}, and \code{garch}.
 #'
 #' @examples
 #  #Declaring a local level model model for the ipc data.
 #' mod1 = LocalLevel(ipc)
 #'
-LocalLevel = function(ts,xreg = NULL,genT = FALSE,series.name = NULL){
+LocalLevel = function(ts, xreg = NULL, genT = FALSE, series.name = NULL){
 
   dat = ssm(ts = ts,trend = FALSE,damped = FALSE,seasonal = FALSE,
             xreg = xreg,period = 0,genT = genT, series.name = series.name)
@@ -79,25 +75,20 @@ is.LocalLevel = function(obj){
 #'
 #' Constructor of the \code{ets("A","A","Z")} object for Bayesian estimation in \pkg{Stan}.
 #'
-#' The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
-#'
-#' @usage Holt(ts,damped = FALSE,xreg = NULL,genT = FALSE,series.name = NULL)
-#'
 #' @param ts a numeric or ts object with the univariate time series.
-#' @param damped a boolean value to specify a damped trend local level model. By default
-#' is \code{FALSE}. If \code{trend} option is \code{FALSE} then \code{damped} is set to
-#' \code{FALSE} automatically.
+#' @param damped a boolean value to specify a damped trend local level model. By
+#' default, \code{damped = FALSE}. If \code{trend} option is \code{FALSE} then
+#' \code{damped = FALSE} automatically.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param genT a boolean value to specify for a generalized t-student SSM model.
 #' @param series.name an optional string vector with the time series names.
 #'
 #' @details
-#' When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
-#' see Fonseca, et. al (2019) for more details.
+#' The \code{genT = TRUE} option generates a t-student innovations SSM model. For
+#' more references check Ardia (2010); or Fonseca, et. al (2019).
 #'
-#' The default priors used in a ssm( ) model are:
+#' The default priors used in a `ssm( )` model are:
 #'
 #' \itemize{
 #'  \item{level ~ normal(0,0.5)}
@@ -112,8 +103,8 @@ is.LocalLevel = function(obj){
 #'
 #' For changing the default prior use the function \code{set_prior()}.
 #'
-#' @return The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
+#' @return The function returns a list with the data for running \code{stan()} f
+#' unction of \pkg{rstan} package.
 #'
 #' @author Asael Alonzo Matamoros.
 #'
@@ -125,7 +116,7 @@ is.LocalLevel = function(obj){
 #' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 #' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 #'
-#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#' @seealso \code{Sarima}, \code{auto.arima}, \code{set_prior}, and \code{garch}.
 #'
 #' @examples
 #  #Declaring a Holt model for the ipc data.
@@ -134,7 +125,7 @@ is.LocalLevel = function(obj){
 #' # Declaring a Holt damped trend model for the ipc data.
 #' mod2 = Holt(ipc,damped = TRUE)
 #'
-Holt = function(ts,damped = FALSE,xreg = NULL,genT = FALSE,series.name = NULL){
+Holt = function(ts, damped = FALSE, xreg = NULL, genT = FALSE, series.name = NULL){
 
   dat = ssm(ts = ts,trend = TRUE,damped = damped,seasonal = FALSE,
             xreg = xreg,period = 0,genT = genT, series.name = series.name)
@@ -152,19 +143,14 @@ is.Holt = function(obj){
   if( is(obj,"Holt")) y = TRUE
   return (y)
 }
-#' A  constructor for a Holt-Winters state-space model.
+#' A constructor for a Holt-Winters state-space model.
 #'
 #' Constructor of the \code{ets("A","A","A")} object for Bayesian estimation in \pkg{Stan}.
 #'
-#' The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
-#'
-#' @usage Hw(ts,damped = FALSE,xreg = NULL,period = 0,genT = FALSE,series.name = NULL)
-#'
 #' @param ts a numeric or ts object with the univariate time series.
-#' @param damped a boolean value to specify a damped trend local level model. By default
-#' is \code{FALSE}. If \code{trend} option is \code{FALSE} then \code{damped} is set to
-#' \code{FALSE} automatically.
+#' @param damped a boolean value to specify a damped trend local level model. By
+#' default, \code{damped = FALSE}. If \code{trend} option is \code{FALSE} then
+#' \code{damped} is \code{FALSE} automatically.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param period an integer specifying the periodicity of the time series by
@@ -173,8 +159,8 @@ is.Holt = function(obj){
 #' @param series.name an optional string vector with the time series names.
 #'
 #' @details
-#' When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
-#' see Fonseca, et. al (2019) for more details.
+#' The \code{genT = TRUE} option generates a t-student innovations SSM model. For
+#' a detailed explanation, check Ardia (2010); or Fonseca, et. al (2019).
 #'
 #' The default priors used in a ssm( ) model are:
 #'
@@ -206,8 +192,8 @@ is.Holt = function(obj){
 #' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 #' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 #'
-#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}}
-#' \code{\link{garch}}
+#' @seealso \code{Sarima}, \code{auto.arima}, and \code{set_prior}.
+#' \code{garch}
 #'
 #' @examples
 #  #Declaring a Holt Winters model for the ipc data.

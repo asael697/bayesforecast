@@ -1,41 +1,36 @@
-#' A  constructor for a Additive linear State space model.
+#' A constructor for a Additive linear State space model.
 #'
 #' Constructor of the \code{ets("Z","Z","Z")} object for Bayesian estimation in \pkg{Stan}.
 #'
-#' The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
-#'
-#' @usage ssm(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
-#'            period = 0,genT = FALSE,series.name = NULL)
-#'
 #' @param ts a numeric or ts object with the univariate time series.
-#' @param trend a boolean value to specify a trend local level model. By default
-#' is \code{FALSE}.
-#' @param damped a boolean value to specify a damped trend local level model. By default
-#' is \code{FALSE}. If \code{trend} option is \code{FALSE} then \code{damped} is set to
-#' \code{FALSE} automatically.
-#' @param seasonal a boolean value to specify a seasonal local level model. By default
-#' is \code{FALSE}.
+#' @param trend a bool value to specify a trend local level model. By default,
+#' \code{trend = FALSE}.
+#' @param damped a bool value to specify a damped trend local level model. By default,
+#' \code{damped = FALSE}. If \code{trend = FALSE} then \code{damped = FALSE}
+#' automatically.
+#' @param seasonal a bool value to specify a seasonal local level model. By default
+#' \code{seasonal = FALSE}.
 #' @param xreg Optionally, a numerical matrix of external regressors,
 #' which must have the same number of rows as ts. It should not be a data frame.
 #' @param period an integer specifying the periodicity of the time series by
-#' default the value frequency(ts) is used.
-#' @param genT a boolean value to specify for a generalized t-student SSM model.
+#' default the value `frequency(ts)` is used.
+#' @param genT a bool value to specify for a generalized t-student SSM model.
 #' @param series.name an optional string vector with the time series names.
 #'
 #' @details
-#' By  default  the  \code{ssm()}  function generates a local level model (or a ets("A","N","N") or
-#' exponential smoothing model from the \pkg{forecast} package). If \code{trend} is set \code{TRUE},
-#' then  a  local  trend ssm model is defined (a equivalent ets("A","A","N") or Holt model from the
-#' \pkg{forecast} package). For damped trend models set \code{damped} to \code{TRUE}. If \code{seasonal}
-#' is  set  to  \code{TRUE} a seasonal local level model is defined (a equivalent ets("A","N","A") model
-#' from  the  \pkg{forecast} package). For a Holt-Winters method (ets("A","A","A")) set \code{Trend} and
-#' \code{seasonal} to \code{TRUE}.
+#' By  default  the  \code{ssm()}  function generates a local level
+#' `ets("A","N","N")`, or exponential smoothing model. If \code{trend = TRUE},
+#' then  the model transforms into a  local  trend, `ets("A","A","N")` or Holt model
+#' from the n\pkg{forecast} package. For damped trend models set \code{damped = TRUE}.
+#' When \code{seasonal = TRUE}, the model becomes a seasonal local level or
+#' `ets("A","N","A")`` model from  the  \pkg{forecast} package. Finally, a
+#' Holt-Winters method or `ets("A","A","A")`,is whenever both \code{Trend} and
+#' \code{seasonal} options are  \code{TRUE}.
 #'
-#' When \code{genT} option is \code{TRUE} a t-student innovations ssm model (see Ardia (2010)) is generated
-#' see Fonseca, et. al (2019) for more details.
+#' The \code{genT = TRUE} defines a t-student innovations SSM model. Check, Ardia (2010))
+#' and Fonseca, et. al (2019) for more details.
 #'
-#' The default priors used in a ssm( ) model are:
+#' The default priors used in a `ssm( )` model are:
 #'
 #' \itemize{
 #'  \item{level ~ normal(0,0.5)}
@@ -52,8 +47,8 @@
 #'
 #' For changing the default prior use the function \code{set_prior()}.
 #'
-#' @return The function returns a list with the data for running \code{stan()} function of
-#'  \pkg{rstan} package.
+#' @return The function returns a list with the data for running \code{stan()}
+#' function of \pkg{rstan} package.
 #'
 #' @author Asael Alonzo Matamoros.
 #'
@@ -65,7 +60,7 @@
 #' degrees of freedom estimation in the Asymmetric GARCH model with Student-t
 #' Innovations. \emph{arXiv} \code{doi: arXiv: 1910.01398}.
 #'
-#' @seealso \code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}} \code{\link{garch}}
+#' @seealso \code{Sarima}, \code{auto.arima}, \code{set_prior}, and \code{garch}.
 #'
 #' @examples
 #  #Declaring a local level model model for the ipc data.
@@ -77,8 +72,8 @@
 #' # Declaring an additive Holt-Winters model for the birth data
 #' mod3 = ssm(birth,trend = TRUE,damped = TRUE,seasonal = TRUE)
 #'
-ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
-               period = 0,genT = FALSE,series.name = NULL){
+ssm = function(ts, trend = FALSE, damped = FALSE, seasonal = FALSE, xreg = NULL,
+               period = 0, genT = FALSE, series.name = NULL){
 
     n = length(as.numeric(ts))
     y = as.numeric(ts)
@@ -91,7 +86,7 @@ ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
 
     # Check the damped trend
     is_dp = damped
-    if(trend == FALSE)is_dp = FALSE
+    if(trend == FALSE) is_dp = FALSE
 
     m1 = list(n = n,time = as.numeric(stats::time(ts)),
               is_td = trend, is_dp = is_dp,is_ss = seasonal,
@@ -140,7 +135,7 @@ ssm = function(ts,trend = FALSE,damped = FALSE,seasonal = FALSE,xreg = NULL,
 }
 #' Checks if is a SSM object
 #'
-#' @param object a  SSM object
+#' @param object a  SSM object.
 #' @noRd
 #'
 is.ssm = function(object){
@@ -150,11 +145,16 @@ is.ssm = function(object){
 }
 #' Extracts all the order coefficients in a list
 #'
-#' @param dat A SSM model
+#' @param dat A SSM model.
 #' @noRd
 #'
 get_order_ssm = function(dat){
-  return(list(level = q,trend = ifelse(dat$is_td,1,0),damped = ifelse(dat$is_dp,1,0),seasonal= ifelse(dat$is_ss,1,0)))
+  return(list(level = 1,
+              trend = ifelse(dat$is_td, 1, 0),
+              damped = ifelse(dat$is_dp, 1, 0),
+              seasonal= ifelse(dat$is_ss, 1, 0)
+              )
+         )
 }
 #' Max order  coefficients in a SSM model
 #'

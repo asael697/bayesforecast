@@ -8,7 +8,7 @@
 #'
 #' @param object Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.
 #' @param series Identifies the time series with a colour, which integrates well
-#' with the functionality of \link{geom_forecast}.
+#' with the functionality of \code{geom_forecast}.
 #' @param xlab a string with the plot's x axis label. By default a NUll value.
 #' @param ylab a string with the plot's y axis label. By default a counts" value.
 #' @param main a string with the plot's title.
@@ -18,7 +18,7 @@
 #' @param colour If TRUE, the time series will be assigned a colour aesthetic
 #' @param model Object of class \dQuote{\code{ts}} to be converted to
 #' \dQuote{\code{data.frame}}.
-#' @param data Not used (required for \link{fortify} method)
+#' @param data Not used (required for \code{fortify} method)
 #' @param ... Other plotting parameters to affect the plot.
 #'
 #' @return None. Function produces a ggplot2 graph.
@@ -143,8 +143,8 @@ ggtsbreaks = function(x) {
 #'
 #' Plots a histogram and density estimates using ggplot.
 #'
-#'
-#' @param y a numeric vector or an object of the \code{ts} class containing a stationary time series.
+#' @param y a numeric vector or an object of the \code{ts} class containing a
+#' stationary time series.
 #' @param title a string with the plot's title.
 #' @param xlab a string with the plot's x axis label. By default a NUll value
 #' @param ylab a string with the plot's y axis label. By default a "counts" value
@@ -165,7 +165,7 @@ ggtsbreaks = function(x) {
 #' x = rnorm(100)
 #' gghist(x,add.normal = TRUE)
 #'
-gghist = function(y,title = NULL,xlab = NULL,ylab = "counts",bins,add.normal = TRUE){
+gghist = function(y, title = NULL, xlab = NULL, ylab = "counts", bins, add.normal = TRUE){
 
   if (!stats::is.ts(y) && !is.numeric(y))
     stop("gghist requires a ts or numeric object")
@@ -212,7 +212,8 @@ gghist = function(y,title = NULL,xlab = NULL,ylab = "counts",bins,add.normal = T
 #' Plot the quantile-quantile plot and quantile-quantile line using ggplot.
 #'
 #'
-#' @param y a numeric vector or an object of the \code{ts} class containing a stationary time series.
+#' @param y a numeric vector or an object of the \code{ts} class containing a
+#' stationary time series.
 #' @param add.normal Add a normal density function for comparison.
 #' @param title a string with the plot's title.
 #'
@@ -228,7 +229,7 @@ gghist = function(y,title = NULL,xlab = NULL,ylab = "counts",bins,add.normal = T
 #' x = rnorm(100)
 #' ggnorm(x)
 #'
-ggnorm = function(y,title = NULL,add.normal = TRUE){
+ggnorm = function(y, title = NULL, add.normal = TRUE){
 
   if (!stats::is.ts(y) && !is.numeric(y))
     stop("gghist requires a ts or numeric object")
@@ -247,7 +248,8 @@ ggnorm = function(y,title = NULL,add.normal = TRUE){
 #'
 #' Plot of the auto-correlation function for a univariate time series.
 #'
-#' @param y a numeric vector or an object of the \code{ts} class containing a stationary time series.
+#' @param y a numeric vector or an object of the \code{ts} class containing a
+#' stationary time series.
 #' @param title a string with the plot's title.
 #'
 #' @return None. Function produces a ggplot2 graph.
@@ -262,7 +264,7 @@ ggnorm = function(y,title = NULL,add.normal = TRUE){
 #' x = rnorm(100)
 #' ggacf(x)
 #'
-ggacf = function(y,title = NULL){
+ggacf = function(y, title = NULL){
   if (!stats::is.ts(y) && !is.numeric(y))
     stop("gghist requires a ts or numeric object")
 
@@ -274,7 +276,8 @@ ggacf = function(y,title = NULL){
 #'
 #' Plot of the partial autocorrelation function for a univariate time series.
 #'
-#' @param y a numeric vector or an object of the \code{ts} class containing a stationary time series.
+#' @param y a numeric vector or an object of the \code{ts} class containing a
+#' stationary time series.
 #' @param title a string with the plot's title.
 #'
 #' @return None.
@@ -299,9 +302,10 @@ ggpacf = function(y,title = NULL){
 }
 #' plot methods for varstan models.
 #'
-#' Preliminary plot methods for varstan models only valid for univariate time series models.
-#' The function prints the fitted values time series, the trace and density plots for the
-#' sampled model parameters, or the residuals' posterior mean time series.
+#' Preliminary plot methods for varstan models only valid for univariate time
+#' series models. The function prints the fitted values time series, the trace
+#' and density plots for the sampled model parameters, or the residuals'
+#' posterior mean time series.
 #'
 #' @param x An object of class \code{varstan}.
 #' @param prob A number \eqn{p \in (0,1)}{p (0 < p < 1)} indicating the desired
@@ -326,7 +330,7 @@ ggpacf = function(y,title = NULL){
 #' @importFrom stats quantile
 #' @export
 #'
-plot.varstan = function(x,prob = 0.95,...){
+plot.varstan = function(x, prob = 0.95, ...){
 
   if( !is.varstan(x))
     stop("The current object is not a varstan class")
@@ -372,7 +376,9 @@ autoplot.varstan = function(object,prob = 0.95,...){
   pI = posterior_interval(pp,prob = prob)
   pM = apply(pp, 2, FUN = mean)
 
-  data = data.frame(time = as.numeric(time(object$ts)),y = as.numeric(object$ts))
+  data = data.frame(time = as.numeric(time(object$ts)),
+                    y = as.numeric(object$ts)
+                    )
   data$yhat = pM; data = cbind(data,pI)
   colnames(data) = c("time","y","yhat","low","hi")
 
@@ -390,9 +396,9 @@ autoplot.varstan = function(object,prob = 0.95,...){
 }
 #' Visual check of residuals in a \code{varstan} object.
 #'
-#'
-#' Performs a visual check of residuals in time series models, this method is inspired in
-#' the \code{check.residuals} function provided by the \code{forecast} package.
+#' Performs a visual check of residuals in time series models, this method is
+#' inspired in the \code{check.residuals} function provided by the \code{forecast}
+#' package.
 #'
 #' @param object a varstan object.
 #' @param ... Other plotting parameters to affect the plot.
@@ -406,13 +412,12 @@ autoplot.varstan = function(object,prob = 0.95,...){
 #'
 #' @examples
 #' \donttest{
-#'  library(astsa)
-#'  sf1 = auto.sarima(ts = birth,iter = 500,chains = 1)
+#'  sf1 = auto.sarima(ts = birth, iter = 500, chains = 1)
 #'  # fitted model
 #'  check_residuals(sf1)
 #' }
 #'
-check_residuals = function(object,...){
+check_residuals = function(object, ...){
 
   if( !is.varstan(object))
     stop("The current object is not a varstan class")
@@ -420,7 +425,8 @@ check_residuals = function(object,...){
 
   lay = matrix(c(1,1,2,3,4,5),nrow = 3,ncol = 2,byrow = TRUE)
 
-  p1 = autoplot(res,main = "Expected Values of the Posterior Predictive Errors",ylab = "residuals")
+  p1 = autoplot(res, main = "Expected Values of the Posterior Predictive Errors",
+                ylab = "residuals")
   p2 = gghist(y = res,add.normal = TRUE,xlab = "residuals")
   p3 = ggnorm(y = res,add.normal = TRUE,)
   p4 = ggacf(y = res)
@@ -482,14 +488,14 @@ mcmc_plot.varstan = function(object, pars = NULL, combo = c("dens","trace"),
     stop("The current object is not a varstan class")
 
   gp = get_parameters(object)
-  code = match(x = pars,table = gp)
+  code = match(x = pars, table = gp)
 
-  if(is.element(NA,code))
+  if(is.element(NA, code))
     stop("pars contains an incorrect value")
 
   if(is.null(pars)) pars = gp
 
-  x = as.data.frame(extract_stan(object = object,pars = pars))
+  x = as.data.frame(extract_stan(object = object, pars = pars))
 
   g = bayesplot::mcmc_combo(x = x,pars = pars,combo = combo)
 
