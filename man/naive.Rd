@@ -53,7 +53,7 @@ Kennedy, P. (1992). Forecasting with dynamic regression models: Alan Pankratz, 1
 \code{url: https://EconPapers.repec.org/RePEc:eee:intfor:v:8:y:1992:i:4:p:647-648}.
 }
 \seealso{
-\code{\link{Sarima}}
+\code{Sarima}
 }
 \author{
 Asael Alonzo Matamoros.

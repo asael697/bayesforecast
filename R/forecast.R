@@ -25,7 +25,7 @@
 #' @param robust a boolean for obtain the robust estimation. The default
 #' @param draws an integer indicating the number of draws to return. The default
 #'    number of draws is 1000.
-#' @param seed An optional \code{\link[=set.seed]{seed}} to use.
+#' @param seed An optional \code{seed} to use.
 #' @param ... Further arguments passed to  \code{posterior_predict}.
 #'
 #' @return

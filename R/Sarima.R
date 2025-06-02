@@ -2,7 +2,7 @@
 #'
 #' Constructor of the SARIMA model for Bayesian estimation in \pkg{Stan}.
 #'
-#' The function returns a list with the data for running \code{stan()} function of
+#' The function returns a list with the data for running \code{stan} function of
 #'  \pkg{rstan} package
 #'
 #' @param ts a numeric or ts object with the univariate time series.

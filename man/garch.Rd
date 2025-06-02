@@ -100,7 +100,7 @@ with Student-t Innovations. \emph{The R Journal}. 2(7), 41-47.
 \code{doi: 10.32614/RJ-2010-014}.
 }
 \seealso{
-\code{\link{Sarima}} \code{\link{auto.arima}} \code{\link{set_prior}}
+\code{Sarima} \code{auto.arima} \code{set_prior}
 }
 \author{
 Asael Alonzo Matamoros.

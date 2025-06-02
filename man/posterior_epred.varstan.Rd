@@ -46,7 +46,7 @@ Compute posterior samples of the expected value/mean of the posterior
 predictive distribution. Can be performed for the data used to fit the model
 (posterior predictive checks) or for new data. By definition, these
 predictions have smaller variance than the posterior predictions performed by
-the \code{\link{posterior_predict.varstan}} method. This is because only the
+the \code{posterior_predict.varstan} method. This is because only the
 uncertainty in the mean is incorporated in the samples computed by
 \code{posterior_epred} while any residual error is ignored. However, the
 estimated means of both methods averaged across samples should be very

@@ -25,7 +25,7 @@
 #'
 #' @author Asael Alonzo Matamoros.
 #'
-#' @seealso \code{\link{Sarima}}
+#' @seealso \code{Sarima}
 #'
 #' @references
 #' Hyndman, R. & Khandakar, Y. (2008). Automatic time series forecasting: the

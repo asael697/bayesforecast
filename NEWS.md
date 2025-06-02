@@ -1,7 +1,7 @@
 **bayesforecast NEWS**
 ============
 
-**Bayesforecast 1.0.5. Date: 21/04/2025**
+**Bayesforecast 1.0.5. Date: 02/06/2025**
 ----------------------------------
 
 ### Features:

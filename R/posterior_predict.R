@@ -130,7 +130,7 @@ fitted.varstan = function(object, robust = FALSE, ...){
 #' predictive distribution. Can be performed for the data used to fit the model
 #' (posterior predictive checks) or for new data. By definition, these
 #' predictions have smaller variance than the posterior predictions performed by
-#' the \code{\link{posterior_predict.varstan}} method. This is because only the
+#' the \code{posterior_predict.varstan} method. This is because only the
 #' uncertainty in the mean is incorporated in the samples computed by
 #' \code{posterior_epred} while any residual error is ignored. However, the
 #' estimated means of both methods averaged across samples should be very
@@ -533,7 +533,7 @@ posterior_predict_SVM = function(object, h = 1, xreg = NULL, robust = TRUE,
 #' @param robust a bool for obtain the robust estimation. The default
 #' @param draws an integer indicating the number of draws to return. The default
 #' number of draws is 1000.
-#' @param seed An optional \code{\link[=set.seed]{seed}} to use.
+#' @param seed An optional \code{seed} to use.
 #'
 #' @author Asael Alonzo Matamoros
 #'

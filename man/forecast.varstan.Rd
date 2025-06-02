@@ -34,7 +34,7 @@ which must have the same number of rows as ts. It should not be a data frame.}
 \item{draws}{an integer indicating the number of draws to return. The default
 number of draws is 1000.}
 
-\item{seed}{An optional \code{\link[=set.seed]{seed}} to use.}
+\item{seed}{An optional \code{seed} to use.}
 
 \item{...}{Further arguments passed to  \code{posterior_predict}.}
 }

@@ -40,7 +40,7 @@ function of \pkg{rstan} package.
 Constructor of the SARIMA model for Bayesian estimation in \pkg{Stan}.
 }
 \details{
-The function returns a list with the data for running \code{stan()} function of
+The function returns a list with the data for running \code{stan} function of
 \pkg{rstan} package
 
 If \code{xreg} option is used, the model by default will cancel the
