@@ -1,7 +1,7 @@
 **bayesforecast NEWS**
 ============
 
-**Bayesforecast 1.0.5. Date: 02/06/2025**
+**Bayesforecast 1.0.5. Date: 05/06/2025**
 ----------------------------------
 
 ### Features:
@@ -21,6 +21,8 @@
 - Update Stan code @andrjohns 
 
 - Correct documentation 
+
+- Fix link in Readme File
 
 **Bayesforecast 1.0.1. Date: 16/06/2021**
 ----------------------------------

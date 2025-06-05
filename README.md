@@ -82,7 +82,7 @@ Monthly live birth U.S.A
 
 For start, a multiplicative Seasonal ARIMA model could give a good fit
 to the data, following [Tsay
-(2010)](https://www.amazon.com/dp/047136164X/ref=cm_sw_su_dp?tag=otexts-20)
+(2010)](https://onlinelibrary.wiley.com/doi/book/10.1002/9781118032978)
 recommendations for order selection using the auto-correlation
 functions, we define (p = 1, d = 1, q = 1) and for the seasonal part (P=
 1, D = 1 and Q = 1). The fitted model is defined as follows
